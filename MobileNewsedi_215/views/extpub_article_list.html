@@ -1,0 +1,436 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title><%=name%>发布稿库</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/override.css">
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <script type="text/javascript" src="../javascripts/json2.js"></script>
+    <script type="text/javascript" src="../javascripts/fzcommon.js"></script>
+</head>
+<body>
+<div id = "doc-form-all">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <div>
+                <a id="doc-header-return-a" href="javascript:returnBack();" ><img src="images/navbar/return.png"></a><a href="javascript:choose_catalog_list();"><span id="doc-select-catalog-name" style="color: #FFFFFF"></span><img src="../images/list/xiala.png" ></a><span id="doc-select-catalog-child-name" style="color: #FFFFFF;font-size: 1rem"></span>
+            </div>
+        </div>
+        <div class="am-header-right am-header-nav">
+            <div>
+                <a href="javascript:list_articles_refresh();"><img src="images/list/refresh-icon.png"></a><!--<a href="javascript:newArticle();"><img src="images/list/plus-icon.png" ></a>--><a href="javascript:returnHome()"><img src="../images/list/home-icon.png" ></a>
+            </div>
+        </div>
+    </header>
+
+    <div id = "doc-scroll-wrapper" class="am-list-news-bd am-margin-left-sm" style="margin: 0">
+        <ul id = "doc-article-list" class="am-list"></ul>
+        <div id = "doc-scroll-more" style="display: none;" class="am-pagination-centered" data-am-scrollspy="{animation: 'fade', delay: 300}">加载更多</div>
+    </div>
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+        <a href="#top" title="回到顶部">
+            <img style="height: 3rem" src="../images/top.png">
+        </a>
+    </div>
+</div>
+<div id="doc-catalog-list" style="display: none;">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:returnBackToMain()" class="">
+                <img src="images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="#title-link" class="">选择栏目</a>
+        </h1>
+    </header>
+    <div id = "doc-catalog-list-tpl" class="am-list-news-bd">
+    </div>
+</div>
+<script type="text/javascript">
+    var g_is_choose_catalog = false;//是否弹出选择分类树
+    var g_articles_begin = 0;//从第几个稿件位置开始加载
+    var g_select_catalog_id = -1;
+    var g_has_more = false;
+    var g_catalog_code = "";
+
+    var CATALOG_PARAM_KEY = 'catalog-param';
+
+    var channel_code = location.search.match(/code=([^&]+)/)[1];
+
+
+    function list_articles_refresh(){
+
+        load_article_list(g_select_catalog_id, 0, g_catalog_code);
+
+    }
+    //导航栏返回按钮
+    function returnBack(){
+        var terminalType = "<%= terminalType %>";
+        if(terminalType && terminalType == "app"){
+            returnHome();
+        }else{
+            history.go(-1);
+        }
+    }
+
+    //返回首页
+    function returnHome(){
+        window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+    }
+
+    //导航返回页面（从选择列表页面返回）
+    function returnBackToMain(){
+        /*$("#doc-catalog-list").hide();
+        $("#doc-form-all").show();
+        window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();*/
+        var terminalType = "<%= terminalType %>";
+        if(terminalType && terminalType == "app"){
+            returnHome();
+        }else{
+            history.go(-1);
+        }
+    }
+
+    function newArticle(){
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    //点击选择分类后，返回列表页面
+    function select_catalog(id,name){
+
+        $.each(g_catalogs, function(i, v){
+            if(v.id == id){
+
+                g_select_catalog_id = v.id;
+                if(window.localStorage){
+                    var catalog_param = JSON.parse(window.localStorage.getItem(CATALOG_PARAM_KEY) || "{}");
+                    catalog_param[channel_code] = { id: v.id, name: v.name, code: v.code };
+                    window.localStorage.setItem(CATALOG_PARAM_KEY, JSON.stringify(catalog_param));
+                }
+
+                $("#doc-select-catalog-name").text(v.name);
+                load_article_list(v.id, 0 ,v.code);
+                return false;
+            }
+        });
+
+        $("#doc-form-all").show();
+        $("#doc-catalog-list").hide();
+        $("#doc-list-operation").show();
+        g_is_choose_catalog = false;
+    };
+
+
+    function get_catalog_info(catalog_id){
+
+        var catalog_info = {"id":0,"parent_id":0};
+        $.each(g_catalogs, function(){
+            if(this.id == catalog_id){
+
+                catalog_info = this;
+            }
+        });
+        return catalog_info;
+    };
+
+    function is_catalog_has_child(catalog_id){
+
+        var has_child = false;
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+
+                has_child = true;
+            }
+        });
+        return has_child;
+    }
+
+    //展示某个分类下的所有子分类
+    function list_child_catalog(catalog_id){
+
+        if(is_catalog_has_child(catalog_id) == false){
+
+            fn_show_tips('已经没有下一级了。');
+            return;
+        }
+
+        var $ul = $("<ul></ul>", {"class": "am-list am-avg-sm-1"}).appendTo($("#doc-catalog-list-tpl").empty());
+
+        if(catalog_id > 0) {
+            var catalog_info = get_catalog_info(catalog_id);
+            $ul.append(
+                    '<li style="width:100%;text-align:center" onclick="list_child_catalog(' + catalog_info.parent_id + ')">' +
+                    '<a class="am-list-item-hd" style="color: #98999D">' +
+                    '<img style="height: 1.6rem" src="../images/return-level.png">' + '&nbsp;返回上一级&nbsp;&nbsp;(' + catalog_info.name + ')' +
+                    '</a>' +
+                    '</li>'
+            )
+        }
+
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+                var id = this.id, name = this.name;
+                if(this.hide){
+                    var $li = $("<li></li>").appendTo($ul).click(function () {fn_show_tips("没有浏览权限");});
+                }else{
+                    var $li = $("<li></li>").appendTo($ul).click(function () { select_catalog(id, name); });
+                }
+
+                // 添加 name
+                $("<a></a>", { "class":"am-list-item-hd"}).appendTo($li)
+                        .append($("<span></span>", { text:name }));
+
+                if (is_catalog_has_child(id)){
+                    // 添加箭头 >
+                    $("<a></a>", { "class":"am-list-item-hd am-fr"}).appendTo($li)
+                            .append($("<i></i>", {"class": "am-icon-angle-right"}))
+                            .click(function () { list_child_catalog(id); return false; });
+
+                }
+
+            }
+        });
+
+    }
+
+    //点击弹出选择分类页面
+    var g_catalogs = "";
+    function choose_catalog_list(){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=extPubCategory&type=browser&code=<%=code%>&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    g_catalogs = jsonData.results;
+                    var catalog_info = get_catalog_info(g_select_catalog_id);
+                    list_child_catalog(catalog_info.parent_id);
+
+                    $("#doc-form-all").hide();
+                    $("#doc-list-operation").hide();
+                    $("#doc-catalog-list").show();
+                    g_is_choose_catalog = true;
+                }
+            }
+        });
+    }
+
+
+    //获取某个分类下的稿件
+    function load_article_list(catalog_id, begin_id, code){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=getExtPubDocs&channelcode=<%=code%>&catalog_id=" + catalog_id + "&begin=" + begin_id + "&loToken=" + loToken + "&count=20&nocache=" + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    show_article_list(jsonData.results, jsonData.has_more, begin_id, catalog_id, code);
+                }
+            }
+        });
+
+    };
+
+    //显示稿件列表
+    function show_article_list(article_list, has_more, begin_id, catalog_id, code){
+
+        var $article_list = $("#doc-article-list");
+        g_has_more = has_more;
+        if(begin_id == 0){
+            $article_list.empty();
+            g_articles_begin = 0;
+            removeSiteHistoryPage();
+            $('html, body').animate({scrollTop: 0}, '500');
+        }
+
+        var iconMap = {
+            "text":"am-icon-file-word-o",
+            "image":"am-icon-file-image-o",
+            "video":"am-icon-file-movie-o"
+        };
+
+        $.each(article_list, function(i, article){
+
+            var $li = $("<li></li>", {"class": "am-g am-list-item-desced"}).appendTo($article_list);
+            //---------------------------------------点击跳转
+            $li.click(function () {
+                /* show_article_detail(article.id, article.article_libid, catalog_id, code);*/
+
+            });
+            $li.css({ "padding-left":"3%" }).attr({
+                "article_id": article.id,
+                "article_libid": article.article_libid,
+                "catalog_id": catalog_id,
+                "code": code
+            });
+
+
+            $("<a></a>", { "class":"am-list-title", text:article.title }).appendTo($li).css({
+                "overflow":"hidden",
+                "text-overflow":"ellipsis",
+                "display":"-webkit-box",
+                "word-break":"break-all",
+                "webkit-box-orient":"vertical",
+                "webkit-line-clamp":"2",
+                "height":"58px"
+            });
+
+            var meta_info = ' ' + article.status + ' ' + article.author + ' ' + article.opt_time.substring(5,16);
+            $("<span></span>", { "class": "am-list-date", text: meta_info }).appendTo($li).addClass(iconMap[article.type] || "");
+
+            g_articles_begin += 1;
+        });
+
+        if(has_more){
+            $("#doc-scroll-more").show();
+        }
+        else{
+            $("#doc-scroll-more").hide();
+        }
+
+        //myScroll.refresh();
+        //myScroll.scrollTo(0, 40, 0, $.AMUI.iScroll.utils.circular);
+    };
+
+    function show_article_detail(article_id, article_libid, catalog_id, code){
+
+        var scrollTop = getScroll().scrollTop;
+        var history_json = {
+            content:document.getElementById('doc-article-list').innerHTML,
+            begin:g_articles_begin,
+            has_more:g_has_more,
+            scrollTop:scrollTop
+        };
+
+        //        saveHistoryPage(JSON.stringify(history_json));
+        saveSiteHistoryPage(JSON.stringify(history_json));
+        var cat_name = document.getElementById('doc-select-catalog-name').innerHTML;
+        var cat_child_name = document.getElementById('doc-select-catalog-child-name').innerHTML;
+        localStorageSetItem('site-catalog-name', cat_child_name);
+        window.location.href = "/article_detail?article_id="+ article_id + "&article_libid=" + article_libid + "&lib_type=site" + "&cat_name=" + cat_name + "&cat_child_name=" + cat_child_name + "&position=source" + "&column_id=" + catalog_id + "&code=" +code  ;
+
+    };
+
+    $(function(){
+
+        $("#doc-article-list").delegate("li", "click", function(){
+
+            var article_id = $(this).attr("article_id");
+            var article_libid = $(this).attr("article_libid");
+            var catalog_id = $(this).attr("catalog_id");
+            var code = $(this).attr("code");
+            show_article_detail(article_id ,article_libid,catalog_id,code,this);
+
+        });
+
+        var $select_catalog_name = $("#doc-select-catalog-name");
+        if(window.localStorage){
+            var catalog_param = JSON.parse(window.localStorage.getItem(CATALOG_PARAM_KEY) || "{}");
+
+            if(catalog_param[channel_code]){
+                g_select_catalog_id = catalog_param[channel_code].id || 0;
+                g_catalog_code = catalog_param[channel_code].code;
+                $select_catalog_name.text(catalog_param[channel_code].name);
+            }
+        }
+        if(g_select_catalog_id <= 0){
+
+            $("#doc-form-all").hide();
+            $("#doc-list-operation").hide();
+            choose_catalog_list();
+            return;
+        }
+
+//        var history_json_string = getSiteHistoryPage();
+//        if(history_json_string != null){
+//
+//            var history_json = JSON.parse(history_json_string);
+//            document.getElementById('doc-article-list').innerHTML = history_json.content;
+//            g_articles_begin = history_json.begin;
+//            if(history_json.has_more){
+//                $("#doc-scroll-more").show();
+//            }
+//            else{
+//                $("#doc-scroll-more").hide();
+//            }
+//
+//            $('html, body').animate({scrollTop: history_json.scrollTop}, '0');
+//        }
+//        else{
+//
+//            load_article_list(g_select_catalog_id, g_articles_begin,g_catalog_code);
+//        }
+        load_article_list(g_select_catalog_id, g_articles_begin,g_catalog_code);
+
+        $('#doc-scroll-more').on('inview.scrollspy.amui', function() {
+
+            load_article_list(g_select_catalog_id, g_articles_begin,g_catalog_code);
+        });
+
+        $('#doc-scroll-refresh').on('inview.scrollspy.amui', function() {
+
+            load_article_list(g_select_catalog_id, 0, g_catalog_code);
+        });
+    });
+
+    var is_confirm_back = true;
+    function return_back_home(){
+
+        if(g_is_choose_catalog){
+            $("#doc-form-all").show();
+            $("#doc-catalog-list").hide();
+            $("#doc-list-operation").show();
+            g_is_choose_catalog = false;
+        }
+        else{
+            window.history.go(-1);
+        }
+    }
+</script>
+</body>
+</html>

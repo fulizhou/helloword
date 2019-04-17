@@ -1,0 +1,575 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>新建采访任务</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../../assets/css/app.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+
+    <link rel="stylesheet" href="../../stylesheets/override.css">
+    <link rel="stylesheet" href="../../stylesheets/report/create.css">
+    <link rel="stylesheet" href="../../stylesheets/extend-box.css">
+    <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/cookie.js"></script>
+    <script type="text/javascript" src="../../javascripts/common.js"></script>
+    <script type="text/javascript" src="../../javascripts/extend-box.js"></script>
+    <script src="http://api.map.baidu.com/components?ak=1ZtQkeXgxF3TsxWbQxUOTAYW&v=1.0"></script>
+    <style type="text/css">
+        #view-member{
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: fixed;
+        }
+        #view-member iframe{
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+        #member-size::before {
+            content: "共 " attr(data-size) " 人";
+        }
+    </style>
+</head>
+<body>
+<div id="view-main" class="choose-view" style="display: block">
+    <!--头部开始-->
+    <header id="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back();">
+                <img src="../../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+            </a>
+        </div>
+        <h1 id="header-title" class="am-header-title">新建采访任务</h1>
+    </header>
+    <!--头部结束-->
+
+    <div id="doc-form-all">
+        <!--输入内容开始-->
+        <form class="am-form">
+            <fieldset class="whiteBg">
+                <div class="am-form-group">
+                    <textarea rows="2" id="doc-title" placeholder="请输入标题" minlength="1"></textarea>
+                </div>
+                <div class="am-form-group">
+                    <textarea rows="6" id="doc-content" placeholder="请输入内容或说明"></textarea>
+                </div>
+                <div class="am-form-group">
+                    <textarea rows="6" id="doc-demand" placeholder="请输入采访要求"></textarea>
+                </div>
+            </fieldset>
+        </form>
+        <!--输入内容结束-->
+        <!--联系开始-->
+        <div class="whiteBg">
+            <ul class="contact">
+                <li><label for="contacts-user">联系人：</label><input id="contacts-user" type="text"/></li>
+                <li><label for="contacts-phone">联系电话：</label><input id="contacts-phone" type="text"/></li>
+            </ul>
+        </div>
+        <!--联系结束-->
+        <!--日期开始-->
+        <div class="whiteBg">
+            <div class="am-alert am-alert-danger" id="my-alert" style="display: none">
+                <p>开始日期应小于结束日期！</p>
+            </div>
+            <ul class="contact">
+                <li id="begin-date">
+                    <label>开始日期：</label>
+                    <span class="date-val"></span>
+                </li>
+                <li id="end-date">
+                    <label>结束日期：</label>
+                    <span class="date-val"></span>
+                </li>
+            </ul>
+        </div>
+        <!--日期结束-->
+
+        <!--上传开始-->
+        <div class="whiteBg">
+            <div id="doc-select-folder">
+                <img class="upload" src="../../images/upload_to_icon.png"/>
+                <span style="margin: 1rem">上传到</span>
+                <span id="doc-select-folder-name" class="am-text-truncate"></span>
+                <i class="am-icon-angle-right" style="float: right;margin-right:1rem;"></i>
+            </div>
+        </div>
+        <!--上传结束-->
+
+        <!--组建报道团队开始-->
+        <div class="whiteBg">
+            <div id="doc-select-member">
+                <span class="am-text-truncate"> 组建报道团队 </span>
+                <span id="member-size" data-size="0" class="am-text-truncate" style="margin: 0 0 0 1rem"></span>
+                <i class="am-icon-angle-right" style="float: right;margin-right:1rem;"></i>
+            </div>
+        </div>
+        <!--组建报道团队结束-->
+
+        <div id="quality-list" class="whiteBg status-list"></div>
+
+        <div class="whiteBg clearfix">
+            <lbs-geo id="doc-geo" city="北京" enable-modified="true"></lbs-geo>
+        </div>
+
+        <!--按钮开始-->
+        <div class="btnSect whiteBg">
+            <button id="cancle" class="btn_cancel am-btn am-btn-default">取消</button>
+            <button id="ok" class="btn_determine am-btn am-btn-default">提交</button>
+        </div>
+        <!--按钮结束-->
+    </div>
+</div>
+
+<div id="view-folder" class="choose-view">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back_to_main()">
+                <img class="img-return" src="../../images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <span>上传至</span>
+        </h1>
+    </header>
+    <div id="doc-folder-list" class="am-list-news-bd"></div>
+</div>
+
+<div id="view-member" class="choose-view">
+    <iframe id="member-paper" src="./build_team"></iframe>
+</div>
+
+<script type="text/javascript">
+
+    var loToken = localStorage.getItem("loToken");
+
+    function choose_view(name){
+        $(".choose-view").hide();
+        $("#view-" + name).show();
+    }
+
+    function back_to_main(){
+        choose_view('main');
+    }
+</script>
+
+<script type="text/javascript">
+
+    var query = {}, regExpResult;
+    var search = location.search;
+    var regExp = /([^?&]+)=([^?&]*)/g;
+    while(regExpResult = regExp.exec(search)){
+        query[regExpResult[1]] = regExpResult[2];
+    }
+
+    var clueID = query.clueID;
+    var topicID = query.topicID;
+
+    $(function () {
+        if(clueID || topicID){
+            $("#header-title").text(document.title = "分配采访任务");
+        }
+        if(clueID){
+            $.ajax({
+                url:"/fatch",
+                data:{
+                    docId: clueID,
+                    method: "clueView",
+                    loToken: loToken
+                },
+                dataType:"json",
+                success: function (data) {
+                    if(data && data.clue){
+                        var clue = data.clue;
+                        $("#doc-title").text(clue.topic);
+                        $("#doc-content").text(clue.clueContent).closest("div").hide();
+
+                        $("#contacts-user").val(clue.author).closest("div").hide();
+                        $("#contacts-phone").val(clue.authorMoBile).closest("div").hide();
+
+                        $("#quality-list [quality='" + clue.clueQuality + "']").click();
+
+                        $("#doc-geo .locbar-txt").text(positionDetail.address = clue.authorAdress);
+                    }
+                }
+            });
+        }
+        if(topicID){
+            $.ajax({
+                url:"/fatch",
+                data:{
+                    id: topicID,
+                    libId: query.topicLibID,
+                    method: "viewTopic",
+                    loToken: loToken
+                },
+                dataType:"json",
+                success: function (data) {
+                    if(data.success && data.results){
+                        var results = data.results;
+
+                        $("#doc-title").text(results.title);
+                        $("#doc-content").text(results.content).closest("div").hide();
+
+                        $("#contacts-user").val(results.author).closest("div").hide();
+                        $("#contacts-phone").val(results.phone).closest("div").hide();
+
+                        $("#quality-list [quality='" + results.quality + "']").click();
+
+                        $("#doc-geo .locbar-txt").text(positionDetail.address = results.authorResion);
+                    }
+                }
+            });
+        }
+    });
+
+</script>
+
+<script type="text/javascript">
+    // 组建报道团队
+    var member_map = {};
+
+    $("#member-paper").on("load", function () {
+        var cWin = this.contentWindow;
+        var $document = cWin.$(cWin.document);
+        $document.on("selectMember.buildTeam", function (event, data) {
+            member_map[data.userId] = data;
+
+            var length = $.map(member_map, function (k) { return k; }).length;
+            $("#member-size").attr("data-size", length);
+        });
+        $document.on("removeMember.buildTeam", function (event, data) {
+            delete member_map[data.userId];
+
+            var length = $.map(member_map, function (k) { return k; }).length;
+            $("#member-size").attr("data-size", length);
+        });
+
+        $document.on("submit.buildTeam", function(event, data){
+            back_to_main();
+        });
+        // 修改 组建报道团队 页面的 后退方法
+        cWin.back = back_to_main;
+
+        $("#doc-select-member").click(function () { choose_view("member") });
+    });
+</script>
+
+<script type="text/javascript">
+    var $quality_list = $("#quality-list").empty();
+
+    // quality
+    $(function () {
+        var on_success = function (data) {
+            if (data.success) {
+                $.each(data.results, function (i, v) {
+                    if(v.quality == 0) return;
+                    $("<button></button>", {"class":"btn-status", quality: v.quality, text: v.qualityName}).appendTo($quality_list);
+                });
+                $quality_list.children(".btn-status").first().addClass("selected");
+            }
+        };
+        $.ajax({
+            url:"/fatch",
+            data:{
+                type:"task",
+                method:"getQuality",
+                loToken:loToken
+            },
+            dataType:"json",
+            success: on_success
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    var $select_folder = $("#doc-select-folder-name");
+
+    // 选择文件夹相关
+    $(function () {
+        var memory_last_folder = "task-last-folder";
+        var last_folder = localStorage.getItem(memory_last_folder);
+
+        var folder_map = {0:{id:0,name:"root"}};
+
+        load_folder(function (data) {
+            $.each(data, function (i, v) {
+                folder_map[v.id] = v;
+            });
+            $.each(data, function (i, v) {
+                var parent = folder_map[v.parent_id];
+                (parent.children = parent.children || []).push(v);
+            });
+
+            var folder;
+            if(last_folder && (folder = folder_map[last_folder]) ){
+                choose_folder(folder.id, folder.name);
+            } else {
+                show_folder(0);
+            }
+
+            $("#doc-select-folder").click(function () {
+                var last_folder = localStorage.getItem(memory_last_folder);
+                if(last_folder && (folder = folder_map[last_folder]) ){
+                    show_folder(folder.parent_id);
+                } else {
+                    show_folder(0);
+                }
+            });
+        });
+
+        function load_folder(callback){
+            function on_success(data) {
+                if(data.success){
+                    callback && callback(data.results);
+                }
+            }
+            $.ajax({
+                url:"/fatch",
+                data:{
+                    type:"task",
+                    perm:"upload",
+                    method:"getNewsPlanFolders",
+                    loToken:loToken
+                },
+                dataType:"json",
+                success: on_success
+            })
+        }
+
+        function choose_folder(id){
+            var folder = folder_map[id];
+            $select_folder.attr("select-folder-id", folder.id).text(folder.name);
+            localStorage.setItem(memory_last_folder, folder.id);
+            back_to_main();
+        }
+
+        function show_folder(id){
+            var folder = folder_map[id];
+            if (!folder || !folder.children || !folder.children.length) {
+                fn_show_tips('已经没有下一级了。'); return;
+            }
+
+            var $folder_list = $("#doc-folder-list").empty();
+            var $ul = $("<ul></ul>", {"class": "am-list am-avg-sm-1"}).appendTo($folder_list);
+
+            if(folder.id > 0){
+                var $li = $("<li></li>", {"class": "return-parent"}).appendTo($ul);
+                $li.click(function(){ show_folder(folder.parent_id); });
+                var $a = $("<a></a>", {"class": "am-list-item-hd"}).appendTo($li);
+                $("<img/>", {"src": "../../images/return-level.png"}).css({"height":"1.6rem"}).appendTo($a);
+                var text = " 返回上一级" + "  (" + folder.name + ")";
+                $("<span></span>", {text: text}).appendTo($a);
+            }
+
+            $.each(folder.children, function (i, v) {
+                var $li = $("<li></li>").appendTo($ul);
+                if (v.trans) { $li.click(function () { choose_folder(v.id); }); }
+
+                // 添加 name
+                $("<a></a>", {"class": "am-list-item-hd"}).append($("<span></span>", {text: v.name})).appendTo($li);
+
+                if (v.children && v.children.length) {
+                    // 添加箭头 >
+                    var $span = $("<span></span>", {"class": "am-list-item-hd am-fr"}).appendTo($li);
+                    $span.append($("<i></i>", {"class": "am-icon-angle-right"}));
+                    $span.click(function () { show_folder(v.id); return false; });
+                }
+            });
+
+            choose_view("folder");
+        }
+    });
+</script>
+
+<script type="text/javascript">
+
+    var positionDetail = {address: "", coords: {lat: "", lng: ""}};
+
+    $("#doc-geo").bind('geofail', function (event) {
+        //监听定位失败事件 geofail
+        event = event.originalEvent;
+    }).bind('geosuccess', function (event) {
+        //监听定位成功事件 geosuccess
+        event = event.originalEvent;
+        positionDetail = event.detail;
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    var $doc_title = $("#doc-title");
+    var $doc_content = $("#doc-content");
+    var $doc_demand = $("#doc-demand");
+
+    var $begin_date = $('#begin-date');
+    var $end_date = $('#end-date');
+
+    // 稿件提交相关
+    $(function () {
+        function create() {
+            var $select_quality = $quality_list.find(".selected");
+
+            var title = $doc_title.val();
+            var content = $doc_content.val();
+            var demand = $doc_demand.val();
+
+            var taskPhone = $("#contacts-phone").val();
+            var taskAuthor = $("#contacts-user").val();
+
+            var qualityName = $select_quality.text();
+            var quality = $select_quality.attr("quality");
+
+            var folder_id = $select_folder.attr("select-folder-id");
+
+            var begin_date_val = $begin_date.children(".date-val").text();
+            var end_date_val = $end_date.children(".date-val").text();
+
+            var taskPrincipal = $.map(member_map, function (k, v) {
+                return v;
+            }).join(";");
+
+            var param = {
+                tpID: topicID || "",
+                clueID: clueID || "",
+                loginID: "",
+                taskFvID: folder_id,
+                taskTopic: title,
+                taskDemand: demand,
+                taskContent: content,
+                taskQuality: quality,
+                taskQualityName: qualityName,
+                taskAuthor: taskAuthor,
+                taskPhone: taskPhone,
+                taskStartDate: begin_date_val,
+                taskEndDate: end_date_val,
+                taskPrincipal: taskPrincipal, //采访任务人
+                authorRegion: positionDetail.address
+            };
+
+            if (validate(param)) {
+                submit(param);
+            }
+
+            function validate(param) {
+                if (!param.taskTopic) {
+                    fn_show_tips("标题不能为空");
+                    return false;
+                }
+                if (!param.taskContent) {
+                    fn_show_tips("内容不能为空");
+                    return false;
+                }
+                if (!param.taskFvID) {
+                    fn_show_tips("请选择上传位置");
+                    return false;
+                }
+                return true;
+            }
+
+            function on_success(data) {
+                if (data.success) {
+                    fn_show_tips("创建线索成功", function () {
+                        back();
+                    });
+                }
+            }
+
+            function submit(param) {
+                $.ajax({
+                    url: "/fatch",
+                    method: "post",
+                    data: $.extend(param, {
+                        method: "createTask",
+                        loToken: loToken
+                    }),
+                    dataType: "json",
+                    success: on_success
+                });
+            }
+        }
+
+        $("#ok").click(create);
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        var startDate = new Date();
+        var endDate = new Date(startDate.getTime() + (1000 * 60 * 60 * 24));
+
+        var $error_msg = $('#date-error-msg');
+        var $begin_date = $('#begin-date').datepicker();
+        var $end_date = $('#end-date').datepicker();
+
+        $begin_date.children(".date-val").text(startDate.Format("yyyy-MM-dd"));
+        $end_date.children(".date-val").text(endDate.Format("yyyy-MM-dd"));
+
+        $begin_date.on('changeDate.datepicker.amui', function (event) {
+            if (event.date.valueOf() > endDate.valueOf()) {
+                $error_msg.children('p').text('开始日期应小于结束日期！');
+                $error_msg.finish().slideDown(1000).delay(3000).slideUp(1000);
+            } else {
+                $error_msg.finish().hide();
+                startDate = new Date(event.date);
+                $(this).children(".date-val").text(startDate.Format("yyyy-MM-dd"));
+            }
+            $(this).datepicker('close');
+        });
+
+        $end_date.on('changeDate.datepicker.amui', function (event) {
+            if (event.date.valueOf() < startDate.valueOf()) {
+                $error_msg.children('p').text('结束日期应大于开始日期！');
+                $error_msg.finish().slideDown(1000).delay(3000).slideUp(1000);
+            } else {
+                $error_msg.finish().hide();
+                endDate = new Date(event.date);
+                $(this).children(".date-val").text(endDate.Format("yyyy-MM-dd"));
+            }
+            $(this).datepicker('close');
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $(".status-list").delegate(".btn-status", "click", function () {
+        $(this).siblings().removeClass("selected");
+        $(this).addClass("selected");
+    });
+
+    $("#cancle").click(back);
+
+</script>
+</body>
+</html>

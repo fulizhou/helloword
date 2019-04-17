@@ -1,0 +1,394 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>新建报题</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/override.css">
+    <link rel="stylesheet" href="../stylesheets/report/create.css">
+    <!--<link rel="stylesheet" href="../assets/css/webuploader.css">-->
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="../assets/js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <!--<script src="../assets/js/webuploader.js"></script>-->
+    <script src="http://api.map.baidu.com/components?ak=1ZtQkeXgxF3TsxWbQxUOTAYW&v=1.0"></script>
+
+</head>
+<body>
+<div id="view-main" class="choose-view" style="display: block">
+    <!--头部开始-->
+    <header id="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back()">
+                <img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+            </a>
+        </div>
+        <h1 id="header-title" class="am-header-title">新建报题</h1>
+    </header>
+    <!--头部结束-->
+
+    <div id="doc-form-all">
+        <!--输入内容开始-->
+        <form class="am-form">
+            <fieldset class="whiteBg">
+                <div class="am-form-group">
+                    <textarea class="docText" rows="2" id="doc-title" placeholder="请输入标题" minlength="1"></textarea>
+                </div>
+                <div class="am-form-group">
+                    <textarea class="docText" rows="6" id="doc-content" placeholder="请输入内容"></textarea>
+                </div>
+            </fieldset>
+        </form>
+        <!--输入内容结束-->
+        <!-- 上传开始 -->
+<!--
+        <div class="whiteBg clearfix">
+            <div id="doc-upload-img-list" class="am-form-group am-u-g" style="padding: 0;margin: 0 ">
+                <div id="upload-img-div" class="am-form-file upload-img-div" style="background-image: url('../images/image_attach.png');border:none">
+                    <input id="doc-form-file" type="file" multiple="multiple">
+                </div>
+            </div>
+        </div>
+-->
+        <!-- 上传结束 -->
+
+        <!-- 选择文件夹 begin -->
+        <div class="whiteBg clearfix">
+            <div id="doc-select-folder" class = "am-form-group" style="margin-bottom: 0">
+                <span class="am-text-truncate">
+                    <img class="upload" src="../images/upload_to_icon.png"/><span style="color: #454545;vertical-align: middle;margin: 1rem">上传到&nbsp;&nbsp;</span>
+                    <span id="doc-select-folder-name" class="am-text-truncate" data-catalog-id="-1" data-catalog-type="source" style="color: #454545;width: 60%;vertical-align: middle">稿源中心</span>
+                    <i class="am-icon-angle-right" style="position: relative;float: right;">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                </span>
+            </div>
+        </div>
+        <!-- 选择文件夹 end -->
+        
+        <div id="quality-list" class="whiteBg status-list"></div>
+        <div id="remark-list" class="whiteBg status-list"></div>
+
+        <div class="whiteBg clearfix">
+            <lbs-geo id="doc-geo" city="北京" enable-modified="true"></lbs-geo>
+        </div>
+
+    </div>
+    <!--按钮开始-->
+    <div class="btnSect whiteBg">
+        <button id="cancle" class="btn_cancel am-btn am-btn-default">取消</button>
+        <button id="ok" class="btn_determine am-btn am-btn-default">提交</button>
+    </div>
+    <!--按钮结束-->
+</div>
+<div id="view-folder" class="choose-view">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back_to_main()">
+                <img class="img-return" src="../images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <span>上传至</span>
+        </h1>
+    </header>
+
+    <div id="doc-folder-list" class="am-list-news-bd">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var $doc_title = $("#doc-title");
+    var $doc_content = $("#doc-content");
+    var $remark_list = $("#remark-list").empty();
+    var $quality_list = $("#quality-list").empty();
+
+    var loToken = localStorage.getItem("loToken");
+
+    function choose_view(name){
+        $(".choose-view").hide();
+        $("#view-" + name).show();
+    }
+
+    function back_to_main(){
+        choose_view('main');
+    }
+</script>
+
+<script type="text/javascript">
+
+    // remark
+    $(function () {
+        var on_success = function (data) {
+            if (data.success) {
+                $.each(data.results, function (i, v) {
+                    $("<button></button>", {"class":"btn-status", remark: v.id, text: v.remarks}).appendTo($remark_list);
+                });
+                $remark_list.children(".btn-status").first().addClass("selected");
+            }
+        };
+        $.ajax({
+            url:"/fatch",
+            data:{
+                type:"baoti",
+                method:"getRemarks",
+                loToken:loToken
+            },
+            dataType:"json",
+            success: on_success
+        });
+    });
+
+    // quality
+    $(function () {
+        var on_success = function (data) {
+            if (data.success) {
+                $.each(data.results, function (i, v) {
+                    if(v.quality == 0) return;
+                    $("<button></button>", {"class":"btn-status", quality: v.quality, text: v.qualityName}).appendTo($quality_list);
+                });
+                $quality_list.children(".btn-status").first().addClass("selected");
+            }
+        };
+        $.ajax({
+            url:"/fatch",
+            data:{
+                type:"baoti",
+                method:"getQuality",
+                loToken:loToken
+            },
+            dataType:"json",
+            success: on_success
+        });
+    });
+
+
+    // 选择文件夹相关
+    $(function () {
+        var memory_last_folder = "baoti-last-folder";
+        var last_folder = localStorage.getItem(memory_last_folder);
+
+        var folder_map = {0:{id:0,name:"root"}};
+
+        load_folder(function (data) {
+            $.each(data, function (i, v) {
+                folder_map[v.id] = v;
+            });
+            $.each(data, function (i, v) {
+                var parent = folder_map[v.parent_id];
+                (parent.children = parent.children || []).push(v);
+            });
+
+            var folder;
+            if(last_folder && (folder = folder_map[last_folder]) ){
+                choose_folder(folder.id, folder.name);
+            } else {
+                show_folder(0);
+            }
+
+            $("#doc-select-folder").click(function () {
+                var last_folder = localStorage.getItem(memory_last_folder);
+                if(last_folder && (folder = folder_map[last_folder]) ){
+                    show_folder(folder.parent_id);
+                } else {
+                    show_folder(0);
+                }
+            });
+        });
+
+        function load_folder(callback){
+            function on_success(data) {
+                if(data.success){
+                    callback && callback(data.results);
+                }
+            }
+            $.ajax({
+                url:"/fatch",
+                data:{
+                    type:"baoti",
+                    perm:"upload",
+                    method:"getNewsPlanFolders",
+                    loToken:loToken
+                },
+                dataType:"json",
+                success: on_success
+            })
+        }
+
+        function choose_folder(id){
+            var folder = folder_map[id];
+            $("#doc-select-folder-name").attr("select-folder-id", folder.id).text(folder.name);
+            localStorage.setItem(memory_last_folder, folder.id);
+            back_to_main();
+        }
+
+        function show_folder(id){
+            var folder = folder_map[id];
+            if (!folder || !folder.children || !folder.children.length) {
+                fn_show_tips('已经没有下一级了。'); return;
+            }
+
+            var $folder_list = $("#doc-folder-list").empty();
+            var $ul = $("<ul></ul>", {"class": "am-list am-avg-sm-1"}).appendTo($folder_list);
+
+            if(folder.id > 0){
+                var $li = $("<li></li>", {"class": "return-parent"}).appendTo($ul);
+                $li.click(function(){ show_folder(folder.parent_id); });
+                var $a = $("<a></a>", {"class": "am-list-item-hd"}).appendTo($li);
+                $("<img/>", {"src": "../images/return-level.png"}).css({"height":"1.6rem"}).appendTo($a);
+                var text = " 返回上一级" + "  (" + folder.name + ")";
+                $("<span></span>", {text: text}).appendTo($a);
+            }
+
+            $.each(folder.children, function (i, v) {
+                var $li = $("<li></li>").appendTo($ul);
+                if (v.trans) { $li.click(function () { choose_folder(v.id); }); }
+
+                // 添加 name
+                $("<a></a>", {"class": "am-list-item-hd"}).append($("<span></span>", {text: v.name})).appendTo($li);
+
+                if (v.children && v.children.length) {
+                    // 添加箭头 >
+                    var $span = $("<span></span>", {"class": "am-list-item-hd am-fr"}).appendTo($li);
+                    $span.append($("<i></i>", {"class": "am-icon-angle-right"}));
+                    $span.click(function () { show_folder(v.id); return false; });
+                }
+            });
+
+            choose_view("folder");
+        }
+    });
+
+    // 稿件提交相关
+    $(function () {
+        function create(){
+            var $select_remark = $remark_list.find(".selected");
+            var $select_quality = $quality_list.find(".selected");
+            var $select_folder = $("#doc-select-folder-name");
+
+            var title = $doc_title.val();
+            var content = $doc_content.val();
+
+            var remarksName = $select_remark.text();
+            var remarksId = $select_remark.attr("remark");
+
+            var qualityName = $select_quality.text();
+            var quality = $select_quality.attr("quality");
+
+            var folder_id = $select_folder.attr("select-folder-id");
+
+            var param = {
+                FVID:folder_id,
+                btTopic: title,
+                btQuality: quality,
+                btQualityName: qualityName,
+                btContent: content,
+                remarksId: remarksId,
+                remarksName: remarksName
+            };
+
+            if(validate(param)){
+                submit(param);
+            }
+
+            function validate(param){
+                if(!param.btTopic){
+                    fn_show_tips("标题不能为空"); return false;
+                }
+                if(!param.btContent){
+                    fn_show_tips("内容不能为空"); return false;
+                }
+                if(!param.FVID){
+                    fn_show_tips("请选择上传位置"); return false;
+                }
+                return true;
+            }
+
+            function on_success(data) {
+                if(data.success){
+                    fn_show_tips("创建报题成功", back);
+                }
+            }
+
+            function submit(param){
+                $.ajax({
+                    url: "/fatch",
+                    method: "post",
+                    data: $.extend(param, {
+                        method:"createBaoti",
+                        loToken:loToken
+                    }),
+                    dataType: "json",
+                    success: on_success
+                });
+            }
+        }
+
+        $("#ok").click(create);
+    });
+
+</script>
+
+<script type="text/javascript">
+    
+    /*getLocation({
+        before: function () {
+            $("#address-info").text("正在定位中...");
+        },
+        success: function (location) {
+            $("#address-info").text(location);
+        },
+        error: function (msg) {
+            fn_show_tips(msg);
+            $("#address-info").text("地址位置获取失败");
+        }
+    });*/
+
+    $(".status-list").delegate(".btn-status", "click", function () {
+        $(this).siblings().removeClass("selected");
+        $(this).addClass("selected");
+    });
+
+    $("#cancle").click(back);
+
+
+    var lbsGeo = document.getElementById('doc-geo');
+    //监听定位失败事件 geofail
+    lbsGeo.addEventListener("geofail",function(evt){
+
+    });
+    //监听定位成功事件 geosuccess
+    lbsGeo.addEventListener("geosuccess",function(evt){
+
+        g_location_address = evt.detail.address;
+        var coords = evt.detail.coords;
+        g_location_coords_x = coords.lng;
+        g_location_coords_y = coords.lat;
+    });
+</script>
+</body>
+</html>

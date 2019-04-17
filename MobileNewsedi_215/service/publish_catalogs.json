@@ -1,0 +1,29 @@
+{
+  "success":true,
+  "results":
+    [{"id": 1,"name": "方正网站","parent_id":0}
+    ,{"id": 12,"name": "国内新闻","parent_id":1}
+    ,{"id": 13,"name": "体育","parent_id":1}
+    ,{"id": 14,"name": "国际新闻","parent_id":1}
+    ,{"id": 14,"name": "生活","parent_id":1}
+    ,{"id": 15,"name": "社会","parent_id":1}
+    ,{"id": 16,"name": "时政","parent_id":1}
+    ,{"id": 2,"name": "方正悦享APP","parent_id":0}
+    ,{"id": 22,"name": "国内新闻","parent_id":2}
+    ,{"id": 23,"name": "体育","parent_id":2}
+    ,{"id": 24,"name": "国际新闻","parent_id":2}
+    ,{"id": 24,"name": "生活","parent_id":2}
+    ,{"id": 25,"name": "社会","parent_id":2}
+    ,{"id": 26,"name": "时政","parent_id":2}
+    ,{"id": 3,"name": "方正新浪微博","parent_id":0}
+    ,{"id": 4,"name": "方正腾讯微博","parent_id":0}
+    ,{"id": 5,"name": "方正微信公众号","parent_id":0}
+    ,{"id": 51,"name": "推荐","parent_id":5}
+    ,{"id": 52,"name": "社会新闻","parent_id":5}
+    ,{"id": 53,"name": "体育新闻","parent_id":5}
+    ,{"id": 6,"name": "方正微信服务号","parent_id":0}
+    ,{"id": 61,"name": "推荐","parent_id":6}
+    ,{"id": 62,"name": "社会新闻","parent_id":6}
+    ,{"id": 63,"name": "体育新闻","parent_id":6}
+    ]
+}

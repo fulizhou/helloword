@@ -1,0 +1,91 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>新建稿</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+</head>
+<body>
+<!--<div class="am-g" style="background-color:rgb(8,122,203);padding:0%;">-->
+    <!--<div class="am-u-sm-3">-->
+        <!--<a href="javascript:return_back_home();" style="color:rgb(255,255,255)">-->
+            <!--<i class="am-icon-arrow-left"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+        <!--</a>-->
+    <!--</div>-->
+<!--</div>-->
+<header id ="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <a href="javascript:returnBack();">
+            <img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+        </a>
+    </div>
+    <h1 id="header-title" class="am-header-title" style="font-size: 1.5rem">选择新建稿类型</h1>
+</header>
+
+<div>
+    <div id="doc-catalog-list">
+        <div id = "doc-catalog-list-tpl" class="am-list-news-bd">
+            <ul class="am-list">
+                <li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="create_article('article');"><span>新建文章稿</span><i style="float: right" ></i></a></li>
+                <li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="create_article('picture');"><span>新建图片稿</span><i style="float: right" ></i></a></li>
+                <li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="create_article('video');"><span>新建视音频稿</span><i style="float: right" ></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+
+    function returnBack(){
+        history.go(-1);
+    }
+
+    function create_article(kind){
+        location.href = "/article_upload?articleKind="+kind;
+    }
+
+    $(function(){
+//        choose_catalog_list();
+    });
+
+    function return_back_home(){
+
+        window.history.go(-1);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>选题详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../../assets/css/app.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+    <link rel="stylesheet" href="../../stylesheets/report/detail.css">
+    <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/cookie.js"></script>
+    <script type="text/javascript" src="../../javascripts/common.js"></script>
+    <script type="text/javascript" src="../../javascripts/Chart.js"></script>
+    <style type="text/css">
+
+        .fromChart {
+            width: 100%;
+            overflow: hidden;
+            padding-top: 1rem;
+        }
+
+        .tagTitle {
+            font-size: 1.4rem;
+            padding-top: 1rem;
+        }
+
+        .sign {
+            font-size: 1.2rem;
+            text-align: right;
+        }
+
+        .sign span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .sign a {
+            width: 1.6rem;
+            height: 1rem;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+
+        .croci {
+            background: #ff7f50;
+        }
+
+        .blue {
+            background: #59B19A;
+        }
+
+        .violet {
+            background: #da70d6;
+        }
+
+        .am-tabs-bd {
+            border: none;
+        }
+
+        .am-tabs-default .am-tabs-nav a {
+            font-size: 1.3rem;
+        }
+
+        .am-tabs-default li:last-child a {
+            border-right: 0;
+            font-size: 1.3rem;
+        }
+
+        .am-tabs-bd .am-tab-panel {
+            padding: 0;
+        }
+
+        .am-input-group {
+            margin-top: 10px;
+        }
+
+        .am-form-field {
+            height: 3rem;
+            border: 1px solid #ddd;
+            font-size: 1.2rem;
+        }
+
+        .am-btn {
+            padding: 0.5rem 1rem;
+        }
+
+        .am-btn.am-radius {
+            border-radius: 0.3rem;
+            height: 2rem;
+            line-height: 2rem;
+            font-size: 1.2rem;
+            border: 1px solid #ddd;
+            padding: 0 1rem !important;
+        }
+
+        .dateBtn {
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .dateBtn img {
+            width: 1.8rem;
+        }
+
+        .btn-show-omitted {
+            width: 94%;
+            height: 3rem;
+            background: #eee;
+            font-size: 1.4rem;
+            margin: 1rem auto 0;
+            border: 1px solid #ddd;
+        }
+
+        .am-btn {
+            border-radius: 0.3rem;
+        }
+
+        /*团队成员*/
+        .teamTitle {
+            font-size: 1.4rem;
+            display: block;
+        }
+
+        .am-gallery {
+            padding: 0;
+            margin: 0;
+        }
+
+        .am-gallery-bordered > li {
+            width: 4.8rem;
+            float: left;
+            padding: 5px;
+        }
+
+        .am-gallery img {
+            width: 4.2rem;
+            height: 4.2rem;
+            border-radius: 0.3rem;
+        }
+
+        .am-gallery-bordered .am-gallery-title {
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .addPoto {
+            width: 4.2rem;
+            height: 4.2rem;
+            line-height: 3.2rem;
+            text-align: center;
+            font-size: 4rem;
+            color: #ddd;
+            border-radius: 0.5rem;
+            border: 1px solid #ddd;
+            display: block;
+        }
+
+        #task-list>li{
+            width: auto;
+            border: none;
+            min-height: 3em;
+            margin-left: 2rem;
+            position: relative;
+            border-left: solid 1px #10a6e8;
+            padding: 0.5rem 1rem 0.5rem 2rem !important;
+        }
+        #task-list>li::before{
+            top: 9px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            content: ' ';
+            display: block;
+            position: absolute;
+            background: url("../../images/icon-clock.png") repeat;
+            background-size: 20px 20px;
+        }
+        .timeDate{
+            border: 1px solid #59B19A;
+            color: #59B19A;
+            border-radius: 0.3rem;
+            padding: 0 0.5rem !important;
+            font-size: 1.2rem;
+            margin-left: 1rem;
+        }
+        .am-list-item-hd{
+            font-size: 1.3rem;
+        }
+        .am-list-title{
+            padding: 0 !important;
+            color: #333;
+            font-size: 1.3rem;
+            height: 2.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .am-list-item-text{
+            font-size: 1.2rem;
+        }
+        .am-accordion-gapped .am-accordion-item{
+            border: none;
+            margin: 0;
+            font-size: 1.4rem;
+        }
+        .listTitle{
+            height: 3em;
+            overflow: hidden;
+            white-space: inherit;
+            display: -webkit-box;
+            word-break: break-all;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+        }
+        .listDate{
+            color: rgb(154, 153, 158);
+            font-size: 1.2rem;
+        }
+
+        #article-detail{
+            display: none;
+        }
+
+        #article-content{
+            min-height: 100px;
+        }
+
+        #article-content-text{
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+
+    </style>
+</head>
+<body>
+<!--头部开始-->
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <div>
+            <a href="javascript:back()"><img src="../../images/navbar/return.png"
+                                             style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+            <span id="doc-select-catalog-name" style="font-size:1.5rem;color: #FFFFFF">选题详情</span>
+        </div>
+    </div>
+    <div class="am-header-right am-header-nav">
+        <div>
+            <a href="javascript:refresh()"><img src="../../images/list/refresh-icon.png"
+                                                style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+        </div>
+    </div>
+</header>
+<!--头部结束-->
+<div id="article-detail">
+    <!--文章开始-->
+    <div class="am-text-danger contentBg">
+        <h2 id="article-title" style=" margin-bottom: 0%;"></h2>
+
+        <div class="am-article-hd">
+            <p id="doc-article-meta" class="am-article-meta" style="margin: 0px">
+                <span id="article-meta-date"></span>
+                <span id="article-meta-author"></span>
+            </p>
+        </div>
+        <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default am-no-layout"
+                 data-am-paragraph="{ tableScrollable: true, pureview: true }" style=" margin:0;">
+            <div id="article-content" class="am-article-bd">
+                <p id="article-content-text"></p>
+            </div>
+        </article>
+    </div>
+    <!--文章结束-->
+    <!--审核意见开始-->
+    <div class="contentBg" style="display: none">
+        <span class="auditOpinion">
+            <span>审核意见：</span>
+            <span id="article-audit">审核意见</span>
+        </span>
+    </div>
+    <!--审核意见结束-->
+    <!--报道方案开始-->
+    <div class="contentBg">
+        <span class="auditOpinion">
+            <span>报道方案：</span>
+            <span id="article-summary">报道方案</span>
+        </span>
+    </div>
+    <!--报道方案结束-->
+
+    <!--图标开始-->
+<!--
+    <div class="contentBg">
+        <div class="tagTitle">
+            <span>声量趋势</span>
+        </div>
+        <div class="sign">
+            <span><a class="croci"></a>新闻门户</span>
+            <span><a class="blue"></a>新媒体</span>
+            <span><a class="violet"></a>APP</span>
+        </div>
+        <div class="fromChart">
+            <canvas id="canvas"></canvas>
+        </div>
+
+    </div>
+-->
+    <!--图标结束-->
+
+    <div class="contentBg" style="padding: 0;">
+        <div data-am-widget="tabs" class="am-tabs am-tabs-default" style="margin: 10px 0">
+            <ul class="am-tabs-nav">
+                <li class=""><a href="[data-tab-panel-1]">相关稿件</a></li>
+                <li class="am-active"><a href="[data-tab-panel-2]">新闻追踪</a></li>
+                <li class=""><a href="[data-tab-panel-3]">任务跟踪</a></li>
+            </ul>
+            <div class="am-tabs-bd">
+                <div data-tab-panel-1 class="am-tab-panel">
+                    <!--相关稿件开始-->
+                    <ul id="art-list" class="am-list am-list-border can-empty-list" data-empty-text="没有数据"></ul>
+                    <button id="art-list-view-all" class="am-btn btn-show-omitted">查看全部</button>
+                    <!--相关稿件结束-->
+                </div>
+                <div data-tab-panel-2 class="am-tab-panel am-active">
+                    <!--搜索开始-->
+                    <div class="am-g">
+                        <div class="am-u-lg-6">
+                            <div class="am-input-group">
+                                <input id="search-word" placeholder="输入关键词" type="text" class="am-form-field"/>
+                                <span class="am-input-group-btn">
+                                    <button id="search-btn" class="am-btn am-btn-default" type="button">
+                                        <span class="am-icon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--搜索结束-->
+                    <div class="dateBtn" style="display: none">
+                        <button type="button" class="am-btn am-btn-default am-radius">2小时</button>
+                        <button type="button" class="am-btn am-btn-default am-radius">3小时</button>
+                        <button type="button" class="am-btn am-btn-default am-radius">4小时</button>
+                        <button type="button" class="am-btn am-btn-default am-radius">5小时</button>
+                        <img src="../../images/date-choose.png"/>
+                    </div>
+                    <div>
+                        <!--新闻追踪开始-->
+                        <ul id="news-list" class="am-list am-list-border can-empty-list" data-empty-text=""></ul>
+                        <button class="am-btn btn-show-omitted">查看全部</button>
+                        <!--新闻追踪结束-->
+                    </div>
+                </div>
+                <div data-tab-panel-3 class="am-tab-panel ">
+                    <!--任务追踪开始-->
+                    <ul id="task-list" class="am-list can-empty-list"></ul>
+                    <button class="am-btn btn-show-omitted">查看全部</button>
+                    <!--任务追踪结束-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--团队成员开始-->
+    <!--<div class="contentBg" style="margin-bottom: 5rem">
+        <span class="teamTitle">团队成员</span>
+        <ul data-am-widget="gallery" class="am-gallery am-gallery-bordered" data-am-gallery="{  }">
+            <li>
+                <a href="#" class="">
+                    <img src="http://lorempixel.com/64/64/?t=1"/>
+
+                    <h3 class="am-gallery-title">远方</h3>
+                </a>
+            </li>
+            <li>
+                <div class="addPoto">+</div>
+            </li>
+        </ul>
+        <input type="button" class="am-btn am-btn-primary" value="团队沟通"/>
+        &lt;!&ndash;地图开始&ndash;&gt;
+        <div style="margin-top: 1rem">
+            <div data-am-widget="map" class="am-map am-map-default"
+                 data-longitude="" data-latitude="" data-scaleControl="" data-zoomControl="true" data-setZoom="17"
+                 data-icon="http://amuituku.qiniudn.com/mapicon.png">
+                <div id="bd-map"></div>
+            </div>
+        </div>
+        &lt;!&ndash;地图结束&ndash;&gt;
+    </div>-->
+    <!--团队成员结束-->
+
+<!--
+    <div class="contentBg">
+        <div class="am-form-group" style="margin-bottom: 0px;">
+            <a>
+                <span>库内稿件</span>
+                <i class="am-icon-angle-right" style="position: relative;float: right;margin-right: 1rem;"></i>
+            </a>
+        </div>
+    </div>
+-->
+
+    <!-- 占位 -->
+    <div class="bottom-placehold"></div>
+
+    <!--组建报道团队开始-->
+    <div class="bottomBg" id="bottom-operator">
+        <a id="assign_task" class="am-btn am-btn-primary" style="width: 97%">分配采访任务</a>
+    </div>
+    <!--组建报道团队结束-->
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $(".btn-show-omitted").click(function () {
+            $(this).prevAll(".omitted-view").removeClass("omitted-view");
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    var query = {}, regExpResult;
+    var search = location.search;
+    var regExp = /([^?&]+)=([^?&]*)/g;
+    while(regExpResult = regExp.exec(search)){
+        query[regExpResult[1]] = regExpResult[2];
+    }
+
+    var loToken = localStorage.getItem("loToken");
+
+    var s = "topicID=" + query.id + "&topicLibID=" + query.libId;
+    $("#assign_task").attr("href", "../interview_task/new_interview_task?" + s);
+
+    $(function () {
+        $.ajax({
+            url:"/fatch",
+            data:{
+                id: query.id,
+                libId: query.libId,
+                method: "viewTopic",
+                loToken: loToken
+            },
+            dataType:"json",
+            success: on_success
+        });
+
+        function on_success(data) {
+            if(data.success && data.results){
+                var results = data.results;
+
+                $("#article-title").text(results.title);
+                $("#article-meta-date").text(results.create_time);
+                $("#article-meta-author").text(results.author);
+                $("#article-content-text").text(results.content);
+                $("#article-summary").text(results.summary);
+
+                fill_art_list(results.artList);
+
+                $("#article-detail").show();
+            }
+        }
+
+        function fill_art_list(artList) {
+            var $art_list = $("#art-list");
+            if(artList && artList.length > 0) {
+                $.each(artList, function (i, v) {
+                    var $li = $("<li></li>", {"class": "am-g am-list-item-desced"}).appendTo($art_list);
+                    $li.attr({"article_id": v.artId, article_libid: v.artLibId});
+                    $("<span></span>", {"class": "am-list-title listTitle", text: v.artTitle}).appendTo($li);
+                    $("<span></span>", {
+                        "class": "am-list-date listDate",
+                        text: "任务指派人：" + v.artAuthor + " " + v.created
+                    }).appendTo($li);
+                });
+                if(artList.length > 5){
+                    // 稿件列表只显示一部分
+                    $art_list.addClass("omitted-view");
+                }
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: "/fatch",
+            data : {
+                docid: query.id,
+                doclibid: query.libId,
+                method: "getFlowRecords",
+                loToken : loToken
+            },
+            success: on_success
+        });
+        function on_success(data) {
+            if($.isArray(data)){
+                var $task_list = $("#task-list");
+                $.each(data, function (i, v) {
+                    var $li = $("<li></li>", {"class": "am-g am-list-item-desced"}).appendTo($task_list);
+
+                    var $div = $("<div></div>", {"class": "am-list-item-hd"}).appendTo($li);
+                    $("<span></span>", {"class":"auditPass" ,text: v.operation}).appendTo($div);
+
+                    var $right = $("<div></div>").css({"float": "right"}).appendTo($div);
+                    $("<span></span>",{"class":"am-article-meta", text: v.operator}).appendTo($right);
+                    $("<span></span>", {"class":"timeDate", text: new Date(v.startTime.time).Format("MM-dd hh:mm")}).appendTo($right);
+
+                    $("<div></div>",{"class":"am-list-item-text more-two-line", text: v.detail}).appendTo($li);
+                });
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        var $news_list = $("#news-list");
+        function search_article(){
+            $.ajax({
+                beforeSend: function () {
+                    $news_list.attr("data-empty-text", "").removeClass("omitted-view").empty();
+                },
+                url: "/fatch",
+                data:{
+                    method:"getRealtedDoc",
+                    searchStr: $("#search-word").val(),
+                    loToken: loToken
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.success && data.results){
+                        fill_news_list(data.results);
+                    } else {
+                        fill_news_list(null);
+                    }
+                }
+            })
+        }
+
+        function fill_news_list(data){
+            if(data && data.length>0){
+                $.each(data, function (i, v) {
+                    var $li = $("<li></li>", {"class": "am-g am-list-item-desced"}).appendTo($news_list);
+                    $("<a></a>", {"class": "am-list-title listTitle", text: v.title, href: v.url, target: "_blank"}).appendTo($li);
+                    $("<span></span>", {"class": "am-list-date listDate", text: v.pubTime }).appendTo($li);
+                });
+                if(data.length > 5){
+                    // 稿件列表只显示一部分
+                    $news_list.addClass("omitted-view");
+                }
+            } else {
+                $news_list.attr("data-empty-text", "没有相关新闻");
+            }
+        }
+
+        $("#search-btn").click(search_article);
+    });
+</script>
+
+<script type="text/javascript">
+    var lineChartData = {
+        labels: ["03-21", "03-22", "03-23", "03-24", "03-25", "03-26", "03-27"],
+        datasets: [
+            {
+                fillColor: "rgba(0,160,230,0.3)",
+                strokeColor: "rgba(0,160,230,1)",
+                pointColor: "rgba(0,160,230,1)",
+                pointStrokeColor: "#fff",
+                data: [18, 28, 60, 49, 76, 57, 80]
+            },
+            {
+                fillColor: "rgba(250,150,100,0.5)",
+                strokeColor: "rgba(250,150,100,1)",
+                pointColor: "rgba(250,150,100,1)",
+                pointStrokeColor: "#fff",
+                data: [68, 48, 70, 29, 96, 87, 100]
+            },
+            {
+                fillColor: "rgba(215,115,240,0.5)",
+                strokeColor: "rgba(215,115,240,1)",
+                pointColor: "rgba(215,115,240,1)",
+                pointStrokeColor: "#fff",
+                data: [65, 59, 90, 81, 56, 55, 40]
+            }
+
+        ]
+    };
+//    var myLine = new Chart(document.getElementById("canvas").getContext("2d")).Line(lineChartData);
+</script>
+</body>
+</html>

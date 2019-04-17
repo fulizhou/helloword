@@ -1,0 +1,653 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>纸媒稿件签发</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/override.css">
+    <style type="text/css">
+        #sign-status-div{
+        display: none;
+        }
+        #sign-status-des{
+        margin-top: 4%;
+        padding-left: 5%;
+        margin-bottom: 3%;
+        }
+        #choose-sign-status>div{
+        width: 20%;
+        color: #454545;
+        margin-left: 5%;
+        text-align: center;
+        border: solid 1px #dddddd;
+        display: inline-block;
+        }
+        #choose-sign-status>.selected{
+        color: #59B19A;
+        border: solid 1px #59B19A;
+        }
+        #choose-sign-status small{
+        cursor: pointer;
+        line-height: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<header id ="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <a href="javascript:returnBack();">
+            <img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+        </a>
+    </div>
+    <h1 id="header-title" class="am-header-title" style="font-size: 1.5rem">纸媒</h1>
+    <div class="am-header-right am-header-nav">
+        <a href="javascript:sign_article();">
+            <img src="../images/navbar/submit.png"><span class="am-header-nav-title">签发</span>
+        </a>
+    </div>
+</header>
+<div>
+    <div style="padding-left: 5%;margin-top: 4%;margin-bottom: 3%">
+        <small>1. 请选择上版时间</small>
+        <!--<small style="color: red;">(请选择当前日期之后的日期!)</small>-->
+    </div>
+    <div id="my-datepicker-box" class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}" style="width: 100%">
+        <input id="public-time-input" type="text" class="input-date" style="display: inline-block;width: 94%;margin-left: 5%;font-size: 80%;padding: 2%;" placeholder="请选择发布时间" readonly>
+        <span class="am-input-group-btn am-datepicker-add-on" style="clear: none">
+        <button id="doc-datepicker"  type="button" style="border: none;background-color: transparent;display: none;"><img src="../images/date-no-choose-grey.png" > </button>
+        </span>
+    </div>
+    <hr data-am-widget="divider" class="am-divider am-divider-default" />
+
+    <a id="doc-select-layout" data_layout_id="-1" data_layout_name="" style="padding-left: 4%;display: none"><small><i class="am-icon-bars"></i>发布版面</small></a>
+
+    <div id="choose-layout-div">
+        <div id="choose-layout-title-div" style="padding-left: 5%;margin-top: 4%;margin-bottom: 3%"><small>2. 请选择版面</small></div>
+        <div id="doc-layout-list" style="margin-top: 0.5%;">
+            <div id = "doc-layout-list-tpl" class="am-list-news-bd"> </div>
+        </div>
+    </div>
+
+    <div id="sign-status-div">
+        <div id="sign-status-des">
+            <small>3.请选择状态</small>
+        </div>
+        <div id="choose-sign-status">
+            <div id="sign-true" sign-status="true" class="selected">
+                <small id="lan-small">签发</small>
+            </div>
+            <div id="sign-false" sign-status="false">
+                <small id="ban-small">预签</small>
+            </div>
+            <hr data-am-widget="divider" class="am-divider am-divider-default"/>
+        </div>
+    </div>
+    <div id = "all-send-make-div" style="display: none">
+        <div style="padding-top: 10px">
+            <div style="padding-left: 3%;display: inline-block"><small style="color: #dddddd">是否送制作:</small></a></div>
+            <div id="send-make-div" style="border: solid 1px #59B19A;border-radius: 0.5rem;width: 60%;margin-left: 5%;text-align: center;display: inline-block" onclick="is_send_make()">
+                <a><small id="send-make-small" style="line-height: 3rem;color: #59B19A">送制作</small></a>
+            </div>
+        </div>
+        <div id="choose-send-div" style="display:none;padding-top: 10px">
+            <div>
+                <a style="padding-left: 4%"><small>颜色:</small></a>
+                <div id="caise-div" style="border: solid 1px #59B19A;width: 15%;margin-left: 2%;text-align: center;display: inline-block" onclick="choose_make_color('caise')">
+                    <a href="javascript:choose_make_color('caise')" ><small id="caise-small" style="line-height: 3rem;color: #59B19A">彩色</small></a>
+                </div>
+                <div id="huise-div" style="border: solid 1px #dddddd;width: 15%;margin-left: 2%;text-align: center;display: inline-block" onclick="choose_make_color('huise')">
+                    <a href="javascript:choose_make_color('huise')" ><small id="huise-small" style="line-height: 3rem;color: #454545">灰色</small></a>
+                </div>
+                <div id="shuangse-div" style="border: solid 1px #dddddd;width: 15%;margin-left: 2%;text-align: center;display: inline-block" onclick="choose_make_color('shuangse')">
+                    <a href="javascript:choose_make_color('shuangse')" ><small id="shuangse-small" style="line-height: 3rem;color: #454545">双色</small></a>
+                </div>
+                <div id="danse-div" style="border: solid 1px #dddddd;width: 15%;margin-left: 2%;text-align: center;display: inline-block" onclick="choose_make_color('danse')">
+                    <a href="javascript:choose_make_color('danse')" ><small id="danse-small" style="line-height: 3rem;color: #454545">单色</small></a>
+                </div>
+            </div>
+            <div style=";padding-top: 10px">
+                <a style="padding-left: 4%"><small>格式:</small></a>
+                <div id="jpg-div" style="border: solid 1px #59B19A;width: 15%;margin-left: 2%;text-align: center;display: inline-block">
+                    <a href="javascript:choose_make_pic_formate('jpg')" ><small id="jpg-small" style="line-height: 3rem;color: #59B19A">JPG</small></a>
+                </div>
+                <div id="tiff-div" style="border: solid 1px #dddddd;width: 15%;margin-left: 2%;text-align: center;display: inline-block" >
+                    <a href="javascript:choose_make_pic_formate('tif')" ><small id="tiff-small" style="line-height: 3rem;color: #454545">TIF</small></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr id="under-send-make-hr" data-am-widget="divider" class="am-divider am-divider-default" style="display: none"/>
+<div>
+    <form class="am-form">
+        <fieldset style="background-color: #FFFFFF;margin: 0px;padding: 0px">
+            <div>
+                <div class = "am-form-group" >
+                    <textarea class="" rows="2" id="doc-note" placeholder="请输入签发意见" minlength="1" style="border: none"></textarea>
+                </div>
+                <hr data-am-widget="divider" class="am-divider am-divider-default" />
+                <!--<hr data-am-widget="divider" style="position:relative;width: 106%;left:-3%" class="am-divider am-divider-default" />-->
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div style="height: 15px"></div>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script>
+
+    var g_choose_color = "#15afef";
+    var g_no_choose_color = "white";
+    var isper = false;
+
+    function returnBack(){
+        history.go(-1);
+    }
+
+    // 当前日期
+    var nowTemp = new Date();
+    var nowDay = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0).valueOf();
+    var nowMoth = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), 1, 0, 0, 0, 0).valueOf();
+    var nowYear = new Date(nowTemp.getFullYear(), 0, 1, 0, 0, 0, 0).valueOf();
+
+    var $my_datepicker = $("#my-datepicker-box");
+
+    // 设置不能选择当前日期之前的日期
+    $my_datepicker.datepicker({
+        onRender: function (date, viewMode) {
+            // 默认 days 视图，与当前日期比较
+            var viewDate = nowDay;
+            switch (viewMode) {
+                // moths 视图，与当前月份比较
+                case 1: viewDate = nowMoth; break;
+                // years 视图，与当前年份比较
+                case 2: viewDate = nowYear; break;
+            }
+            return date.valueOf() < viewDate ? 'am-disabled' : '';
+        }
+    });
+    // 日期的修改事件
+    $my_datepicker.on('changeDate.datepicker.amui', function(ev) {
+        $("#date-error-msg").css({"display": ev.date.valueOf() < nowDay ? "block" : "none"});
+    });
+
+    var g_sign_status = "false";
+    $("#choose-sign-status>div").click(function () {
+        $("#choose-sign-status>div").removeClass("selected");
+        g_sign_status = $(this).addClass("selected").attr("sign-status");
+    });
+    /*----------加载栏目树------*/
+
+    function get_catalog_info(catalog_id){
+
+        var catalog_info = {"id":0,"parent_id":0};
+        $.each(g_catalogs, function(){
+            if(this.id == catalog_id){
+
+                catalog_info = this;
+            }
+        });
+        return catalog_info;
+    };
+
+    function is_catalog_has_child(catalog_id){
+
+        var has_child = false;
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+
+                has_child = true;
+            }
+        });
+        return has_child;
+    }
+
+    var g_catalog_html = "";
+    var g_choose_root_id = 0;
+    var g_id = 0;
+    //展示某个分类下的所有子分类
+    function list_child_catalog(catalog_id, isRoot){
+
+        if(isRoot){
+            g_choose_root_id = catalog_id;
+        }
+
+        if(is_catalog_has_child(catalog_id) == false){
+            fn_show_tips('已经没有下一级了。');
+            return;
+        }
+
+        var $ul = $("<ul></ul>", {"class": "am-list am-avg-sm-1"}).appendTo($("#doc-catalog-list-tpl").empty());
+
+        if(catalog_id > 0) {
+            var catalog_info = get_catalog_info(catalog_id);
+            $ul.append(
+                '<li style="width:100%;text-align:center" onclick="list_child_catalog(' + catalog_info.parent_id + ')">' +
+                    '<a class="am-list-item-hd" style="color: #98999D">' +
+                        '<img style="height: 1.6rem" src="../images/return-level.png">' + '&nbsp;返回上一级&nbsp;&nbsp;(' + catalog_info.name + ')' +
+                    '</a>' +
+                '</li>'
+            )
+        }
+
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+                var id = this.id, name = this.name, isRoot = (this.parent_id == 0);
+
+                var $li = $("<li></li>").appendTo($ul);
+                $.each($li,function (){ select_catalog(id, name, isRoot); });
+                if(!isRoot){
+                    $li.click(function () { select_catalog(id, name, isRoot); })
+                }
+
+                // 添加 name
+                var $img = $('<img name="catalog-select-check" id="' + 'doc-catalog-select-' + id + '" style="height: 1rem" src="../images/no-choose.png">');
+                $("<a></a>", { "class":"am-list-item-hd"}).appendTo($li)
+                        .append($img).append($("<span></span>", { text:name }));
+
+                if (is_catalog_has_child(id)){
+                    // 添加箭头 >
+                    $("<a></a>", { "class":"am-list-item-hd am-fr"}).appendTo($li)
+                            .append($("<i></i>", { "class": "am-icon-angle-right" }))
+                            .click(function () { list_child_catalog(id, isRoot); return false; });
+
+                }
+
+            }
+        });
+
+        if (catalog_id <= 0) {
+            g_catalog_html = $ul.clone(true, true);
+        }
+    }
+
+    //点击弹出选择报纸栏目分类页面
+//    var g_catalogs = "";
+//    function choose_catalog_list(){
+//
+//        $.AMUI.progress.start();
+//        $.AMUI.progress.set(0.6);
+//
+//        var q = "method=paperCatalog" + "&perm=sign"  + '&nocache=' + (new Date()).getTime();
+//        var data = {"m":"", "q":q};
+//
+////        var q = "method=paperCatalog" + "&perm=sign"  + '&nocache=' + (new Date()).getTime();
+////        var data = {"m":"", "q":q};
+//
+//        //以post方式提交数据
+//        $.ajax({
+//            type: "GET",
+//            url: "/get",
+//
+//            dataType:'json',
+//            data: data,
+//            contentType: "application/json",
+//            success:function(jsonData){
+//
+//                if(jsonData.success == true){
+//
+//                    g_catalogs = jsonData.results;
+//                    var catalog_info = get_catalog_info(0);
+//                    list_child_catalog(catalog_info.parent_id,0);
+//                }
+//            }
+//        });
+//    };
+    /*------加载栏目树end-----------*/
+
+    /*-----加载栏目下的版面列表--------*/
+    var g_layouts = "";
+
+    function load_list(column_id){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=paperLayout" + "&column_id="+column_id + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+//        var q = "method=paperLayout" + "&column_id="+column_id  + '&nocache=' + (new Date()).getTime();
+//        var data = {"m":"", "q":q};
+//        var data = {"column_id":column_id};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+//            url: "/catalog/sign_layouts",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    g_layouts = jsonData.results;
+                    list_layout(column_id);
+//                    $("#choose-layout-title-div").show();
+                    var layoutInfo = localStorage.getItem("paper_column_sign_layout");
+                    select_layout(layoutInfo.split("_")[0], decodeURI(layoutInfo.split("_")[1]));
+                }
+            }
+        });
+    }
+
+    //获取当前栏目下的签发、预签权限
+    function get_column_signper(column_id){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=paperCatalog&perm=sign&getType=column" + "&column_id="+column_id + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime()+"&paper_id=<%= paper_id %>";
+        var data = {"m":"", "q":q};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+//            url: "/catalog/sign_layouts",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    var item = jsonData.results;
+                    // 可预签权限
+                    var canPreSign = item[0].canPreSign;
+                    // 可组版权限
+                    var canMakeLayout = item[0].canMakeLayout;
+
+                    $("#sign-status-div").css({"display": canMakeLayout||canPreSign ? "block" : "none"});
+
+                    $("#sign-true").css({"display": canMakeLayout ? "inline-block" : "none"});
+                    $("#sign-false").css({"display": canPreSign ? "inline-block" : "none"});
+
+                    $("#sign-true,#sign-false").removeClass("selected");
+                    ( canMakeLayout ? $("#sign-true") : $("#sign-false") ) ["addClass"]("selected");
+                    if(canPreSign ||canMakeLayout) isper = true;
+                }
+            }
+        });
+    }
+    function list_layout(column_id){
+
+//        $("#doc-layout-list").show();
+        var layout_list_html = '<div id = "doc-layout-list-tpl" class="am-list-news-bd">';
+        layout_list_html += '<ul class="am-list" >';
+
+        $.each(g_layouts, function(){
+            layout_list_html += '<li style="padding-left: 5%"><a onclick="select_layout(' + this.id + ',\''+ this.name + '\');" class="am-list-item-hd" style="font-size:80%">';
+            layout_list_html += '<img name="layout-select-check" id="' + 'doc-layout-select-' + this.id + '"  style="height: 1rem" src="../images/no-choose.png">';
+//            layout_list_html += '<i name="layout-select-check" id="' + 'doc-layout-select-' + this.id + '" class="am-icon-square-o"></i>';
+            layout_list_html += '&nbsp;&nbsp;' + this.name + '</a></li>';
+        });
+        layout_list_html += '</ul>';
+        layout_list_html += '</div>';
+
+        $("#doc-layout-list-tpl").replaceWith(layout_list_html);
+    }
+
+    function select_layout(layout_id, layout_name){
+
+        var layout_checks = document.getElementsByName('layout-select-check');
+        $.each(layout_checks, function(){
+
+            var layout_check_id = "doc-layout-select-" + layout_id;
+            if(this.id == layout_check_id ){
+                this.src = "../images/choose.png";
+                this.parentElement.style.color = "#59B19A";
+                var select_layout = document.getElementById("doc-select-layout");
+                select_layout.setAttribute("data_layout_id", layout_id);
+                select_layout.setAttribute("data_layout_name", layout_name);
+            }
+            else{
+                this.src = "../images/no-choose.png";
+                this.parentElement.style.color = "#454545";
+            }
+        });
+    }
+
+    /*------加载版面列表end----------*/
+
+    function GetDateStr(AddDayCount)
+    {
+        var dd = new Date();
+        dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y+"-"+m+"-"+d;
+    }
+
+    $(function(){
+
+        var article_type = "<%= article_type%>";
+        if(article_type == "image"){
+            $("#all-send-make-div").show();
+            $("#under-send-make-hr").show();
+        }
+
+        var dateInput = document.getElementById('public-time-input');
+        dateInput.value = "<%= fx_paperdate %>";
+//        choose_catalog_list();
+        var column_id = "<%= catalog_id%>";
+        get_column_signper(column_id);
+        load_list(column_id);
+    });
+
+    function return_back_home(){
+
+        window.history.go(-1);
+    }
+
+    var g_state = "layout";
+    function choose_state(state){
+
+        g_state = state;
+        if(g_state == "column"){
+            document.getElementById('lan-div').style.borderColor = "#59B19A";
+            document.getElementById('lan-small').style.color = "#59B19A";
+            document.getElementById('ban-div').style.borderColor = "#DDDDDD";
+            document.getElementById('ban-small').style.color = "#454545";
+            $('#choose-layout-div').hide()
+        }else{
+            document.getElementById('lan-div').style.borderColor = "#DDDDDD";
+            document.getElementById('lan-small').style.color = "#454545";
+            document.getElementById('ban-div').style.borderColor = "#59B19A";
+            document.getElementById('ban-small').style.color = "#59B19A";
+            $('#choose-layout-div').show()
+        }
+    }
+
+    var g_is_send_make = 0;
+    function is_send_make(){
+        if(g_is_send_make == 0){
+            g_is_send_make = 1;
+            document.getElementById('send-make-div').style.backgroundColor = "#59B19A";
+            document.getElementById('send-make-small').style.color = "white";
+            $('#choose-send-div').show();
+        }else{
+            g_is_send_make = 0;
+            document.getElementById('send-make-div').style.backgroundColor = "white";
+            document.getElementById('send-make-small').style.color = "#59B19A";
+            $('#choose-send-div').hide();
+        }
+        var scroll_offset = $("#choose-send-div").offset().top;
+
+        $("body,html").animate({
+
+            scrollTop: scroll_offset
+
+        }, 1000);
+    }
+
+    var g_make_color = "caise";
+    function choose_make_color(makeColor){
+        g_make_color = makeColor;
+        if(g_make_color == "caise"){
+            document.getElementById('caise-div').style.borderColor = "#59B19A";
+            document.getElementById('caise-small').style.color = "#59B19A";
+            document.getElementById('huise-div').style.borderColor = "#DDDDDD";
+            document.getElementById('huise-small').style.color = "#454545";
+            document.getElementById('shuangse-div').style.borderColor = "#DDDDDD";
+            document.getElementById('shuangse-small').style.color = "#454545";
+            document.getElementById('danse-div').style.borderColor = "#DDDDDD";
+            document.getElementById('danse-small').style.color = "#454545";
+        }else if(g_make_color == "huise"){
+            document.getElementById('caise-div').style.borderColor = "#DDDDDD";
+            document.getElementById('caise-small').style.color = "#454545";
+            document.getElementById('huise-div').style.borderColor = "#59B19A";
+            document.getElementById('huise-small').style.color = "#59B19A";
+            document.getElementById('shuangse-div').style.borderColor = "#DDDDDD";
+            document.getElementById('shuangse-small').style.color = "#454545";
+            document.getElementById('danse-div').style.borderColor = "#DDDDDD";
+            document.getElementById('danse-small').style.color = "#454545";
+        }else if(g_make_color == "shuangse"){
+            document.getElementById('caise-div').style.borderColor = "#DDDDDD";
+            document.getElementById('caise-small').style.color = "#454545";
+            document.getElementById('huise-div').style.borderColor = "#DDDDDD";
+            document.getElementById('huise-small').style.color = "#454545";
+            document.getElementById('shuangse-div').style.borderColor = "#59B19A";
+            document.getElementById('shuangse-small').style.color = "#59B19A";
+            document.getElementById('danse-div').style.borderColor = "#DDDDDD";
+            document.getElementById('danse-small').style.color = "#454545";
+        }else if(g_make_color == "danse"){
+            document.getElementById('caise-div').style.borderColor = "#DDDDDD";
+            document.getElementById('caise-small').style.color = "#454545";
+            document.getElementById('huise-div').style.borderColor = "#DDDDDD";
+            document.getElementById('huise-small').style.color = "#454545";
+            document.getElementById('shuangse-div').style.borderColor = "#DDDDDD";
+            document.getElementById('shuangse-small').style.color = "#454545";
+            document.getElementById('danse-div').style.borderColor = "#59B19A";
+            document.getElementById('danse-small').style.color = "#59B19A";
+        }
+    }
+
+    var g_pic_formate = "jpg"
+    function choose_make_pic_formate(picFormate){
+        g_pic_formate = picFormate;
+        if(g_pic_formate == "jpg"){
+            document.getElementById('jpg-div').style.borderColor = "#59B19A";
+            document.getElementById('jpg-small').style.color = "#59B19A";
+            document.getElementById('tiff-div').style.borderColor = "#DDDDDD";
+            document.getElementById('tiff-small').style.color = "#454545";
+        }else if(g_pic_formate == "tif"){
+            document.getElementById('jpg-div').style.borderColor = "#DDDDDD";
+            document.getElementById('jpg-small').style.color = "#454545";
+            document.getElementById('tiff-div').style.borderColor = "#59B19A";
+            document.getElementById('tiff-small').style.color = "#59B19A";
+        }
+    }
+
+    function sign_article(){
+        var column_id =  "<%= catalog_id%>";
+        var layout_id =  document.getElementById("doc-select-layout").getAttribute("data_layout_id");
+        var layout_name =  document.getElementById("doc-select-layout").getAttribute("data_layout_name");
+        layout_name = encodeURIComponent(layout_name);
+
+        var signDate = $('input.input-date').val();
+//
+//        if(signDate == ""){
+//            var myDate = new Date();
+//            var nowDate = myDate.Format("yyyy-MM-dd").toString();
+//            signDate = nowDate;
+//        }
+
+//        if(column_id <= 0){
+//            fn_show_tips('请选择栏目');
+//            return;
+//        }
+        if((layout_id) <= 0){
+            fn_show_tips('请选择版次!');
+            return;
+        }
+
+        var note = document.getElementById('doc-note').value;
+        note = encodeURIComponent(note);
+//        if(note.length == 0){
+//            fn_show_tips('请填写签发意见');
+//            return;
+//        }
+
+        var sendColor = 1;
+        if(g_make_color == "danse"){
+            sendColor = 1;
+        }else if(g_make_color == "shuangse"){
+            sendColor = 2;
+        }else if(g_make_color == "huise"){
+            sendColor = 8;
+        }else if(g_make_color == "caise"){
+            sendColor = 24;
+        }
+
+        var sign_status = $("#choose-sign-status>.selected").attr("sign-status") == "true";
+        if(!isper){
+            fn_show_tips("您没有预签和签发权限!");
+            return;
+        }
+        var g_state =  sign_status ? "SIGN" : "PRESIGN";
+
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=onColumnSign" + "&DocIDs=" + '<%= article_id %>' + "&DocLibID=" + '<%= article_libid %>' + "&layoutID=" + layout_id + "&layoutName=" + layout_name + "&operateType="+g_state + "&sendMake="+ g_is_send_make + "&photoColor="+ sendColor + "&photoFormat="+ g_pic_formate + "&ispublish=true" + "&layoutDate=" + signDate + "&message="+ note + "&ispublish=true" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+        //记住选择：时间和版面
+        localStorage.setItem("paper_column_sign_date",signDate);
+        localStorage.setItem("paper_column_sign_layout",layout_id+"_"+layout_name);
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    fn_show_tips("稿件签发成功。");
+                    setTimeout(function () {
+                        window.history.go(-2);
+//                        var artId = "<%= article_id %>";
+//                        window.location.href = "/article_detail?articleId="+artId;
+                    }, 1500);
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

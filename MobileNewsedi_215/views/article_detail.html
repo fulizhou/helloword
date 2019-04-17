@@ -1,0 +1,743 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+
+    <style type="text/css">
+        #play{
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 206px;
+            right: 178px;
+            border-radius: 15px;
+        }
+        #relation-list{
+            left: 0;
+            right: 0;
+            bottom: 100%;
+            background: #fff;
+            position: absolute;
+        }
+        #relation-list>.relation{
+            height: 2em;
+            padding: 0 10px;
+            line-height: 2em;
+            overflow: hidden;
+            word-break: break-all;
+            text-overflow: ellipsis;
+            border-top: solid 1px #cccccc;
+        }
+        #relation-list>.relation>a{
+            color: #59B19A;
+            margin-left: 0.5em;
+            text-decoration: underline;
+        }
+
+        #doc-article-content {
+            /*min-height: 600px;*/
+            padding: 10px 20px;
+            word-break: break-all;
+            word-wrap: break-word;
+            overflow: auto;
+            line-height: 1.75;
+            clear: both;
+            font-size: 16px;
+            color: #000;
+        }
+
+        #doc-article-content table td{
+            padding: 5px 10px;
+            border: 1px solid #DDD;
+        }
+
+        #fj{
+            "height":200px;
+            "width":200 px;
+            "background":#bfa;
+            "transform":translateY(10px);
+        }
+        #fj a{
+            color: #59B19A;
+            text-decoration:underline;
+            margin-left: 35px;
+        }
+
+        #fj a:hover{
+            color:#59B19A;
+
+        }
+        #out{
+            margin-top: 50px;
+            width:100%;
+            border-top: 1px solid rgb(200,200,200);
+        }
+        #wrap{
+            text-align: center;
+        }
+        #clj a{
+            font-size:15px;
+            color: #999;
+            text-decoration: none;
+        }
+        .name{
+            display: block;
+        }
+        .am-article-bd code{
+            padding: 0;
+            font-size: 1.3rem;
+            color: #555;
+            background-color: #f8f8f8;
+            white-space: pre-wrap;
+            border-radius: 0;
+        }
+        .am-paragraph p {
+            margin: 0;
+        }
+        #showatt img{
+            width: 100%;
+        }
+        #showatt audio{
+            vertical-align:middle;
+        }
+        #showatt iframe{
+            width: inherit;
+            height: inherit;
+        }
+        #reback{
+            color: #59B19A;
+        }
+        .am-navbar .am-navbar-nav {
+            overflow: visible;
+        }
+        .dropup .dropdown-menu, .navbar-fixed-bottom .dropdown .dropdown-menu {
+            margin-bottom: 61px;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 0;
+        }
+        .am-navbar-nav a {
+            height: 60px;
+            line-height: 51px;
+        }
+        .am-navbar-nav a:hover{
+            text-decoration: none;
+        }
+        #more a {
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .am-navbar-nav a .am-navbar-label {
+            overflow: visible;
+        }
+        .dropdown-menu>li>a {
+            padding: 3px 13px;
+        }
+        .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus, .dropdown-submenu:hover>a, .dropdown-submenu:focus>a {
+            color: #fff;
+            text-decoration: none;
+            background-color: #59B19A;
+            background-image: -moz-linear-gradient(top,#59B19A,#59B19A);
+            background-image: -webkit-gradient(linear,0 0,0 100%,from(#59B19A),to(#59B19A));
+            background-image: -webkit-linear-gradient(top,#59B19A,#59B19A);
+            background-image: -o-linear-gradient(top,#59B19A,#59B19A);
+            background-image: linear-gradient(to bottom,#59B19A,#59B19A);
+            background-repeat: repeat-x;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#59B19A',endColorstr='#59B19A',GradientType=0);
+        }
+    </style>
+</head>
+<body>
+<div id="showatt">
+</div>
+<div id="showdetail">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <div>
+                <!--<a><img style="height: 1.7rem;" src="images/list/1.png"></a><span>&nbsp;&nbsp;</span><a><img style="height: 1.6rem;" src="images/list/1.png"></a><span>&nbsp;&nbsp;</span><span id="doc-select-catalog-name" style="color: #FFFFFF"></span>-->
+                <a href="javascript:returnBack()"><img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a><span>&nbsp;&nbsp;&nbsp;</span><span id="doc-select-catalog-name" style="font-size:1.5rem;color: #FFFFFF"></span>
+            </div>
+        </div>
+        <div class="am-header-right am-header-nav">
+            <div>
+                <a href="javascript:clickRefresh();"><img src="../images/list/refresh-icon.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+                <a href="javascript:returnHome()"><img src="../images/list/home-icon.png"></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="am-text-danger">
+        <p id = "doc-article-introtopic" style="padding:0;margin:0;text-align: left;"></p>
+        <h2 id = "doc-article-title" style="padding:2%; margin-bottom: 0%;text-align: center;margin-top:0;"></h2>
+        <p id = "doc-article-subtopic" style="padding:0;margin:0;text-align: center;"></p>
+
+        <div class="am-article-hd" style="text-align: center;">
+            <p id="doc-article-meta" class="am-article-meta" style="padding-left:2%;margin: 0px"></p>
+        </div>
+    </div>
+    <!--<hr data-am-widget="divider" style="" class="am-divider am-divider-default" />-->
+    <article data-am-widget="paragraph" style="padding:2%; margin-bottom: 0%;" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+        <div id = "doc-article-content" class="am-article-bd">
+            <div><code style="background-color: #fff;border: 0;"></code></div>
+        </div>
+        <div id = "doc-article-media" class="am-article-bd">
+
+        </div>
+    </article>
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0; z-index: 9999">
+        <a href="#top" title="回到顶部">
+            <img style="height: 3rem" src="../images/top.png">
+        </a>
+    </div>
+    <div id="navbar-bottom" data-am-widget="navbar" class="am-navbar am-cf am-navbar-default">
+        <div id="relation-list" style="display: none">
+        </div>
+        <div>
+                <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4" style="border-top: solid 2px #59b19a">
+
+            </ul>
+        </div>
+    </div>
+    <div id="out">
+        <span  id='wrap' style="font-size: 15px;padding-left: 10px;" >相关附件:</span>
+
+        <div id="fj" >
+
+        </div>
+    </div>
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <!--<![endif]-->
+
+    <script type="text/javascript">
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+
+
+        var Request = GetRequest();
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for(var i = 0; i < strs.length; i ++) {
+                    theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+        var type = Request["type"];
+        if (type != "undefined" && (type=="message" || type=="notice")){
+            $("#doc-operation-list").css("display","none");
+        }
+        var statusMapping = {
+            "NORMAL":"success",
+            "NOEXIST":"文档状态已经改变，或者已经不存在！",
+            "ISLOCKED":"文档正在被别人处理，您现在不能进行操作！",
+            "STATECHANGE":"文档状态已经改变，或者已经不存在！"
+        };
+
+        var g_article_type = "";
+        var g_sign_type = "";
+        var g_fvid = 0;
+        var g_fvname = "";
+        var has_img = 0;
+
+
+        function newArticle(){
+            window.location.href = "/article_upload/turnNew";
+        }
+
+        function load_article_detail(article_id){
+            var loToken = localStorage.getItem('loToken');
+            var q = "method=articleDetail&article_id=" + article_id + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>" + "&loToken=" + loToken + "&nocache=" + (new Date()).getTime();
+            var data = {"m":"", "q":q};
+
+//        var q = "method=articleDetail&article_id=" + article_id + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>" + "&nocache=" + (new Date()).getTime();
+//        var data = {"m":"", "q":q};
+            $.ajax({
+                url: "/get",
+                dataType:'json',
+                data: data,
+                contentType: "application/json",
+                success:function(jsonData){
+                    if(jsonData.success == true){
+                        show_article_detail(jsonData.results);
+                    }
+                }
+            });
+        }
+        var articlecon = null;
+        function show_article_detail(article) {
+            //副题
+            document.getElementById('doc-article-title').innerText = article.title;
+            if (article.subtopic != undefined && article.subtopic != "") {
+                document.getElementById('doc-article-subtopic').innerText = article.subtopic;
+            }
+            //引题
+            if (article.introtopic != undefined && article.introtopic != "") {
+                document.getElementById('doc-article-introtopic').innerText = article.introtopic;
+            }
+            var meta_info = "";
+            if (type != "undefined" && type == "message") {
+                meta_info += "作者：" + article.addauthor;
+                meta_info += '&nbsp;&nbsp;&nbsp;';
+                meta_info += "留言对象：" + article.msg_receivenode;
+                meta_info += '&nbsp;&nbsp;&nbsp;';
+            } else if (type != "undefined" && type == "notice") {
+                meta_info += "作者：" + article.addauthor;
+                meta_info += '&nbsp;&nbsp;&nbsp;';
+            } else {
+                meta_info += "作者：" + article.author;
+                meta_info += '&nbsp;&nbsp;&nbsp;';
+            }
+
+            meta_info += article.opt_time;
+            if (article.text_count > 0) {
+                meta_info += '&nbsp;&nbsp;';
+                meta_info += article.text_count;
+                meta_info += '字';
+            }
+
+            //--------------------------------------------------------------判断是视频还是音频还是图片
+          //  var src = $(article.content).find('source').eq(0).attr('src');
+            /* if(src){
+                //--------------------------------------------------------------根据iphone和android区分显示
+                if (navigator.userAgent.match(/iphone/i)){
+                    $("#doc-article-content >div >code").html(article.content);
+                }else if(navigator.userAgent.match(/android/i)){
+                    $("#doc-article-content >div >code").append($("<img src = '../images/jiazai.png'/>"));
+                    $("body").append($("<a id='transfer_video'><img id='play' src='../images/play.JPG'/></a>"));
+                    var src = $(article.content).find('source').eq(0).attr('src');
+                    var newSrc = src + "&type=android-video";
+                    $("#transfer_video").attr("href",newSrc);
+                }else{
+                    $("#doc-article-content  >div >code").html(article.content);
+                }
+            }else{*/
+            //document.getElementById('doc-article-content').innerHTML = article.content;
+            //}
+            $("#doc-article-content  >div >code").html(article.content);
+            articlecon = article.attachments;
+            if(article.content && article.content.indexOf("<img ") >-1){
+                has_img = 1;
+            }
+            document.getElementById('doc-article-meta').innerHTML = meta_info;
+            //document.getElementById('doc-article-content').innerHTML = article.content;
+            //document.getElementById('doc-article-media').innerHTML = article.attachments;
+            var num = $(article.attachments).length;
+            if(num>0){
+                $('#clj').empty();
+                for(var i=0;i<num;i++){
+                    if(article.attachments[i].indexOf("<img ") >-1)  has_img = 1;
+                    var temp =  $(article.attachments[i]).attr("title");
+                    var src =  $(article.attachments[i]).attr("src");
+                    if(temp == undefined || temp == "") {
+                        temp = "无标题";
+                    }
+                    $('#fj').append($("<div  id='clj'></div>"));
+                    var att = $("<a class='name' id='"+i+"' onclick=doview('"+i+"')>"+temp+"</a>" );
+                    $('#clj').append(att);
+                }
+            }else{
+                $("#out").hide();
+            }
+            //------------------------------
+            g_article_type = article.type;
+            g_sign_type = article.sign_channel;
+            g_fvid = article.fvid;
+            g_fvname = article.fvname;
+            var opt_perm = article.opt_perm;
+            var operate_perm = "|" + article.opt_perm + "|";
+            var operateMapping = [];
+
+            operateMapping.push({
+                id:"share",
+                text: "共享",
+                statusCheck:true,
+                handler: article_share,
+                iconImg: "images/navbar/transfer.png"
+            });
+            operateMapping.push({
+                id:"sendaudit",
+                text: "送审",
+                statusCheck:true,
+                handler: article_sendAudit,
+                iconImg: "images/navbar/transfer.png"
+            });
+
+            operateMapping.push({
+                id:"choose",
+                text: "选用",
+                statusCheck:true,
+                handler: article_choose,
+                iconImg: "images/navbar/choose.png"
+            });
+            operateMapping.push({
+                id:"auditing",
+                text: "审核",
+                statusCheck:true, // 调用 handler 之前是否进行稿件状态检查
+                handler: article_auditing, // 按钮触发的事件
+                iconImg: "images/navbar/auditing.png"
+            });
+            operateMapping.push({
+                id:"get",
+                text: "取稿",
+                statusCheck:true,
+                handler: article_get,
+                iconImg: "images/navbar/choose.png"
+            });
+            operateMapping.push({
+                id:"transfer",
+                text: "送稿",
+                statusCheck:true,
+                handler: article_transfer,
+                iconImg: "images/navbar/transfer.png"
+            });
+            if(article.type!='link') {
+                operateMapping.push({
+                    id: "sign",
+                    text: "签发",
+                    statusCheck: true,
+                    handler: article_sign,
+                    iconImg: "images/navbar/sign.png"
+                });
+
+                operateMapping.push({
+                    id: "unsign",
+                    text: "撤签",
+                    statusCheck: true,
+                    handler: article_unsign,
+                    iconImg: "images/navbar/unsigned.png"
+                });
+            }
+            //_______________________________________________________________________送审
+            if(article.type=='text') {
+                operateMapping.push({
+                    id: "edit",
+                    text: "修改",
+                    statusCheck:true,
+                    handler: article_editDetail,
+                    iconImg: "images/navbar/opinion.png"
+                });
+            }
+            if(article.type=='image') {
+                operateMapping.push({
+                    id: "edit",
+                    text: "修改",
+                    statusCheck:true,
+                    handler: article_editDetail,
+                    iconImg: "images/navbar/opinion.png"
+                });
+            }
+            operateMapping.push({
+                id: "editInfo",
+                text: "修改标题",
+                statusCheck:true,
+                handler: article_editInfo,
+                iconImg: "images/navbar/update.png",
+                authCheck:function(auth){ return auth.indexOf('|edit|') >= 0; }
+            });
+            operateMapping.push({
+                id:"modifity",
+                text: "修改痕迹",
+                statusCheck:true,
+                handler: article_modifity,
+                iconImg: "images/navbar/modifity.png"
+            });
+            operateMapping.push({
+                id:"remove",
+                text: "移动",
+                statusCheck:true,
+                handler: article_remove,
+                iconImg: "images/navbar/remove.png"
+            });
+            operateMapping.push({
+                id:"unlock",
+                text: "解锁",
+                statusCheck:false,
+                handler: article_unlock,
+                iconImg: "images/navbar/unlock2.png"
+            });
+            operateMapping.push({
+                id:"record",
+                text: "流程记录",
+                statusCheck:false,
+                handler: article_logDetail,
+                iconImg: "images/navbar/record.png",
+                authCheck: function(auth){ return true; }
+            });
+            var statusCheck = function (callback) {
+                var loToken = localStorage.getItem('loToken');
+                $.ajax({
+                    url: "/article_detail/articleStatus",
+                    data:{
+                        "article_id": "<%= article_id %>",
+                        "article_libid" : "<%= article_libid %>",
+                        "flowNode" : article.flowNode,
+                        "loToken" : loToken
+                    },
+                    dataType:"json",
+                    success:function(data){
+                        if(!data.success){
+                            fn_show_tips(data.results.error_info); return;
+                        }
+                        var msg = statusMapping[data.results.status];
+                        if( msg !== "success" ){
+                            fn_show_tips(msg || "当前文档状态未知, 无法操作当前文档!");
+                        } else {
+                            callback();
+                        }
+                    }
+                });
+            };
+            var check = function (auth) { return auth.indexOf('|' + this.id + '|') >= 0; };
+            var $operation_list = $("#doc-operation-list").empty();
+            var n = 0;
+            $.each(operateMapping, function (i, v) {
+                var authCheck = v.authCheck || check;
+
+                // 权限检查
+                if(!authCheck.call(v, operate_perm)){ return; }
+                var handler = !v.statusCheck ? v.handler : function () { statusCheck(v.handler); };
+                n++;
+                if(n<4){
+                    var $li = $("<li></li>").appendTo($operation_list);
+                    var $a = $("<a></a>").click(handler).appendTo($li);
+                    $a.append($("<img/>", { src: v.iconImg }));
+                    $a.append($("<span></span>", {"class": "am-navbar-label", text: v.text }));
+                }else if(n == 4){
+                    var $li = $("<li id='more'></li>").appendTo($operation_list);
+                    var $a = $("<a></a>").click(moreOperation).appendTo($li);
+                    $a.append($("<img/>", { src: "images/navbar/more1.png" }));
+                    $a.append($("<span></span>", {"class": "am-navbar-label", text: "更多" }));
+                    var $div = $("<div></div>");
+                    $div.attr("class","dropup");
+                    var $ul = $("<ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'></ul>").appendTo($div);
+                    $div.appendTo($("#more"));
+                    var $li = $("<li></li>").appendTo($(".dropdown-menu"));
+                    var $a = $("<a></a>").click(handler).appendTo($li);
+                    $a.append($("<img/>", { src: v.iconImg }));
+                    $a.append($("<span></span>", {"class": "am-navbar-label", text: v.text }));
+                }else{
+                    var $li = $("<li></li>").appendTo($(".dropdown-menu"));
+                    var $a = $("<a></a>").click(handler).appendTo($li);
+                    $a.append($("<img/>", { src: v.iconImg }));
+                    $a.append($("<span></span>", {"class": "am-navbar-label", text: v.text }));
+                }
+
+            });
+        }
+        $(function(){
+            document.getElementById('doc-select-catalog-name').innerText = '<%= cat_name%>';
+            load_article_detail("<%= article_id %>");
+        });
+        function moreOperation(){
+            $(".dropdown-menu").toggle();
+        }
+        function clickRefresh(){
+            document.getElementById('doc-select-catalog-name').innerText = '<%= cat_name%>';
+            load_article_detail("<%= article_id %>");
+        }
+        //导航栏返回按钮
+        function returnBack(){
+            var terminalType = "<%= terminalType %>";
+            if(terminalType && terminalType == "app"){
+                returnHome();
+            }else{
+                history.go(-1);
+            }
+        }
+        //返回首页
+        function returnHome() {
+            window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+        }
+        function article_logDetail(){
+            var cat_name = document.getElementById('doc-select-catalog-name').innerText;
+            var cat_child_name = "";
+            var href = "/article_detail/logDetail?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>"+ "&cat_name=" + cat_name+ "&cat_child_name=" + cat_child_name;
+            location.href = href;
+        }
+        function article_auditing(){
+            var href = "/article_detail/auditing?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>" + "&fvid=" + g_fvid + "&fvname=" + g_fvname ;
+            location.href = href;
+        }
+        function article_choose(){
+            //选用直接在当前页面完成
+            var href = "/article_detail/choose?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+            location.href = href;
+        }
+        function article_remove(){
+            var href = "/article_detail/remove?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>"+ "&fvid=" + g_fvid + "&fvname=" + g_fvname ;;
+            location.href = href;
+        }
+        function article_get(){
+            var href = "/article_detail/get?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+            location.href = href;
+        }
+        function article_transfer(){
+            var href = "/article_detail/transfer?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+            location.href = href;
+        }
+        function article_sign(){
+            var href = "/article_detail/sign?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>" + "&article_type=" + g_article_type + "&sign_type=" + encodeURIComponent(encodeURIComponent(JSON.stringify(g_sign_type)))+"&has_img="+has_img;
+            location.href = href;
+        }
+        function article_unsign(){
+            var href = "/article_detail/unsign?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+            location.href = href;
+        }
+        function article_modifity(){
+            var href = "/article_detail/article_modifity?" + "article_id=" + "<%= article_id %>" + "&article_libid=" + "<%= article_libid %>" + "&loToken="+window.localStorage.getItem('loToken');
+            location.href = href;
+        }
+        function article_editDetail(){
+            var href = "/article_edit?" + "article_id=" + "<%= article_id %>" + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>"+"&operation=update";
+            location.href = href;
+        }
+        function article_editInfo(){
+            var href = "/article_edit/edit_info?" + "article_id=" + "<%= article_id %>" + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>";
+            location.href = href;
+        }
+        function article_unlock(){
+            $.ajax({
+                url:"/article_detail/unlock",
+                data:{
+                    "article_id": "<%= article_id %>",
+                    "article_libid": "<%= article_libid %>",
+                    "loToken": window.localStorage.getItem('loToken')
+                },
+                dataType:"json",
+                success: function (jsonData) {
+                    if (jsonData.success == true) {
+                        fn_show_tips("稿件解锁成功!");
+                    }else{
+                        fn_show_tips("稿件解锁失败!");
+                    }
+                    setTimeout(function () {
+                        load_article_detail("<%= article_id %>");
+                    }, 1500);
+                }
+            });
+        }
+        /*送审*/
+        function article_sendAudit(){
+            var href = "/article_detail/sendAudit?"+"article_id="+"<%= article_id %>"+"&article_libid="+"<%= article_libid %>"+"&catalog_id="+"<%= transfer_catalogID %>"+"&isDeleteOriDoc=true";
+            location.href = href;
+        }
+        function article_share(){
+            var href = "/article_detail/sendAudit?"+"article_id="+"<%= article_id %>"+"&article_libid="+"<%= article_libid %>"+"&catalog_id="+"<%= transfer_catalogID %>"+"&isDeleteOriDoc=false";
+            location.href = href;
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            var loToken = window.localStorage.getItem('loToken');
+            var article_to_relation = parseInt("<%= article_to_relation %>");
+            if(article_to_relation){
+                var $relation_list = $("#relation-list");
+                $.ajax({
+                    url:"/article_detail/get_relation",
+                    data:{
+                        "docId": "<%= article_id %>",
+                        "loToken" : loToken
+                    },
+                    dataType:"json",
+                    success: function (data) {
+                        data = $.isArray(data) ? data[0] : data;
+                        if(data.success){
+                            $relation_list.show();
+                            var $relation = $("<div></div>", {"class": "relation"}).appendTo($relation_list);
+                            $relation.append($("<span></span>", {text: "稿件关联"}));
+                            var doc = data.doc;
+                            if(!doc){
+                                //$relation.append($("<span></span>", {text: "无"}));
+                                $relation_list.hide();
+                            } else {
+                                $relation.append($("<a></a>", {text: doc.topic}));
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        function showview(){
+            $("#showatt").hide();
+            $("#showdetail").show();
+        }
+        function doview(index) {
+            $("#showatt").empty();
+            $("#showdetail").hide();
+            $("#showatt").show();
+            $("#showatt").css("height",$(window).height());
+            $("#showatt").css("width",$(window).width());
+
+            var atts = $(articlecon[index]);
+            atts.attr("onclick","showview()");
+            if(articlecon[index].indexOf("<audio") != -1){
+                var p = $("<p></p>");
+                p.css("height",$(window).height());
+                var paudio = p.append(atts);
+                paudio.attr("onclick","showview()");
+                $("#showatt").append(paudio);
+                $("#showatt p audio").css("height","50%");
+            }else if(articlecon[index].indexOf(".flv") == -1 && (articlecon[index].indexOf("<video") != -1 || articlecon[index].indexOf("<img") != -1)){
+                $("#showatt").append(atts);
+            }else if(articlecon[index].indexOf(".txt") != -1){
+                var src = $("<iframe frameborder='0' scrolling='auto' src='"+atts.attr("href")+"'></iframe>");
+                var divatt = $("<div id='reback'>点击返回</div>");
+                divatt.attr("onclick","showview()");
+                $("#showatt").append(divatt);
+                $("#showatt").append(src);
+            }else{
+                var p = $("<p></p>");
+                p.css("height",$(window).height());
+                var paudio = p.append("<div><center>抱歉，该文件不支持在线预览！</center></div>");
+                paudio.attr("onclick","showview()");
+                $("#showatt").append(paudio);
+            }
+
+        }
+
+    </script>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,276 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>纸媒大样列表</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../assets/js/cookie.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <script type="text/javascript" src="../javascripts/fzcommon.js"></script>
+</head>
+<body style="background-color: #EEEFF1">
+<div id = "doc-form-all">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav" style="width: 50%">
+            <div>
+                <a id="doc-header-return-a" href="javascript:returnBack();" ><img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a><span>&nbsp;</span><span id="doc-select-catalog-name" style="color: #FFFFFF"></span><span id="doc-select-catalog-child-name" style="color: #FFFFFF;font-size: 1rem"></span>
+            </div>
+        </div>
+        <div class="am-header-right am-header-nav" style="width: 50%;right:0px">
+            <div id="doc-date-picker-div" class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}" style="line-height: 49px;float: right">
+                <button id="doc-datepicker" class="am-btn am-btn-default" type="button" style="border: none;background-color: transparent;"><span id = "doc-select-date" style="color: white;font-size: 16px"></span><img src="../images/date-no-choose.png" style="position: relative;top:-1px"></button>
+                <!--<a href="javascript:list_articles_refresh();" style="float: right"><img src="../images/list/refresh-icon.png"></a>-->
+                <a href="javascript:returnHome()"><img src="../images/list/home-icon.png" style="height: 2rem;padding-left: 0rem;padding-right: 1.4rem"></a>
+            </div>
+        </div>
+    </header>
+
+    <div id = "doc-scroll-wrapper" class="am-list-news-bd am-margin-left-sm" style="margin: 0;">
+        <ul id = "doc-article-list" class="am-list" style="margin: 0;"></ul>
+        <div id = "doc-scroll-more" onclick="load_more();" style="display: none;" class="am-pagination-centered" data-am-scrollspy="{animation: 'fade', delay: 300}">加载更多</div>
+    </div>
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+        <a href="#top" title="回到顶部">
+            <img style="height: 3rem" src="../images/top.png">
+        </a>
+    </div>
+</div>
+<div id="doc-catalog-list" style="display: none;">
+    <div id = "doc-catalog-list-tpl" class="am-list-news-bd">
+    </div>
+</div>
+<script type="text/javascript">
+    var g_is_choose_catalog = false;//是否弹出选择分类树
+    var g_articles_begin = 0;//从第几个稿件位置开始加载
+    var g_select_catalog_id = -1;
+    var g_paper_date = "";
+
+    function list_articles_refresh(){
+
+        load_article_list(localStorageGetItem("paper_layout_date_"+"<%= paper_paper_id%>"), 0);
+    }
+
+    function newArticle(){
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    //导航栏返回按钮
+    function returnBack(){
+        //history.go(-1);
+        window.location.href = "/paper_article_list";
+    }
+
+    //返回首页
+    function returnHome(){
+        window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+    }
+
+    function show_layout_list(article_list, has_more, begin_id){
+
+        if(begin_id == 0){
+            g_articles_begin = 0;
+            var list = document.getElementById('doc-article-list');
+            list.className = "am-list";
+            list.innerHTML = "";
+            $('html, body').animate({scrollTop: 0}, '500');
+        }
+        var arr="";
+        for(var i=0;i<article_list.length;i++){
+            arr+= article_list[i].article_libid+"_"+article_list[i].id+",";
+
+        }
+
+        for(var i in article_list){
+
+            var article_node = document.createElement('li');
+            article_node.onclick = "show_layout_detail("+ article_list[i].id +"," + article_list[i].id+","+article_list[i].article_libid  + ",'"+arr+"');";
+            article_node.className = "am-g am-list-item-desced";
+            article_node.style.paddingLeft = "3%";
+            article_node.style.paddingRight = "3%";
+            article_node.article_id = article_list[i].id;
+            var title_node = document.createElement('a');
+            title_node.href = "javascript:show_layout_detail("+ article_list[i].id +"," + article_list[i].id+","+article_list[i].article_libid  + ",'"+arr+"');";
+            title_node.className = "am-list-title";
+            title_node.innerText = article_list[i].column_name + ' ' + article_list[i].layout_name;
+            title_node.style.overflow = "hidden";
+            title_node.style.textOverflow = "ellipsis";
+            title_node.style.whiteSpace = "nowrap";
+            var status_node = document.createElement('span');
+            if(article_list[i].status == "composing"){
+                status_node.innerText += "正在组版";   //////////////#ebb369
+                status_node.style.color = "#ebb369";
+            }else if(article_list[i].status == "save"){
+                status_node.innerText += "已经组版";
+                status_node.style.color = "red";
+            }else if(article_list[i].status == "finished"){
+                status_node.innerText += "组版完成";
+                status_node.style.color = "#66c080";    ///////#66c080
+            }else if(article_list[i].status == "sign"){
+                status_node.innerText += "大样已签发";
+                status_node.style.color = "#69c3db";   ///69c3db
+            }else{
+                status_node.innerText += article_list[i].status;
+            }
+            var detail_node = document.createElement('span');
+            detail_node.style.color = "#98999d";
+            if(article_list[i].type == "text")
+                detail_node.className = "am-list-date am-icon-file-word-o";
+            else if(article_list[i].type == "image")
+                detail_node.className = "am-list-date am-icon-file-image-o";
+            else if(article_list[i].type == "video")
+                detail_node.className = "am-list-date am-icon-file-movie-o";
+            else
+                detail_node.className = "am-list-date";
+            var meta_info = '';
+            if(article_list[i].status == ""){
+                meta_info += article_list[i].author;
+            }else{
+                meta_info += '　' + article_list[i].author;
+            }
+            if(article_list[i].author == ""){
+                meta_info +=  article_list[i].opt_time.substring(5,16);
+            }else{
+                meta_info += '　' + article_list[i].opt_time.substring(5,16);
+            }
+            var voice_node=document.createElement('span');
+            voice_node.style.float="right";
+            voice_node.style.display="block";
+            /*if(article_list[i].hasVoiceComment==true){
+                var voice_pic = document.createElement('img');
+                voice_pic.src = "../images/navbar/voice.png";
+                voice_node.appendChild(voice_pic);
+            }*/
+            detail_node.innerText = meta_info;
+            article_node.appendChild(title_node);
+            article_node.appendChild(status_node);
+            article_node.appendChild(detail_node);
+            article_node.appendChild(voice_node);
+            document.getElementById('doc-article-list').appendChild(article_node);
+            g_articles_begin += 1;
+        }
+
+        if(has_more){
+            $("#doc-scroll-more").show();
+        }
+        else{
+            $("#doc-scroll-more").hide();
+        }
+
+    };
+
+    function show_layout_detail(article_id,page_id,article_libid,arr){
+
+        var column_name = document.getElementById('doc-select-catalog-name').innerText;
+        window.location.href = "/article_detail?articleId="+ article_id + "&lib_type=paper_layout&article_libid="+ article_libid+"&page_id=" + page_id + "&column_name=" + column_name+"&paper_date="+localStorageGetItem("paper_layout_date_"+"<%= paper_paper_id%>")+"&paper_paper_id="+"<%= paper_paper_id%>"+"&arry="+arr;
+
+    };
+
+
+    function load_more(){
+		load_article_list("<%=paperMinDate%>", g_articles_begin);
+};
+
+    function load_article_list(column_date, begin){
+        var loToken = localStorage.getItem('loToken');
+        var paper_id = "<%= paper_paper_id%>";
+        var data = {"count":"<%= article_list_count%>", "begin":begin,"column_date":column_date,"paper_id":paper_id,"loToken":loToken};
+//        var data = {"count":7, "begin":begin,"column_date":column_date,"paper_id":paper_id,"loToken":loToken};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/paper_article_list/layout",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+                    console.log(jsonData.results);
+
+                    show_layout_list(jsonData.results, jsonData.has_more, begin);
+                    if(JSON.stringify(jsonData.results).length <= 2){
+                        fn_show_tips("当前日期无内容。");
+                    }
+                }
+            }
+        });
+    }
+
+    function GetDateStr(AddDayCount)
+    {
+        var dd = new Date();
+        dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y+"-"+m+"-"+d;
+    }
+
+    $(function(){
+
+//        var add_date = 0;
+//        if(window.localStorage){
+//            var paper_id = "<%= paper_paper_id%>";
+//            var str = "paper_select_date_" + paper_id;
+//            add_date = localStorage.getItem(str);
+//        }
+//        var i_date = add_date - 0;
+//        g_paper_date = GetDateStr(i_date);
+//        g_paper_date = GetDateStr(1);
+
+        document.getElementById('doc-select-date').innerHTML = "<%=paperMinDate%>";//不从localStorage中获取
+        localStorageSetItem("paper_layout_date_"+"<%= paper_paper_id%>","<%=paperMinDate%>");
+        load_article_list("<%=paperMinDate%>", g_articles_begin);
+
+        document.getElementById('doc-select-catalog-name').innerText = "<%= catalog_name%>";
+        $('#doc-datepicker').datepicker().on('changeDate.datepicker.amui', function(event) {
+            document.getElementById('doc-select-date').innerHTML = event.date.Format('yyyy-MM-dd').toString();
+            var column_date = event.date.Format('yyyy-MM-dd').toString();
+            localStorageSetItem("paper_layout_date_"+"<%= paper_paper_id%>",column_date);
+            g_articles_begin = 0;
+            load_article_list(localStorageGetItem("paper_layout_date_"+"<%= paper_paper_id%>"), g_articles_begin);
+//            g_paper_date = column_date;
+        });
+
+        $('#doc-scroll-more').on('inview.scrollspy.amui', function() {
+
+            load_more();
+        });
+
+
+        $('#doc-scroll-refresh').on('inview.scrollspy.amui', function() {
+
+            load_article_list("<%=paperMinDate%>", 0);
+        });
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "results": {
+    "voiceList": [
+      {
+        "audioUrl": "http://59.108.92.232:8080/newsedit/newMobile/getMedia.do?timestamp=0&id=6699",
+        "creatTime": "2016-09-27 18:54:29",
+        "creator": "葛安贵"
+      }
+    ],
+    "error_info": ""
+  },
+  "success": true
+}

@@ -1,0 +1,194 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件流程记录</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <style>
+        .am-accordion-default .am-accordion-title:before{
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+        .am-accordion-default .am-accordion-title.hover:before{
+            -webkit-transform: rotate(270deg);
+            -moz-transform: rotate(270deg);
+            -ms-transform: rotate(270deg);
+            -o-transform: rotate(270deg);
+            transform: rotate(270deg);
+        }
+        .am-accordion-default .am-accordion-title.hover{
+            color:#59B19A;
+        }
+        .am-accordion-default .am-accordion-title.click{
+            color:#59B19A;
+        }
+        .am-accordion-default .am-accordion-title .span-operation{
+            width: 30%;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .am-accordion-default .am-accordion-title .span-operator{
+            width: 25%;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .am-accordion-default .am-accordion-title .span-end-time{
+            width: 40%;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 90%;
+        }
+        .am-accordion-content{
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <div>
+            <a id="doc-header-return-a" href="javascript:returnBack();" ><img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a><span>&nbsp;&nbsp;&nbsp;</span><span id="doc-select-catalog-name" style="color: #FFFFFF">流程记录</span><span id="doc-select-catalog-child-name" style="color: #FFFFFF;font-size: 1rem"></span>
+        </div>
+    </div>
+</header>
+
+<div>
+    <section id="doc-operation-section" style="width: 100%;margin: 0;font-size: 1.3rem" data-am-widget="accordion" class="am-accordion am-accordion-default" data-am-accordion='{ "multiple": true }'></section>
+</div>
+
+<article data-am-widget="paragraph" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+    <div id = "doc-article-content" class="am-article-bd">
+    </div>
+</article>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+     id="">
+    <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4">
+    </ul>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+
+    function returnBack(){
+        history.go(-1);
+    }
+
+    function newArticle(){
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    function load_operation_detail(article_id){
+        var article_id = "<%= article_id%>";
+        var article_libid = "<%= article_libid%>";
+
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=articleLogDetail&article_id=" + article_id + "&article_libid=" + article_libid + "&loToken=" + loToken + "&nocache=" + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+        $.ajax({
+            type: "GET",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            cache:true,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    if(jsonData.results == ""){
+//                        alert("该稿件无流程记录。");
+                    }else{
+                        show_log_list(jsonData.results);
+                    }
+                }
+            }
+        });
+
+    }
+
+    function show_log_list(log_list){
+
+        var list = document.getElementById('doc-operation-section');
+        list.innerHTML = "";
+
+        for(var i in log_list){
+
+            var dl = document.createElement("dl");
+            dl.className = "am-accordion-item";
+
+            var dt = document.createElement("dt");
+            dt.className = "am-accordion-title";
+            dt.innerHTML = "<span class='span-operation'>"+log_list[i].operation + " " +"</span>"+
+                "<span class='span-operator'>"+log_list[i].operator + " " +"</span>"+
+                "<span class='span-end-time'>"+log_list[i].end_time.replace(/(\d+):(\d+):(\d+)/,"$1:$2")+"</span>";
+            dl.appendChild(dt);
+
+            var dd = document.createElement("dd");
+            dd.className = "am-accordion-bd am-collapse";
+            dl.appendChild(dd);
+
+            var div = document.createElement("div");
+            div.className = "am-accordion-content";
+            div.innerHTML = log_list[i].notes;
+            dd.appendChild(div);
+
+            document.getElementById('doc-operation-section').appendChild(dl);
+
+        }
+    }
+
+    $(function(){
+
+        var cat_name = "<%= cat_name%>";
+        var cat_child_name = "<%= cat_child_name%>";
+//        document.getElementById('doc-select-catalog-name').innerText = cat_child_name;
+//        document.getElementById('doc-select-catalog-child-name').innerHTML = cat_child_name;
+        load_operation_detail("<%= article_id %>");
+        $("#doc-operation-section").delegate("dt", "click", function(){
+            $(this).toggleClass("hover");
+            $(this).parent().find("dd").slideToggle(500);
+        });
+    });
+
+
+</script>
+</body>
+</html>

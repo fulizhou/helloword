@@ -1,0 +1,441 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>线索</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../../assets/css/app.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+    <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/cookie.js"></script>
+    <script type="text/javascript" src="../../javascripts/common.js"></script>
+    <script type="text/javascript" src="../../javascripts/extend-box.js"></script>
+    <script type="text/javascript" src="../../javascripts/base64.js"></script>
+    <style type="text/css">
+        .am-navbar{
+            height: auto;
+        }
+        .am-navbar-nav a{
+            height: 45px;
+            line-height: 45px;
+        }
+        .am-navbar-nav a .am-navbar-label{
+            width: 5.5em;
+            height: 45px;
+            padding-top: 0;
+            margin: 0 auto;
+            max-width: 100%;
+            font-size: 2.1rem;
+            line-height: 45px;
+        }
+        #footer-op li.selected span{
+            border-bottom: solid 2px #f44a3f;
+        }
+
+        i.icon{
+            width: 22px;
+            height: 22px;
+            display: inline-block;
+        }
+        .icon-locate{
+            color: #FFFFFF;
+            padding: 2px 5px;
+            font-size: 12px;
+            font-stretch: normal;
+            font-style: normal;
+            font-variant: normal;
+            font-weight: normal;
+            font-family: arial, sans-serif;
+            height: 25px !important;
+            background-size: 22px 25px;
+            background-repeat: repeat;
+            background-image: url("http://api.map.baidu.com/images/marker_red_hd.png");
+        }
+        .icon-telephone{
+            background-image: url("/images/icon/telephone.png");
+        }
+        .icon-weixin{
+            background-image: url("/images/icon/weixin.png");
+        }
+
+        /* 隐藏百度地图的 copyright */
+        .anchorBL, .BMap_cpyCtrl{
+            display: none !important;
+        }
+
+        #baidu-map{
+            width: 100%;
+            z-index: -1;
+        }
+        #footer{
+            background-color: #fff;
+        }
+        #footer-op{
+            height: 44px;
+            line-height: 45px;
+            overflow: visible;
+        }
+        #footer-op li{
+            border-left: solid 1px #ddd;
+        }
+        #footer-op li:first-child{
+            border-left: none;
+        }
+        #list-box{
+            display: none;
+            line-height: 1em;
+            max-height: 24rem;
+            border-top: solid 1px #ddd;
+        }
+        .task{
+            padding: 8px 10px 5px;
+            position: relative;
+            border-bottom: solid 1px #ddd;
+        }
+        .locate{
+            padding-top: 1px;
+            position: absolute;
+        }
+        .detail{
+            margin-left: 2.4rem;
+        }
+        .title{
+            height: 1.6em;
+            overflow: hidden;
+            font-size: 1.5rem;
+            line-height: 1.6em;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .content{
+            margin: 0;
+            color: #777;
+            height: 3em;
+            overflow: hidden;
+            font-size: 1.4rem;
+            line-height: 1.6em;
+            display: -webkit-box;
+            word-break: break-all;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+        }
+        .assign-info{
+            height: 2rem;
+            margin-top: 10px;
+            line-height: 2rem;
+            position: relative;
+        }
+        .assign-reporter, .assign-date{
+            float: left;
+            color: #999;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        .assign-info>.contact{
+            top: 0;
+            right: 0;
+            position: absolute;
+        }
+        .contact i{
+            float: left;
+            margin-left: 8px;
+        }
+
+        .vicinity{
+            position: relative;
+            padding: 5px 15px 8px;
+            border-bottom: solid 1px #ddd;
+        }
+        .reporter{
+            margin: 5px 0;
+        }
+        .reporter>div{
+            float: left;
+        }
+        .reporter>.photo{
+            width: 10%;
+            margin-right: 4%;
+            display: inline-block;
+        }
+        .reporter>.photo>img{
+            width: 32px;
+            height: 32px;
+            max-width: 100%;
+        }
+        .reporter>.info{
+            width: 84%;
+            display: inline-block;
+        }
+        .info>p{
+            margin: 0;
+        }
+        .info>.reporter{
+            font-size: 1.5rem;
+        }
+        .info>.position{
+            color: #999;
+            margin-top: 5px;
+            font-size: 1.2rem;
+        }
+        .position>.distance{
+            margin-left: 10px;
+        }
+        .operator>button{
+            color: #59B19A;
+            font-size: 1.3rem;
+            margin-right: 5px;
+            border-radius: 2px;
+            background-color: #fff;
+            border: solid 1px #59B19A;
+        }
+    </style>
+</head>
+<body>
+
+<div id="doc-form-all">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+
+            <a id="doc-header-return-a" href="javascript:back()">
+                <img src="../../images/navbar/return.png">
+            </a>
+            <span class="can-extend">
+                <span id="doc-select-catalog-name" style="color: #FFFFFF">线索</span>
+                <img src="../../images/list/xiala.png" style="height: 2rem;">
+                <ul class="extend-box">
+                    <li><a href="../interview_task/interview_task">采访任务</a></li>
+                </ul>
+            </span>
+
+        </div>
+        <div class="am-header-right am-header-nav">
+            <div>
+                <!--<a href="javascript:void(0)">
+                    <img src="../../images/list/plus-icon.png">
+                </a>
+                <a href="javascript:void(0)">
+                    <img src="../../images/list/plus-icon.png">
+                </a>-->
+                <a href="./new_clue">
+                    <img src="../../images/list/plus-icon.png">
+                </a>
+                <!--<span class="can-extend extend-right">
+                    <img src="../../images/list/xiala.png"/>
+                    <ul class="extend-box">
+                        <li><a href="./view_track">查看轨迹</a></li>
+                        <li><a href="./statistical_task">任务统计</a></li>
+                    </ul>
+                </span>-->
+            </div>
+        </div>
+    </header>
+</div>
+
+<div id="baidu-map"></div>
+
+<div id="footer" data-am-widget="navbar" class="am-navbar am-cf am-navbar-default am-no-layout">
+    <ul id="footer-op" class="am-navbar-nav am-cf am-avg-sm-2">
+        <li id="interview-task" href="#list1">
+            <a href="#" class="">
+                <span class="am-navbar-label">未分配</span>
+            </a>
+        </li>
+        <li id="view-near" href="#list2">
+            <a href="#" class="">
+                <span class="am-navbar-label">已分配</span>
+            </a>
+        </li>
+    </ul>
+    <div id="list-box">
+        <div id="list1">
+            <div class="task clear">
+                <div class="locate">
+                    <i class="icon icon-locate">1</i>
+                </div>
+                <div class="detail">
+                    <a href="./interview_task_detail">
+                        <div class="title">京城有望迎来今年以来最温暖的一周</div>
+                        <p class="content">据市气象台预计,受暖气团的控制,本周前四天,京城最高气温都将维持在20℃以上,京城有望迎来今年以来最温暖的一周。今起四天,最高气温都将在21至22℃左右徘徊</p>
+                    </a>
+                    <div class="assign-info">
+                        <div class="assign-reporter">任务指派人：丛琼怡</div>
+                        <div class="assign-date">3月28日</div>
+                        <!-- 联系方式 -->
+                        <div class="contact">
+                            <a href="#"><i class="icon icon-telephone"></i></a>
+                            <a href="#"><i class="icon icon-weixin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="task clear">
+                <div class="locate">
+                    <i class="icon icon-locate">2</i>
+                </div>
+                <div class="detail">
+                    <a href="./interview_task_detail">
+                        <div class="title">虚拟运营商将迎正式牌照发放 强化实名登记</div>
+                        <p class="content">3月24日，在2016中国虚拟运营发展论坛上，工信部信息通信发展司司长闻库称，虚商试点两年，促进了提速降费，推动了电信行业的创新，但也存在实名制落实不到位，违规率很高的问题。 </p>
+                    </a>
+                    <div class="assign-info">
+                        <div class="assign-reporter">任务指派人：苏晓灵</div>
+                        <div class="assign-date">3月28日</div>
+                        <!-- 联系方式 -->
+                        <div class="contact">
+                            <a href="#"><i class="icon icon-telephone"></i></a>
+                            <a href="#"><i class="icon icon-weixin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="list2">
+            <div class="task clear">
+                <div class="locate">
+                    <i class="icon icon-locate">3</i>
+                </div>
+                <div class="detail">
+                    <a href="./interview_task_detail">
+                        <div class="title">强制收取参观费遭拒 导游追打游客致车祸</div>
+                        <p class="content">公诉机关指控，2015年10月4日11点多，陈某在昌平区八达岭高速居庸关附近的大巴车上，言语威胁车上游客补交参观费用，收费至申先生时被拒绝。陈某对申先生殴打，并在高速上对其进行追逐。申先生在高速公路逃跑时被汽车撞伤，经鉴定属于轻微伤。</p>
+                    </a>
+                    <div class="assign-info">
+                        <div class="assign-reporter">任务指派人：吕光辉</div>
+                        <div class="assign-date">3月27日</div>
+                        <!-- 联系方式 -->
+                        <div class="contact">
+                            <a href="#"><i class="icon icon-telephone"></i></a>
+                            <a href="#"><i class="icon icon-weixin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="task clear">
+                <div class="locate">
+                    <i class="icon icon-locate">4</i>
+                </div>
+                <div class="detail">
+                    <a href="./interview_task_detail">
+                        <div class="title">残疾人乘坐地铁可用APP预约出行服务</div>
+                        <p class="content">今年，《北京地铁无障碍出行手册》将把所有信息一网打尽，主要针对盲人、乘坐轮椅乘客、携带大件行李乘客等特殊乘客的不同出行需求，以无障碍设施功能介绍、设施位置、人员服务规范为主要内容，系统梳理地铁无障碍服务工作。</p>
+                    </a>
+                    <div class="assign-info">
+                    <div class="assign-reporter">任务指派人：张景浩</div>
+                    <div class="assign-date">3月28日</div>
+                    <!-- 联系方式 -->
+                    <div class="contact">
+                        <a href="#"><i class="icon icon-telephone"></i></a>
+                        <a href="#"><i class="icon icon-weixin"></i></a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    // footer 切换
+    $("#interview-task, #view-near").click(function () {
+        var $me = $(this);
+        var className = "selected";
+        if(!$me.hasClass(className)){
+            $("#list-box").show();
+            $("#list1, #list2").hide();
+            $("#interview-task, #view-near").removeClass(className);
+            $me.addClass(className);
+            $($me.attr("href")).show();
+        }else{
+            $("#list-box").hide();
+            $("#list1, #list2").hide();
+            $("#interview-task, #view-near").removeClass(className);
+        }
+    });
+
+    $(window).on("resize", function () {
+        $("#baidu-map").height($(window).height() - 45 - 49);
+    }).triggerHandler("resize");
+
+    // 获取一个百度定位的 ICON
+    /*function getBMapIcon(i){
+     return new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(23, 25), {
+     offset: new BMap.Size(10, 25), // 指定定位位置
+     imageOffset: new BMap.Size(0, 0 - i * 25) // 设置图片偏移
+     });
+     }*/
+
+    // 创建百度地图实例
+    var map = new BMap.Map("baidu-map");
+
+    // 编写自定义函数,创建标注
+    function addMarker(point, label){
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+        marker.setLabel(label);
+    }
+    getLocation({
+        before: function () {
+            fn_show_tips("正在获取位置信息，请稍后...");
+        },
+        showPosition: function (x, y) {
+            // 创建百度地图实例
+            var center = new BMap.Point(x, y);
+            map.centerAndZoom(center,16);
+
+            // 设置当前位置
+            var mk = new BMap.Marker(center);  // 创建标注
+            map.addOverlay(mk);              // 将标注添加到地图中
+
+            // 随机向地图添加标注
+            var bounds = map.getBounds();
+            var sw = bounds.getSouthWest();
+            var ne = bounds.getNorthEast();
+            var lngSpan = Math.abs(sw.lng - ne.lng);
+            var latSpan = Math.abs(ne.lat - sw.lat);
+
+            for (var i = 1; i <= 4; i++) {
+                var label = new BMap.Label(i, {offset:new BMap.Size(5, 3)});
+                label.setStyle({ border: "0", color: "#fff", fontSize: "12px", backgroundColor :"0.05"});
+                var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+                addMarker(point, label);
+            }
+        },
+        error: function (msg) {
+            fn_show_tips(msg);
+            // 创建百度地图实例
+            var center = new BMap.Point(116.4035, 39.915);
+            map.centerAndZoom(center,16);
+        },
+        option :{
+            enableHighAccuracy: true
+        }
+    });
+
+</script>
+</body>
+</html>

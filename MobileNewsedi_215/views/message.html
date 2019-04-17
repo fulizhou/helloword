@@ -1,0 +1,448 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no ,minimal-ui">
+    <title>新建留言</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+<!--    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/override.css">
+    <link rel="stylesheet" href="../stylesheets/report/create.css">-->
+
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/override.css">
+    <link rel="stylesheet" href="../stylesheets/report/create.css">
+    <!--<link rel="stylesheet" href="../assets/css/webuploader.css">-->
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.charfirst.pinyin.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/sort.js"></script>
+    <!--<script type="text/javascript" src="../assets/js/flowplay.min.js"></script>-->
+    <!--<script src="../assets/js/webuploader.js"></script>-->
+
+    <style>
+        ul,li{
+            list-style: none;
+            padding:0;
+            margin:0;
+        }
+
+        .img-return {
+            height: 2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .white-bar {
+            margin: 1.6rem 0;
+            background: white;
+        }
+
+        .bottomBg{
+            background: #eee;
+            border-top: 1px solid #ddd;
+            width: 100%;
+            text-align: center;
+            height: 5rem;
+            line-height: 5rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+        }
+        .return-parent {
+            text-align: center;
+        }
+
+        .return-parent > a {
+            color: #98999D;
+        }
+
+        .upload-img-div {
+            padding-top: 0;
+            margin: 3px;
+            border: 1px solid #cccccc;
+            width: 10rem;
+            height: 31.5%;
+            /*width: 100;*/
+            /*height: 100;*/
+            min-height: 100px;
+            overflow: hidden;
+            float: left;
+            position: relative;
+            background-origin: content;
+            background-size: auto 100%;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-image: url('/images/image_add.png');
+        }
+
+        .upload-progress{
+            text-align: center;
+        }
+
+        .doc-choose-list{
+            display: none;
+            margin-top: 0;
+        }
+
+        .des-label{
+            padding: 4% 0 3% 5%;
+        }
+        .am-datepicker-date{
+            width: 100%;
+        }
+        .public-time-input{
+            width: 94%;
+            padding: 2%;
+            font-size: 80%;
+            margin-left: 5%;
+            display: inline-block;
+        }
+        .doc-datepicker{
+            border: none;
+            background-color: transparent;
+        }
+
+        #doc-select-catalog-div, #doc-select-relation-div {
+            padding: 1rem;
+            margin-bottom: 0;
+        }
+
+        .am-form-group i {
+            color: #59B19A;
+        }
+
+        #cancel-relation, #cancel-relation-root, #relation-search{
+            width: 90%;
+            color: #FFFFFF;
+            border-radius: 5px;
+            background: #59B19A;
+        }
+        #doc-select-relation::after{
+            clear: both;
+            content: " ";
+            display: block;
+        }
+        #doc-select-relation>span{
+            float: left;
+            display: block;
+        }
+        #list{
+            width:100%;
+            margin-top:5px;
+        }
+        #list li{
+            float:left;
+            width:40%;
+            margin:3px 5%;
+            border:1px solid #ddd;
+            border-radius:8px;
+            height:33px;
+            line-height:33px;
+        }
+        #list li span{
+            display: block;
+            text-align: center;
+        }
+        #selectuser{
+            color: #59b19a;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        #messobj{
+            padding-top: 3px;
+        }
+
+    </style>
+</head>
+<body style="background-color: #EEEFF1;">
+<div id="view-main" class="choose-view" style="display: block">
+    <!--头部开始-->
+    <header id="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back()">
+                <img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+            </a>
+        </div>
+        <h1 id="header-title" class="am-header-title">新建留言</h1>
+    </header>
+    <!--头部结束-->
+    <div id="doc-form-all">
+        <!--输入内容开始-->
+        <form class="am-form" >
+            <fieldset class="whiteBg">
+                <div class="am-form-group">
+                    <textarea class="docText" rows="2" id="doc-title" placeholder="请输入留言标题" minlength="1"></textarea>
+                </div>
+                <div class="am-form-group">
+                    <textarea class="docText" rows="6" id="doc-content" placeholder="请输入留言内容"></textarea>
+                </div>
+            </fieldset>
+
+            <div id="messobj"><span>留言对象：</span><div id="selectuser"></div></div>
+            <div class="whiteBg clearfix" id="book">
+            <div id="getUserList" class = "am-form-group" style="margin-bottom: 0;border-bottom: none;">
+                <span class="am-text-truncate am-form-group i">
+                    <i class="am-icon-upload"></i>
+                  <!--  <span style="color: #454545;vertical-align: middle;margin: 1rem">通讯录&nbsp;&nbsp;</span>-->
+                    <a href="#" id="phoneBook2">&nbsp;选择留言对象</a>
+                    <i class="am-icon-angle-right" style="position: relative;float: right;">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                </span>
+            </div>
+            <div class="show_user" style="display: none" id="content">
+                <!-- <li>张三</li> <li>张三</li> <li>张三</li>-->
+            </div>
+        </div>
+            </form>
+    </div>
+    <!--按钮开始-->
+    <div class="btnSect whiteBg">
+        <button id="cancle" class="btn_cancel am-btn am-btn-default">取消</button>
+        <button id="ok" class="btn_determine am-btn am-btn-default">提交</button>
+    </div>
+    <!--按钮结束-->
+    </div>
+    </form>
+<!--通讯录-->
+<div id="outer" style="display: none;">
+    <div id="phoneBook" style="position:fixed;">
+        通讯录
+      <!--  <span id="con">确定</span>-->
+    </div>
+    <div  id="con">确定</div>
+    <div class="searchName">
+       <!-- <input type="text" name="first_name" class="first"/>-->
+    </div>
+    <div id="letter"></div>
+    <div class="sort_box">
+        <div id="show_user"></div>
+    </div>
+    <div class="initials">
+        <ul>
+        </ul>
+    </div>
+</div>
+</form>
+
+<script>
+  $("#search").unbind("click");
+  $("form").bind("submit",function(){
+      return false;
+  })
+
+  var Request = GetRequest();
+  function GetRequest() {
+      var url = location.search; //获取url中"?"符后的字串
+      var theRequest = new Object();
+      if (url.indexOf("?") != -1) {
+          var str = url.substr(1);
+          strs = str.split("&");
+          for(var i = 0; i < strs.length; i ++) {
+              theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+          }
+      }
+      return theRequest;
+  }
+
+  var type = Request["type"];
+  var ispublic = true;
+  if(type == "public"){
+      ispublic = true;
+      $("#book").css("display","none");
+      $("#messobj").css("display","none");
+  }  else{
+      ispublic = false;
+      $("#book").css("display","block");
+      $("#messobj").css("display","block");
+  }
+
+   var _input = $("input:checkbox");
+   _input.click(function(){
+       var _check = $(this).attr("checked") ;
+       if(_check=="checked"){
+           $("#book").toggle();
+       }
+       else{
+           $("#book").toggle();
+       }
+   });
+  $("#cancle").on("click",function(){
+       if(confirm("确认取消留言吗？")){
+           window.history.go(-1);
+       }else{
+           alert("未成功")
+       }
+   });
+
+
+    $(function(){
+        $("#getUserList").click(function() {
+            var loToken = localStorage.getItem('loToken');
+            var data = {"loToken": loToken};
+            $.ajax({
+                type: "GET",
+                url: "/message/getUserMailList",
+                dataType: 'json',
+                data: data,
+                contentType: "application/json",
+               /* beforeSend:function(){
+                    $("#getUserList").unbind('click');//提交链接只点击一次，防止多次点击
+                },*/
+                success: function (jsonData) {
+
+                   // showUser(jsonData.results);
+                    $(".show_user div").click(function(){
+                        $(this).toggleClass("select");
+                    })
+                }
+            });
+            function showUser(user_list){
+                $(".show_user").css("display","block");
+                for(var i in user_list){
+                    $(".show_user").append("<div><input type='hidden' name='selectedUser' value='"+user_list[i].userID+"'>"+user_list[i].userName+"</div>");
+                }
+            }
+            $("#view-main").hide();
+            $("#outer").show();
+        })
+
+    })
+
+
+
+</script>
+<script>
+    var ids="";
+    var selectName = "";
+    var $doc_title = $("#doc-title");
+    var $doc_content = $("#doc-content");
+    $("#ok").click(function(){
+        var title = $doc_title.val();
+        var content = $doc_content.val();
+        var param = {
+            btTopic: title,
+            btContent: content
+        };
+        if(validate(param)){
+
+            submit(param);
+        }
+        function validate(param){
+            if(!param.btTopic){
+                fn_show_tips("留言标题不能为空"); return false;
+            }
+            if(!param.btContent){
+                fn_show_tips("留言内容不能为空"); return false;
+            }
+            if(type != "public" && $(".select input").size()==0){
+                fn_show_tips("请选择留言对象"); return false;
+            }
+            return true;
+        }
+
+        function on_success(data) {
+            if(data.success){
+                fn_show_tips("创建留言成功", back);
+            }
+        }
+
+        function submit(param){
+            var DocLibID=localStorage.getItem("messageDocLibID");//localStorage.getItem("message_DocLibID");
+            var FVID=localStorage.getItem("messageDocLibID");//localStorage.getItem("message_DocLibID");
+            var loToken = localStorage.getItem('loToken');
+
+            $.ajax({
+                //http://127.0.0.1:8080/newsedit/newMobile/syn.do?method=saveLeaveMessage&DocLibID=20
+                // &FVID=20&selectedUser=&selectedOrg=&isPublic=true&SYS_TOPIC=题目&DOC_CONTENT=内容
+                url: "/fatch",
+                //0method: "post",
+                data: {
+                    method:"saveMyLeaveMessage",
+                    DocLibID:DocLibID,
+                    FVID:FVID,
+                    selectedUser:ids,
+                    selectedOrg:"",
+                    isPublic:ispublic,
+                    SYS_TOPIC:title,
+                    DOC_CONTENT:content,
+                    loToken:loToken
+                },
+                dataType: "json",
+                success: on_success
+            });
+        }
+    })
+//----------------------通讯录
+
+    $("#con").on("click",function(){
+        ids = "";
+        selectName = "";
+        $("#view-main").show();
+        $("#outer").hide();
+        var alldiv = $(".sort_box div");
+        for(var i=0;i<alldiv.size();i++){
+            if($(alldiv[i]).hasClass("select")){
+                ids+=","+$(alldiv[i]).find("input").val();
+                selectName+="&nbsp;&nbsp;"+$(alldiv[i]).find("li").text();
+            }
+        }
+        ids = ids.substr(1);
+        $("#selectuser").empty();
+        $("#selectuser").html(selectName);
+    });
+    $(function(){
+        var loToken = localStorage.getItem('loToken');
+        var data = {"loToken": loToken};
+        $.ajax({
+            type: "GET",
+            url: "/message/getUserMailList",
+            dataType: 'json',
+            data: data,
+            contentType: "application/json",
+            success: function (jsonData) {
+                console.log(jsonData);
+                showUser(jsonData.results);
+                $("#show_user div").click(function(){
+                    $(this).toggleClass("select");
+                });
+                startSort();
+            }
+        });
+        function showUser(user_list){
+            for(var i in user_list){
+                $("#show_user").append("<div class='sort_list'><li class='a num_name'><input type='hidden' name='selectedUser' value='"+user_list[i].userID+"'>"+user_list[i].userName+"</li></div>");
+            }
+        }
+
+    })
+
+</script>
+</body>
+</html>

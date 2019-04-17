@@ -1,0 +1,10 @@
+{
+  "results":[
+    {"groupHead":"http://59.108.121.222/newsedit/newsedit/weixin/getHeaderImg.do?type=weibo&appId=1","groupName":"文新微博","groupId":10},
+    {"groupHead":"http://59.108.121.222/newsedit/newsedit/weixin/getHeaderImg.do?type=weibo&appId=1","groupName":"新浪微博","groupId":20},
+    {"groupHead":"http://59.108.121.222/newsedit/newsedit/weixin/getHeaderImg.do?type=weibo&appId=1","groupName":"腾讯微博","groupId":494},
+    {"groupHead":"http://59.108.121.222/newsedit/newsedit/weixin/getHeaderImg.do?type=weibo&appId=1","groupName":"网易微博","groupId":505},
+    {"groupHead":"http://59.108.121.222/newsedit/newsedit/weixin/getHeaderImg.do?type=weibo&appId=1","groupName":"hello微博","groupId":514},
+    {"groupHead":"http://59.108.121.222/newsedit/newsedit/weixin/getHeaderImg.do?type=weibo&appId=1","groupName":"how are you 微博","groupId":516}],
+  "success":true
+}

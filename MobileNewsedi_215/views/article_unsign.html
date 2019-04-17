@@ -1,0 +1,118 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件撤签</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+</head>
+<body>
+<header id ="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <a href="javascript:returnBack();">
+            <img src="../images/navbar/return.png">
+        </a>
+    </div>
+    <h1 id="header-title" class="am-header-title" style="font-size: 2rem">撤签</h1>
+    <div class="am-header-right am-header-nav">
+        <a href="javascript:unsign_mode();">
+            <img src="../images/navbar/submit.png"><span class="am-header-nav-title">&nbsp;提交</span>
+        </a>
+    </div>
+</header>
+
+<div>
+    <form class="am-form">
+        <fieldset style="background-color: #FFFFFF;margin: 0px;padding: 0px">
+            <div>
+                <div class = "am-form-group" >
+                    <textarea class="" rows="2" id="doc-note" placeholder="请输入撤签意见" minlength="1" style="border: none"></textarea>
+                </div>
+                <hr data-am-widget="divider" class="am-divider am-divider-default" />
+                <!--<hr data-am-widget="divider" style="position:relative;width: 106%;left:-3%" class="am-divider am-divider-default" />-->
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+
+    function returnBack(){
+        history.go(-1);
+    }
+
+    function unsign_mode(){
+        var note = document.getElementById('doc-note').value;
+//        if(note.length == 0){
+//            fn_show_tips('请填写签发意见');
+//            return;
+//        }
+        var loToken = localStorage.getItem('loToken');
+        var data = {"article_id": '<%= article_id %>',"article_libid":'<%= article_libid %>',"note":note, "loToken":loToken};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/article_detail/unsign_opt",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+                    fn_show_tips("稿件撤签成功。");
+                    setTimeout(function () {
+                        window.history.go(-2);
+                    }, 1500);
+                }
+            }
+        });
+
+    }
+
+    $(function(){
+//        choose_catalog_list();
+
+    });
+
+    function return_back_home(){
+
+        window.history.go(-1);
+    }
+
+</script>
+</body>
+</html>

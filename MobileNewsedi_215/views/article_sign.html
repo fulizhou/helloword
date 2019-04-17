@@ -1,0 +1,112 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件签发</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+</head>
+<body>
+<header id ="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <a href="javascript:returnBack();">
+            <img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+        </a>
+    </div>
+    <h1 id="header-title" class="am-header-title" style="font-size: 2rem">签发</h1>
+</header>
+
+<div>
+    <div id="doc-catalog-list">
+        <div id = "doc-catalog-list-tpl" class="am-list-news-bd">
+            <ul class="am-list">
+                <!--<li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="sign_mode('paper');"><span>纸媒</span><i style="float: right" class="am-icon-angle-right"></i></a></li>-->
+                <!--<li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="sign_mode('site');"><span>网站</span><i style="float: right" class="am-icon-angle-right"></i></a></li>-->
+                <!--<li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="sign_mode('weibo');"><span>微博</span><i style="float: right" class="am-icon-angle-right"></i></a></li>-->
+                <!--<li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="sign_mode('app');"><span>APP</span><i style="float: right" class="am-icon-angle-right"></i></a></li>-->
+                <!--<li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="sign_mode('weibo');"><span>微博</span><i style="float: right" class="am-icon-angle-right"></i></a></li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+
+    function returnBack(){
+        history.go(-1);
+    }
+
+    function sign_mode(mode){
+
+        var articleType = "<%= article_type%>";
+        if(mode=="paper"){
+            if(articleType=="video"){
+                fn_show_tips("视频不能签发到纸媒");
+                return;
+            }
+        }
+
+        location.href = "/article_detail/sign_mode?sign_mode="+mode+"&article_id=<%= article_id%>&article_libid=<%= article_libid%>&article_type=<%= article_type%>&has_img=<%= has_img%>";
+
+    }
+
+    $(function(){
+
+        var sign_type = "<%= sign_type%>";
+        sign_type = decodeURIComponent(decodeURIComponent(sign_type));
+
+        var layout_list_html = '<div id = "doc-catalog-list-tpl" class="am-list-news-bd">';
+        layout_list_html += '<ul class="am-list" >';
+
+        var jsonObj = JSON.parse(sign_type);
+        for(var i=0;i<jsonObj.length;i++){
+            var columnCode = jsonObj[i].columnCode;
+            var name = jsonObj[i].name;
+            layout_list_html += '<li><a style="padding-left: 5%;padding-right: 5%" class="am-list-item-hd" onclick="sign_mode(\''+columnCode+'\');"><span>'+name+'</span><i style="float: right" class="am-icon-angle-right"></i></a></li>';
+        }
+        layout_list_html += '</ul>';
+        layout_list_html += '</div>';
+
+        $("#doc-catalog-list-tpl").replaceWith(layout_list_html);
+    });
+
+    function return_back_home(){
+
+        window.history.go(-1);
+    }
+
+</script>
+</body>
+</html>

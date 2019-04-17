@@ -1,0 +1,747 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>版面详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <!-- 远程调试js工具-->
+    <!--<script src="http://172.19.32.37:8081/target/target-script-min.js#anonymous" type="text/javascript">-->
+    <!--</script>-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript">
+        $(document).on("pagecreate","#pageone",function(){
+            $("#pageone").on("swiperight",function(){
+                showDocNew('paper_layout_detail.html',1)
+            });
+            $("#pageone").on("swipeleft",function(){
+                showDocNew('paper_layout_detail.html',2)
+            });
+        });
+    </script>
+    <style>
+        .ui-loader{
+            display:none;
+        }
+        ul,li{
+            padding:0;
+            margin:0;
+            list-style: none;
+        }
+        #play_list{
+            display:none;
+            position: absolute;
+            height:25rem;
+            overflow-y: auto;
+            padding:1rem;
+            width:100%;
+            right:0;
+            bottom:9rem;
+            font-size:12px;
+            border:1px solid #ddd;
+            background: #ddd;
+        }
+        #play_list li{
+            height:6rem;
+        }
+        #play_list li p:nth-child(1){
+            margin-bottom:0;
+        }
+        #play_list li p:nth-child(2){
+            margin-top:0;
+        }
+        #play_list li p span{
+            display:inline-block;
+            padding:0 10px;
+        }
+        .voice{
+            border-radius:4px;
+            height:30px;
+            width:50%;
+            background: #fff;
+        }
+        .voice img{
+            display: inline-block;
+            padding-left:5px;
+            border:none;
+            vertical-align: top;
+            overflow:hidden;
+        }
+    </style>
+</head>
+<body>
+<div data-role="page" id="pageone">
+    <!--左右按钮是 start-->
+
+    <!--<a style="position: absolute;left: 15px;cursor: pointer;"   onclick="showDocNew('paper_layout_detail.html',1)" >
+        <img src="images/pic_left.png"  id="yi" style="position: fixed; top: 300px; z-index: 100;">
+    </a>
+    <a  style="position:absolute;right:40px;cursor: pointer;"  onclick="showDocNew('paper_layout_detail.html',2)">
+        <img src="images/pic_right.png" id="er"  style="position: fixed; top: 300px; z-index: 100;">
+    </a>-->
+    <!--左右按钮是 end-->
+    <header data-am-widget="header" class="am-header am-header-default" id="header">
+        <div class="am-header-left am-header-nav">
+            <div>
+                <a id="doc-header-return-a" href="javascript:returnBack();" ><img src="images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a><span id="doc-select-catalog-name" style="color: #FFFFFF"></span>
+            </div>
+        </div>
+        <!-- <div class="am-header-right am-header-nav">
+               <div>
+                 &lt;!&ndash;  <a href="javascript:newArticle();"><img src="images/list/no-pic-icon.png"></a>&ndash;&gt;
+                   <a href="javascript:void(0)" onclick=" show_layout_list()" id="article_list"><img src="images/list/no-pic-icon.png"></a>
+
+              </div>
+
+          </div>-->
+        <!-- <ul id ="doc-article-list" class="am-list" style="width:40%;position:absolute;right:0;top:30px;text-align:center;">
+             <li>fdf</li>
+             <li>fdf</li>
+             <li>fdf</li>
+             <li>fdf</li>
+         </ul>-->
+    </header>
+    <!--<div id="doc-date-picker-div" style="text-align: center;background-color: #ecf4f7;border-bottom: solid 1px #d2d2d2;vertical-align: middle;line-height: 4rem;">-->
+    <!--<span id="paper-info-lay" style="float: left;font-size: 80%;color: #59B19A"></span>-->
+    <!--<span id="paper-info-date" style="font-size: 80%"></span>-->
+    <!--<span id="paper-info-status" style="float: right;font-size: 80%;color: greenyellow"></span>-->
+    <!--</div>-->
+
+    <!--<div style="text-align:left;margin:0;">-->
+    <!--<small id="doc-article-meta" style="padding-left:2%" class="am-text-danger"></small>-->
+    <!--</div>-->
+    <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: false }">
+        <div id = "doc-article-content" class="am-article-bd">
+        </div>
+    </article>
+
+    <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="doc-operation-div" >
+        <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4" style="border-top: solid 2px #59b19a">
+        </ul>
+    </div>
+    <div id="play_list" style="">
+    </div>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+        <div class="am-modal-dialog">
+            <div class="am-modal-bd" id="modal-content-div">
+                <!--啦啦啦啦啦-->
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--<script type="text/javascript" src="../assets/js/jquery.min.js"></script>-->
+<script type="text/javascript" src="../assets/js/amazeui.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+
+
+    function returnBack()
+    {
+        window.location.href = "/paper_article_list/paperList?paper_paper_id=" + "<%= paper_paper_id %>" + "&catalog_name=" + "<%= column_name%>"+"&paperMinDate="+"<%= paper_date%>";
+    }
+
+    function newArticle(){
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    function load_article_detail(article_id){
+        var loToken = localStorage.getItem('loToken');
+        var data = {"article_id":article_id, "page_id":"<%= page_id %>", "loToken":loToken};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/article_detail/layout",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+                if(jsonData.success == true){
+                    show_article_detail(jsonData.results);
+                }
+            }
+        });
+
+    }
+
+    function show_article_detail(article){
+
+//        document.getElementById('doc-article-title').innerText = article.column_date + ' ' +  article.column_name + ' ' + article.layout_name;
+//        var meta_info = "";
+//        meta_info += article.column_name;
+//        meta_info += '&nbsp;&nbsp;';
+//        meta_info += article.layout_name;
+//        meta_info += '&nbsp;&nbsp;';
+//        meta_info += article.author;
+//        meta_info += '&nbsp;&nbsp;';
+//        meta_info += article.opt_time.substring(5, 16);
+//        meta_info += '&nbsp;&nbsp;';
+//        meta_info += article.status;
+//        document.getElementById('doc-article-meta').innerHTML = meta_info;
+//        article_list[i].imageUrl = article_list[i].imageUrl.split("&amp;").join("&");
+        article.largeImage = article.largeImage.split("&amp;").join("&");
+//        var content = '<figure data-am-widget="figure" class="am am-figure am-figure-default "   data-am-figure="{  pureview: \'true\' }"><img src="' + article.largeImage + '" data-rel="' + article.largeImage + '"/></figure>';
+        var content = '<a href="#" onclick="getLargeImage(this)"><img src="' + article.largeImage + '" data-rel="' + article.largeImage + '"/></a>';
+
+        document.getElementById('doc-article-content').innerHTML = content;
+        document.getElementById('doc-select-catalog-name').innerText = article.column_name + ' ' + article.layout_name;
+
+//        document.getElementById('paper-info-lay').innerHTML = '&nbsp;&nbsp;' + article.column_name + '&nbsp;&nbsp;' + article.layout_name;;
+//        document.getElementById('paper-info-date').innerHTML = article.opt_time.substring(0, 10);
+//
+//        if(article.status == "composing"){
+////            color_span.innerText = "正在组版";
+//            document.getElementById('paper-info-status').innerHTML = '正在组版&nbsp;&nbsp;';
+//            document.getElementById('paper-info-status').style.color = "#ebb369";
+//        }else if(article.status == "save"){
+////            color_span.innerText = "保存组版";
+//            document.getElementById('paper-info-status').innerHTML = '保存组版&nbsp;&nbsp;';
+//            document.getElementById('paper-info-status').style.color = "red";
+//        }else if(article.status == "finished"){
+////            color_span.innerText = "组版完毕";
+//            document.getElementById('paper-info-status').innerHTML = '组版完成&nbsp;&nbsp;';
+//            document.getElementById('paper-info-status').style.color = "#66c080";
+//        }else if(article.status == "sign"){
+////            color_span.innerText = "签发大样";
+//            document.getElementById('paper-info-status').innerHTML = '大样已签发&nbsp;&nbsp;';
+//            document.getElementById('paper-info-status').style.color = "#69c3db";
+//        }else{
+////            color_span.innerText = article.status;
+//            document.getElementById('paper-info-status').innerHTML = article.status + '&nbsp;&nbsp;';
+//        }
+
+//        document.getElementById('paper-info-status').innerHTML = article.status + '&nbsp;&nbsp;';
+
+//        article_list[i].imageUrl = article_list[i].imageUrl.split("&amp;").join("&");
+
+        document.getElementById('doc-operation-list').innerHTML = "";
+        var operation_list_node = document.getElementById('doc-operation-list');
+//        var operate_perm = article.operate_perm;
+
+        var operate_perm = "|" + article.opt_perm + "|";
+
+//        if(operate_perm.find('signpage') > 0)
+        if(operate_perm.indexOf('|signpage|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_sign();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "../images/navbar/sign.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "大样签发";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+//        if(operate_perm.find('unsignpage') > 0)
+        if(operate_perm.indexOf('|unsignpage|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_unsign();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "../images/navbar/unsigned.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "大样撤签";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+//        if(operate_perm.find('notepage') > 0)
+        if(operate_perm.indexOf('|notepage|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_opinion();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "../images/navbar/opinion.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "大样意见";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+//        if(operate_perm.find('markpage') > 0)
+        if(operate_perm.indexOf('|markpage|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_sign33();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "../images/navbar/sign.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "大样批注";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+        //        if(operate_perm.find('markpage') > 0)
+        if(operate_perm.indexOf('|record|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_logDetail();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "../images/navbar/record.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "流程记录";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+        var isVoiced = getAppType();
+        if(isVoiced)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.id="add_voice";
+            operation_a.href = 'schema://VoiceComment_record/'+"<%= article_id %>"+'';
+            var operation_i = document.createElement('img');
+            operation_i.src = "../images/navbar/add_radio.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "开始录音";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+        $("#add_voice").click(function(){
+            $(this).css("background","#ddd");
+        });
+        if(isVoiced)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.id="end_voice";
+            operation_a.href = 'schema://VoiceComment_upload';
+            var operation_i = document.createElement('img');
+            operation_i.src = "../images/navbar/add_radio.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "结束录音";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+        $("#end_voice").click(function(){
+            $("#add_voice").css("background","#F8F8F8");
+            //voice_upload();
+
+        })
+        if(isVoiced)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.id="play_voice";
+            operation_a.href = '';
+            var operation_i = document.createElement('img');
+            operation_i.src = "../images/navbar/play_radio.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "播放录音";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+        $("#play_voice").click(function(){
+            play_voice();
+        });
+
+        /*
+
+         //if(operate_perm.find('sign') > 0)
+         {
+         var operation_li = document.createElement('li');
+         var operation_a = document.createElement('a');
+         operation_a.href = 'javascript:article_tranfer();';
+         var operation_i = document.createElement('i');
+         operation_i.className = "am-icon-pencil-square-o";
+         operation_a.appendChild(operation_i);
+         var operation_span = document.createElement('span');
+         operation_span.className = "am-navbar-label";
+         operation_span.innerText = "调版";
+         operation_a.appendChild(operation_span);
+         operation_li.appendChild(operation_a);
+         operation_list_node.appendChild(operation_li);
+         }
+
+         */
+    };
+    /*function voice_upload(guid_id){
+        var loToken = localStorage.getItem('loToken');
+        var datas = {"method":"saveVoiceComment","article_id":"<%= article_id %>","guid":guid_id,"loToken":loToken};
+        $.ajax({
+            type:"GET",
+            url: "../newsedit/newMobile/syn.do",
+            data:datas,
+            dataType:"json",
+            beforeSend:function(){
+                $("#end_voice").attr("href","#");
+            },
+            success:function(jsonData){
+                console.log(jsonData);
+                if(jsonData.success == true){
+                    fn_show_tips("上传成功");
+                }else{
+                    fn_show_tips("上传失败");
+                }
+            }
+        })
+    }*/
+
+    function getAppType(){
+        var isVoice=false;
+        var loToken = localStorage.getItem('loToken');
+        var data = {"method": "getapptype","loToken":loToken};
+        $.ajax({
+            url: "/article_detail/getapptype",
+            type: "GET",
+            data: data,
+            async: false,
+            dataType: "json",
+            beforeSend:function(){
+                $("#play_voice").hide();
+            },
+            success: function (jsonData) {
+                if (jsonData.app_type == "native_app") {
+                    isVoice=true;
+                }
+
+                if (jsonData.app_type == "web_app") {
+                    isVoice=false;
+                }
+            }
+        });
+        return isVoice;
+    }
+    function play_voice(){
+        var loToken = localStorage.getItem('loToken');
+        var data = {"method": "getVoiceComment","article_id":"<%= article_id %>","loToken":loToken};
+        $.ajax({
+            url: "/article_detail/voice",
+            type: "GET",
+            data: data,
+            dataType: "json",
+            beforeSend:function(){
+                $("#play_voice").attr("href","#");
+            },
+            success: function (jsonData) {
+                if (jsonData.success == true) {
+                    show_list(jsonData.results);
+                    $("#play_list").slideDown();
+                }
+            }
+        });
+        function show_list(article){
+            var user=$("#play_list");
+            var ul=$("<ul></ul>");
+            var len=article.voiceList.length-1;
+            for(var i=0;i<=len;i++){
+                var li=$("<li>"
+                        + "<p><audio controls><source src="+article.voiceList[i].audioUrl+" type='audio/mp3'/>"
+                        + "<source src="+article.voiceList[i].audioUrl+" type='audio/mpeg'/>"
+                        + "<source src="+article.voiceList[i].audioUrl+" type='audio/ogg'/>"
+                        + "</audio></p>"
+                        + "<p><span><b>时间:</b>"+article.voiceList[i].creatTime+"</span>"
+                        + "<span><b>作者:</b>"+article.voiceList[i].creator+"</span></p>"
+                        + "</li>");
+                ul.append(li)
+            }
+            user.append(ul);
+        }
+    }
+
+    $(function(){
+        load_article_detail("<%= article_id %>");
+
+//        document.getElementById('doc-select-catalog-name').innerText = "<%= column_name%>";
+
+    });
+
+    //撤签
+    function article_unsign(){
+//        $('#modal-content-div').innerText = "确定撤签？";
+        document.getElementById('modal-content-div').innerText = "确定撤签?";
+        $('#my-confirm').modal({
+
+            onConfirm: function(){
+                var loToken = localStorage.getItem('loToken');
+                var data = {"page_id":"<%= page_id %>", "loToken":loToken};
+
+                //以post方式提交数据
+                $.ajax({
+                    type: "GET",
+                    url: "/article_detail/unsign_page",
+
+                    dataType:'json',
+                    data: data,
+                    contentType: "application/json",
+                    success:function(jsonData){
+
+                        if(jsonData.success == true){
+
+
+                            $('html, body').animate({scrollTop: 0}, '500');
+                            fn_show_tips("大样撤签成功。");
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1500);
+//                            load_article_detail("<%= article_id %>");
+
+                        }
+                    }
+                });
+            },
+            onCancel: function(){
+                //啥也不干
+            }
+
+        })
+
+
+    }
+
+    function article_choose(){
+
+        var href = "/article_detail/choose?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+
+    function article_sign(){
+
+//        $('#modal-content-div').innerText = "确定签发？";
+        document.getElementById('modal-content-div').innerText = "确定签发?";
+        $('#my-confirm').modal({
+
+            onConfirm: function(){
+                var loToken = localStorage.getItem('loToken');
+                var data = {"page_id":"<%= page_id %>","loToken":loToken,"isSign":"0"};
+
+                //以post方式提交数据
+                $.ajax({
+                    type: "GET",
+                    url: "/article_detail/sign_page",
+
+                    dataType:'json',
+                    data: data,
+                    contentType: "application/json",
+                    success:function(jsonData){
+
+                        if(jsonData.success == false && jsonData.results.error_info.indexOf("版面内有图片更新")>-1){
+                            if(confirm(jsonData.results.error_info) == true){
+                               article_sign_two();
+                            }
+                        }
+                        else if(jsonData.success == true){
+
+                            $('html, body').animate({scrollTop: 0}, '500');
+                            fn_show_tips("大样签发成功。");
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1500);
+//                            load_article_detail("<%= article_id %>");
+                        }
+
+                    }
+                });
+            },
+            onCancel: function(){
+                //啥也不干
+            }
+
+        })
+
+//        $.AMUI.progress.start();
+//        $.AMUI.progress.set(0.6);
+//
+//        var data = {"page_id":"<%= page_id %>"};
+//
+//        //以post方式提交数据
+//        $.ajax({
+//            type: "GET",
+//            url: "/article_detail/sign_page",
+//
+//            dataType:'json',
+//            data: data,
+//            contentType: "application/json",
+//            success:function(jsonData){
+//
+//                if(jsonData.success == true){
+//                    $('html, body').animate({scrollTop: 0}, '500');
+//                    fn_show_tips("大样签发成功。");
+//                }
+//            }
+//        });
+
+    }
+
+    function article_sign_two(){
+
+        var loToken = localStorage.getItem('loToken');
+        var data = {"page_id":"<%= page_id %>","loToken":loToken,"isSign":"1"};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/article_detail/sign_page",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    $('html, body').animate({scrollTop: 0}, '500');
+                    fn_show_tips("大样签发成功。");
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1500);
+//
+                }
+
+            }
+        });
+
+    }
+
+
+    function article_return_dept(){
+
+        fn_show_tips("大样意见提交成功。");
+        $('html, body').animate({scrollTop: 0}, '500');
+    }
+
+    //大样意见
+    function article_opinion(){
+
+        var article_id = "<%= article_id %>";
+        var page_id = "<%= page_id %>";
+        var column_name = document.getElementById('doc-select-catalog-name').innerText;
+        window.location.href = "/article_detail?articleId="+ article_id + "&page_id="+ page_id +"&lib_type=paper_layout_opinion&column_name=" + column_name;
+
+    }
+
+    //流程记录
+    function article_logDetail(){
+
+        var cat_name = document.getElementById('doc-select-catalog-name').innerText;
+        var cat_child_name = document.getElementById('doc-select-catalog-name').innerHTML;
+
+        var href = "/article_detail/logDetail?" + "article_id=" + "<%= article_id %>" + "&article_libid=" + "<%= article_libid %>"+ "&cat_name=" + cat_name+ "&cat_child_name=" + cat_child_name;
+        location.href = href;
+    }
+
+</script>
+<script>
+    //触控翻页
+    var sHref = window.location.href;
+    var CurPageDocIDs=sHref.split("&arry=")[1];
+    if(CurPageDocIDs=="null"){
+        $("#yi").attr("style",$("#yi").attr("style")+"display:none;");
+        $("#er").attr("style",$("#er").attr("style")+"display:none;");
+    }
+    var arry=CurPageDocIDs.split(",");
+    var arryc = arry[0].split("_");
+    var wid="wid";
+    var yi="";
+    var er="";
+    for(var int=0;int<arry.length;int++){
+        if(arry[int]==arryc[0]+"_<%=article_id%>"){
+            yi=arry[int-1]
+            er=arry[int+1]
+        }
+    }
+    if(yi==undefined){
+        $("#yi").attr("style",$("#yi").attr("style")+"display:none;")
+    }
+    if(er==undefined){
+        $("#er").attr("style",$("#er").attr("style")+"display:none;")
+    }
+
+    function showDocNew(url,param){
+
+        var i=0;
+
+        if(param=='1'){//上一篇
+            if(yi==undefined){
+
+                i=1;
+                fn_show_tips("已经是第一篇了");
+            }else {
+                url = sHref.split("?")[0] + "?lib_type=paper_layout&paper_paper_id=" + "<%= paper_paper_id %>"+ "&column_name=" + "<%= column_name%>"+"&paper_date="+"<%= paper_date%>"+"&page_id=" + yi.split("_")[1] + "&articleId=" + yi.split("_")[1] + "&article_libid=" + er.split("_")[0] + "&CurPageDocIDs=" + CurPageDocIDs + "&wid=" + wid + "&arry=" + CurPageDocIDs;
+                if (!($(".pic_Rifgt").is(":visible"))) {
+                    $(".pic_Rifgt").show();
+                }
+            }
+        }else if(param=='2') {//下一篇
+            if(er==""){
+                i=2;
+                fn_show_tips("已经是最后一篇了");
+            }else {
+                url = sHref.split("?")[0] + "?lib_type=paper_layout&paper_paper_id=" + "<%= paper_paper_id %>"+ "&column_name=" + "<%= column_name%>"+"&paper_date="+"<%= paper_date%>"+"&page_id=" + er.split("_")[1] + "&articleId=" + er.split("_")[1] + "&article_libid=" + er.split("_")[0] + "&CurPageDocIDs=" + CurPageDocIDs + "&wid=" + wid + "&arry=" + CurPageDocIDs;
+                if (!($(".pic_Left").is(":visible"))) {
+                    $(".pic_Left").show();
+                }
+            }
+        }
+        if(i==0) {
+            window.location.href = url;
+        }
+    }
+    function getLargeImage(src){
+        var url = $(src).find("img").attr("src");
+        window.location.href="./zoomImg?img="+url;
+    }
+</script>
+</body>
+</html>

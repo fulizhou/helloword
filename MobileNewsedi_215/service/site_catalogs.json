@@ -1,0 +1,12 @@
+{
+  "success":true,
+  "results":
+    [{"id": 1,"name": "方正网站","parent_id":0}
+    ,{"id": 12,"name": "国内新闻","parent_id":1}
+    ,{"id": 13,"name": "体育","parent_id":1}
+    ,{"id": 14,"name": "国际新闻","parent_id":1}
+    ,{"id": 121,"name": "生活","parent_id":12}
+    ,{"id": 122,"name": "社会","parent_id":12}
+    ,{"id": 123,"name": "时政","parent_id":12}
+    ]
+}

@@ -1,0 +1,178 @@
+html,body,div,ul,li,ol,a,input,textarea,p,dl,dt,dd{margin:0;padding:0;}
+ul li{list-style: none;}
+a{text-decoration: none;cursor: pointer;}
+html{height: 100%;}
+body{height: 100%;background: #f5f5f5;position: relative;font-family: '微软雅黑';max-width: 640px;margin:auto;}
+a,input,img,textarea,span,div{outline: 0;-webkit-tap-highlight-color:rgba(255,0,0,0);}
+header{
+    width:100%;
+    height: 45px;
+    background: #ececea;
+    border-bottom: 1px solid #ddd;
+}
+body{
+    background-color: white;
+    position: relative;
+}
+header.fixed{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+}
+.header{
+    margin:0 20px;
+    text-align: center;
+    color: #4e4a49;
+    font-size: 1em;
+    height: 45px;
+    line-height: 45px;
+    position: relative;
+}
+#letter{
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    font-size: 75px;
+    color: #555;
+    text-align: center;
+    line-height: 100px;
+    background: rgba(145,145,145,0.6);
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin:-50px 0px 0px -50px;
+    z-index: 99;
+    display: none;
+}
+#letter img{
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin:25px 0px 0px 25px;
+}
+.sort_box{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: white;
+}
+.sort_list{
+    padding:0px 60px 0px 0px;
+    line-height:41px;
+    border-bottom:1px solid #ddd;
+}
+.sort_list li{
+    margin-left: 20px;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.sort_list .num_logo{
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: absolute;
+    top: 5px;
+    left: 20px;
+}
+.sort_list .num_logo img{
+    width: 50px;
+    height: 50px;
+}
+.sort_list .num_name{
+    color: #000;
+}
+#phoneBook{
+
+    background-color: #75859f;
+    transform: translateX(160px);
+    position: fixed;
+    z-index: 999;
+}
+.sort_letter{
+    text-indent: 20px;
+    height: 30px;
+    line-height: 30px;
+    color:#59b19a;
+    font-size: 16px;
+    border-bottom:1px solid #ddd;
+    background-color: #EEE;
+}
+.initials{
+    position: fixed;
+    top:49px;
+    right:17px;
+    height: 100%;
+    width: 15px;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 14px;
+    z-index: 99;
+    background: rgba(145,145,145,0);
+    float: right;
+}
+/* 默认不显示的的标签 */
+.visible-hide{
+    display: none;
+}
+.show_user{
+    width:100%;
+    margin-top:10px;
+    height:10rem;
+    overflow-y: auto;
+}
+.show_user li{
+    float:left;
+    display:inline-block;
+    padding:0 5px;
+}
+.show_user li.select{
+    background: #ddd;
+}
+.select{
+    background:#3f4e68;
+}
+.select{
+    background:#B7B7B7;
+}
+#phoneBook{
+    position: fixed;
+    right: 160px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: 700;
+    background:#59B19A;
+    color: white;
+    width: 100%;
+    z-index: 999;
+}
+.first{
+    width:95%;
+    display: block;
+    margin:auto;
+    height: 30px;
+    transform: translateY(3px);
+    border-radius: 6px;
+}
+.searchName{
+    height: 36px;
+    line-height: 36px;
+    background: lightgray;
+    overflow: hidden;
+}
+#con{
+    position:fixed;
+    top:10px;
+    right: 1px;
+    z-index: 999;
+    width: 39px;
+    color: #ffffff;
+}
+#messobj{
+    text-indent: 33px;
+    background: white;
+}

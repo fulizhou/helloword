@@ -1,0 +1,525 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title><%= app_title%></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <!--<meta name="msapplication-TileColor" content="#59B19A">-->
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/font.css?v=1">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <style type="text/css">
+        .lib-div-block {
+            /*float:left;
+            width: 50%;
+            height: 166px;
+            margin-bottom: 8px;*/
+            text-align: center;
+        }
+
+        .lib-div-block > div {
+            float: left;
+            color: #fff;
+        }
+        .div-block-full > img {
+            width: 80px;
+            display: block;
+            margin: 0 auto;
+            padding-top: 25px;
+        }
+
+        .div-block-half-h > img {
+            width: 40px;
+            display: inline;
+            margin:-5px 10px 0 22px;
+        }
+
+        .div-block-half-h > .pic-words {
+            display: inline;
+            line-height: 79px;
+        }
+
+        .div-block-half-v > img {
+            width: 40px;
+            display: block;
+            margin: 0 auto;
+            padding-top: 48px;
+        }
+
+        .div-block-small > img {
+            width: 40px;
+            display: block;
+            margin: 3px auto 0;
+        }
+
+        #lib-div-list {
+            padding: 0 1%;
+            margin: 5% 0;
+        }
+
+        #lib-div-list::after {
+            width: 0;
+            height: 0;
+            clear: both;
+            content: " ";
+            display: block;
+        }
+        .pic-words {
+            font-size: 14px;
+            color: #5E5E5E;
+            letter-spacing: 0;
+            font-weight: bolder;
+        }
+        .am-header {
+            position: relative;
+            width: 100%;
+            height: 49px;
+            line-height: 49px;
+            padding: 0 10px;
+            background-color: #59B19A;
+        }
+    </style>
+</head>
+<div style="background-color: #FDFDFE">
+    <div>
+        <div style="width: 100%;background-color: #59B19A;height: 55px;line-height: 55px;">
+            <header id="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+                <div class="am-header-left am-header-nav">
+                    <a href="javascript:back()" style="color: #fff;">
+                        <img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;">返回
+                    </a>
+                </div>
+            </header>
+        </div>
+    </div>
+
+    <!-- 操作功能列表 -->
+    <div id="lib-div-list">
+
+        <span class="lib-div-block">
+            <div id="article-lib-div" class="div-block-small">
+                <img src="../images/tougao.png">
+                <span class="pic-words">投稿</span>
+            </div>
+        </span>
+        <span class="lib-div-block">
+            <div id="picture-lib-div" class="div-block-small">
+                <img src="../images/toutu.png">
+                <span class="pic-words">投图</span>
+            </div>
+        </span>
+        <span class="lib-div-block">
+            <div id="video-lib-div" class="div-block-small">
+                <img src="../images/toushipin.png">
+                <span class="pic-words">投视音频</span>
+            </div>
+        </span>
+
+        <span class="lib-div-block">
+            <div id="source-lib-div" class="div-block-small">
+                <img src="../images/source.png">
+                <span class="pic-words">稿源中心</span>
+            </div>
+        </span>
+        <span class="lib-div-block">
+             <div id="dept-lib-div" class="div-block-small">
+                 <img src="../images/dept.png">
+                 <span class="pic-words">部门库</span>
+             </div>
+        </span>
+        <span class="lib-div-block">
+             <div id="paper-lib-div" class="div-block-small">
+                 <img src="../images/paper.png">
+                 <span class="pic-words">报纸</span>
+             </div>
+        </span>
+
+        <!-- 扩展渠道, 没有时设置为隐藏 -->
+        <span id="lib-div-ext" class="div-block-small" style="display:none;"></span>
+
+        <span class="lib-div-block">
+             <div id="passhand-lib-div" class="div-block-small">
+                 <img src="../images/passhand.png">
+                 <span class="pic-words">经手稿库</span>
+             </div>
+        </span>
+        <span class="lib-div-block">
+            <div id="xhs-lib-div" class="div-block-small">
+                <img src="../images/xinhua.png">
+                <span class="pic-words">电稿库</span>
+            </div>
+        </span>
+
+        <span class="lib-div-block">
+            <div id="weixi-lib-div" class="div-block-small">
+                <img src="../images/weixin.png">
+                <span class="pic-words">微信</span>
+            </div>
+        </span>
+        <span class="lib-div-block">
+            <div id="site-lib-div" class="div-block-small">
+                <img src="../images/site.png">
+                <span class="pic-words">网站</span>
+            </div>
+        </span>
+
+        <span class="lib-div-block">
+             <div id="weibo-lib-div" class="div-block-small">
+                 <img src="../images/weibo.png">
+                 <span class="pic-words">微博</span>
+             </div>
+        </span>
+         <span class="lib-div-block">
+             <div id="message-lib-div" class="div-block-small">
+                 <img src="../images/message.png">
+                 <span class="pic-words">留言簿</span>
+             </div>
+         </span>
+        <span class="lib-div-block">
+            <div id="notice-lib-div" class="div-block-small">
+                <img src="../images/notice.png">
+                <span class="pic-words">报社公告</span>
+            </div>
+        </span>
+         <span class="lib-div-block">
+             <div id="clue-lib-block" class="div-block-small">
+                 <img src="../images/xiansuo.png">
+                 <span class="pic-words">线索</span>
+             </div>
+         </span>
+        <span class="lib-div-block">
+             <div id="draft-lib-div" class="div-block-small">
+                 <img src="../images/baoti.png">
+                 <span class="pic-words">报题</span>
+             </div>
+        </span>
+        <span class="lib-div-block">
+             <div id="task-lib-block" class="div-block-small">
+                 <img src="../images/renwu.png">
+                 <span class="pic-words">任务</span>
+             </div>
+        </span>
+        <span class="lib-div-block">
+            <div id="topic-lib-block" class="div-block-small">
+                <img src="../images/xuanti.png">
+                <span class="pic-words">选题</span>
+            </div>
+        </span>
+        <span class="lib-div-block">
+            <div id="beforehand-lib-div" class="div-block-small">
+                <img src="../images/reporter.png">
+                <span class="pic-words">编前会</span>
+            </div>
+        </span>
+        <span class="lib-div-block">
+            <div id="app-lib-div" class="div-block-small">
+                <img src="../images/xinhuaRSS.png">
+                <span class="pic-words">APP</span>
+            </div>
+        </span>
+    </div>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../assets/js/cookie.js"></script>
+<script type="text/javascript" src="../javascripts/json2.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+<script>
+
+    var moduleMapping = {
+        clue: {
+            id: "clue",
+            name: "线索",
+            href: "/clue/clue",
+            target: "#clue-lib-block"
+        },
+        task: {
+            id: "task",
+            name: "任务",
+            href: "/interview_task/interview_task",
+            target: "#task-lib-block"
+        },
+        topic: {
+            id: "topic",
+            name: "选题",
+            href: "/topic/topic",
+            target: "#topic-lib-block"
+        },
+        draft: {
+            id: "draft",
+            name: "报题库",
+            href: "/draft/draft",
+            target: "#draft-lib-div"
+        },
+        article: {
+            id: "article",
+            name: "投稿",
+            href: "/article_upload?articleKind=article",
+            target: "#article-lib-div",
+            authCheck: function () { return true; }
+        },
+        picture: {
+            id: "picture",
+            name: "投图",
+            href: "/article_upload?articleKind=picture",
+            target: "#picture-lib-div",
+            authCheck: function () { return true; }
+        },
+        video: {
+            id: "video",
+            name: "投视音频",
+            href: "/article_upload?articleKind=video",
+            target: "#video-lib-div",
+            authCheck: function () { return true; }
+        },
+        source: {
+            id: "source",
+            name: "稿源中心",
+            href: "/source_article",
+            target: "#source-lib-div"
+        },
+        xhs: {
+            id: "xhs",
+            name: "新华社稿件库",
+            href: "/xhs_article_list",
+            target: "#xhs-lib-div"
+        },
+        dept: {
+            id: "dept",
+            name: "部门库",
+            href: "/dept_article_list",
+            target: "#dept-lib-div"
+        },
+
+        paper: {
+            id: "paper",
+            name: "报纸",
+            href: "/paper_article_list",
+            target: "#paper-lib-div"
+        },
+        site: {
+            id: "site",
+            name: "网站库",
+            href: "/site_article_list?channel_code=site",
+            target: "#site-lib-div"
+        },
+        app: {
+            id: "app",
+            name: "app稿件库",
+            href: "/app_article_list",
+            target: "#app-lib-div"
+        },
+       message: {
+           id: "message",
+            name: "留言簿",
+           href: "/message_article_list",
+           target: "#message-lib-div"
+       },
+       notice: {
+            id: "notice",
+           name: "报社公告",
+           href: "/notice_article_list",
+           target: "#notice-lib-div"
+      },
+        weibo: {
+            id: "weibo",
+            name: "微博稿件库",
+            href: "/weibo_article_list",
+            target: "#weibo-lib-div"
+        },
+        weixi: {
+            id: "weixi",
+            name: "微信稿件库",
+            href: "#",
+            target: "#weixi-lib-div",
+            authCheck: function () { return false; }
+        },
+        beforehand: {
+            id: "beforehand",
+            name: "编前会",
+            href: "#",
+            target: "#beforehand-lib-div",
+            authCheck: function () { return false; }
+        },
+        passhand: {
+            id: "passhand",
+            name: "经手稿库",
+            href: "/passhand_article_list",
+            target: "#passhand-lib-div"
+        }
+       /* notice: {
+            id: "notice",
+            name: "通知公告",
+            href: "#",
+            target: "#notice-lib-div"
+        }*/
+    };
+
+    var getLibBlockClass = (function (total, index) {
+        return "div-block-small";
+    });
+
+    function back(){
+        window.location.href = "/home?loginToHome=1&user_name=" + localStorage.getItem('user_name') + "&timestamp" + (new Date()).getTime();
+    }
+    $(function () {
+
+        var modulePerm = JSON.parse(localStorage.getItem("modulePerm"));
+
+        // 默认的权限检查函数
+        var defaultAuthCheck = function (modulePerm) {
+            return !!modulePerm[this.id];
+        };
+
+        // 权限检查
+        $.each(moduleMapping, function (k, v) {
+            var hasAuth = (v.authCheck || defaultAuthCheck).call(v, modulePerm);
+            if(v.target=="#public-lib-div"){
+                alert(hasAuth)
+            }
+            if(v.target){
+                var $target = $(v.target);
+                // 没有权限
+                if (!hasAuth) {
+                    $target.addClass("lib-div-disable");
+                }
+/*                if (modulePerm[k] && modulePerm[k].name) {
+                    $target.find(".pic-words").text(v.name || modulePerm[k].name);
+                }*/
+
+                $target.click(function () {
+                    if (hasAuth) {
+                        location.href = v.href;
+                    } else {
+                        fn_show_tips("对不起，您没有权限查看" + v.name + "。");
+                    }
+                });
+            }
+        });
+
+        var extModule = [];
+        //  查找扩展通道
+        $.each(modulePerm, function (k, v) {
+            if (!moduleMapping[k] && /^ext/i.test(k)) {
+                extModule.push(v);
+            }
+        });
+
+        // 含有扩展通道
+        if (extModule.length > 0) {
+            var ext_href = "/site_article_list";
+
+            // 删除标签上 display:none 的样式
+            var $ext = $("#lib-div-ext").css({"display": ""});
+            $.each(extModule, function (i, v) {
+                if (i >= 4) return false;
+                var $div = $("<div></div>").appendTo($ext);
+                $div.addClass(getLibBlockClass(extModule.length, i));
+                $div.append($("<img/>", {src: "../images/site.png"}));
+                $div.append($("<span></span>", {"class": "pic-words", text: v.name}));
+                $div.click(function () {
+                    location.href = ext_href + "?channel_code=" + v.value
+                });
+            });
+        }
+
+        //获取三方网站模块
+        var extPubModule = [];
+        //  查找扩展通道
+        $.each(modulePerm, function (k, v) {
+            if (!moduleMapping[k] && v.auto) {
+                extPubModule.push(v);
+            }
+        });
+        //加载三方网站模块
+        if (extPubModule.length > 0) {
+            $.each(extPubModule, function (i, v) {
+                    var $extpub = $("<span></span>");
+                    $extpub.attr("class","lib-div-block");
+                    $extpub.appendTo($("#lib-div-list"));
+                    var $div = $("<div></div>").appendTo($extpub);
+                    $div.attr("id","lib-div-extpub"+i);
+                    $div.addClass(getLibBlockClass(extPubModule.length, i+1));
+                    $div.append($("<img/>", {src: "../images/site.png"}));
+                    if(v.name.length < 5){
+                        $div.append($("<span></span>", {"class": "pic-words", text: v.name}));
+                    }else if(v.name.length == 5){
+                        $div.append($("<span></span>", {"class": "pic-words font-words1", text: v.name}));
+                    }else if(v.name.length > 5){
+                        $div.append($("<span></span>", {"class": "pic-words font-words2", text: v.name}));
+                    }
+                    $div.click(function () {
+                        location.href = v.path;
+                    });
+            });
+        }
+
+        // 如果 .lib-div-block 中所有的 div 都被禁用 (.lib-div-disable) 则隐藏
+        $("#lib-div-list>.lib-div-block").filter(function () {
+            return $(this).children("div").length == $(this).children(".lib-div-disable").length;
+        }).hide();
+
+        if ("<%= loginToHome%>" == 1) {
+            select_paper_date();
+        }
+
+    });
+
+    function select_paper_date() {
+
+        var loToken = localStorage.getItem('loToken');
+        //请求报纸的查看日期
+        var data = {"da": "da", "loToken": loToken};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/configure",
+            dataType: 'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+                if (jsonData.success) {
+                    var dateList = jsonData.results;
+                    for (var i in dateList) {
+                        var i_date = dateList[i].view_day - 0;
+                        var str_date = GetDateStr(i_date);
+//            localStorage.setItem("paper_select_date_" + dateList[i].paper_id, str_date);
+                        localStorage.setItem("paper_layout_date_" + dateList[i].paper_id, str_date);
+                        localStorage.setItem("paper_column_date_" + dateList[i].paper_id, str_date);
+
+                    }
+                }
+            }
+        });
+    }
+
+    function GetDateStr(AddDayCount) {
+        var dd = new Date();
+        dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+        var y = dd.getFullYear();
+        var m = dd.getMonth() + 1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y + "-" + m + "-" + d;
+    }
+
+</script>
+</body>
+</html>

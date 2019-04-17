@@ -1,0 +1,8 @@
+{
+  "success":true,
+  "results":
+    [{"id": 1,"name": "方正悦享新浪微博","parent_id":0}
+    ,{"id": 2,"name": "方正悦享腾讯微博","parent_id":0}
+    ,{"id": 3,"name": "方正悦享微信公众号","parent_id":0}
+    ]
+}

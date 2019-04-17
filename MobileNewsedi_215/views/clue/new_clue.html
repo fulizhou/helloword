@@ -1,0 +1,626 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>线索新建</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../../assets/css/app.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+    <link rel="stylesheet" href="../../stylesheets/override.css">
+    <link rel="stylesheet" href="../../stylesheets/report/create.css">
+    <!--<link rel="stylesheet" href="../../assets/css/webuploader.css">-->
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/amazeui.min.js"></script>
+    <script src="../../assets/js/jQuery.md5.js"></script>
+    <script src="../../javascripts/common.js"></script>
+    <!--<script src="../../assets/js/webuploader.js"></script>-->
+    <script src="http://api.map.baidu.com/components?ak=1ZtQkeXgxF3TsxWbQxUOTAYW&v=1.0"></script>
+</head>
+<body>
+<div id="view-main" class="choose-view" style="display: block">
+    <!--头部开始-->
+    <header id="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back();">
+                <img src="../../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+            </a>
+        </div>
+        <h1 id="header-title" class="am-header-title">新建线索</h1>
+    </header>
+    <!--头部结束-->
+
+    <div id="doc-form-all">
+        <!--输入内容开始-->
+        <form class="am-form">
+            <fieldset class="whiteBg">
+                <div class="am-form-group">
+                    <textarea id="doc-title" class="docText" rows="2" placeholder="请输入线索标题" minlength="1"></textarea>
+                </div>
+                <div class="am-form-group">
+                    <textarea id="doc-content" class="docText" rows="6" placeholder="请输入线索内容"></textarea>
+                </div>
+            </fieldset>
+        </form>
+        <!--输入内容结束-->
+
+        <div class="whiteBg">
+            <ul class="contact" style="overflow: hidden;">
+                <li><label>爆料人：</label> <input id="clueAuthor" type="text"></li>
+                <li><label style="width:32%;">联系电话：</label> <input id="authorMoBile" type="text"  style="width:68%;"></li>
+            </ul>
+        </div>
+
+        <div class="whiteBg clearfix">
+            <div id="doc-upload-img-list" class="am-u-g" style="float:left;padding: 0;">
+                <div id="upload-img-div" class="am-form-file upload-img-div"
+                     style="background-image: url('/images/image_attach.png');border:none">
+                    <input id="doc-form-file" type="file" multiple="multiple">
+                </div>
+            </div>
+        </div>
+
+        <!-- 选择文件夹 begin -->
+        <div class="whiteBg clearfix">
+            <div id="doc-select-folder" class="am-form-group" style="margin-bottom: 0">
+                <span class="am-text-truncate">
+                    <img class="upload" src="../../images/upload_to_icon.png"/>
+                    <span style="color: #454545;vertical-align: middle;margin: 1rem">上传到</span>
+                    <span id="doc-select-folder-name" class="am-text-truncate" data-catalog-id="-1"
+                          data-catalog-type="source"
+                          style="color: #454545;vertical-align: middle;width: 60%;"></span>
+                    <i class="am-icon-angle-right" style="position: relative;float: right;">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                </span>
+            </div>
+        </div>
+        <!-- 选择文件夹 end -->
+
+        <div id="quality-list" class="whiteBg status-list"></div>
+
+        <div class="whiteBg clearfix">
+            <lbs-geo id="doc-geo" city="北京" enable-modified="true"></lbs-geo>
+        </div>
+
+        <!--按钮开始-->
+        <div class="btnSect whiteBg">
+            <button id="cancle" class="btn_cancel am-btn am-btn-default">取消</button>
+            <button id="ok" class="btn_determine am-btn am-btn-default">提交</button>
+        </div>
+        <!--按钮结束-->
+    </div>
+</div>
+<div id="view-folder" class="choose-view">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back_to_main()">
+                <img class="img-return" src="../../images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <span>上传至</span>
+        </h1>
+    </header>
+
+    <div id="doc-folder-list" class="am-list-news-bd">
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    var $quality_list = $("#quality-list").empty();
+    var $select_folder = $("#doc-select-folder-name");
+
+    var loToken = localStorage.getItem("loToken");
+
+    function choose_view(name) {
+        $(".choose-view").hide();
+        $("#view-" + name).show();
+    }
+
+    function back_to_main() {
+        choose_view('main');
+    }
+</script>
+
+<script type="text/javascript">
+
+    var positionDetail = {address: "", coords: {lat: "", lng: ""}};
+
+    $("#doc-geo").bind('geofail', function (event) {
+        //监听定位失败事件 geofail
+        event = event.originalEvent;
+    }).bind('geosuccess', function (event) {
+        //监听定位成功事件 geosuccess
+        event = event.originalEvent;
+        positionDetail = event.detail;
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    // quality
+    $(function () {
+        var on_success = function (data) {
+            if (data.success) {
+                $.each(data.results, function (i, v) {
+                    if(v.quality == 0) return;
+                    $("<button></button>", { "class": "btn-status", quality: v.quality, text: v.qualityName}).appendTo($quality_list);
+                });
+                $quality_list.children(".btn-status").first().addClass("selected");
+            }
+        };
+        $.ajax({
+            url: "/fatch",
+            data: {
+                type: "clue",
+                method: "getQuality",
+                loToken: loToken
+            },
+            dataType: "json",
+            success: on_success
+        });
+    });
+
+    // 选择文件夹相关
+    $(function () {
+        var memory_last_folder = "clue-last-folder";
+        var last_folder = localStorage.getItem(memory_last_folder);
+
+        var folder_map = {0: {id: 0, name: "root"}};
+
+        load_folder(function (data) {
+            $.each(data, function (i, v) {
+                folder_map[v.id] = v;
+            });
+            $.each(data, function (i, v) {
+                var parent = folder_map[v.parent_id];
+                (parent.children = parent.children || []).push(v);
+            });
+
+            var folder;
+            if (last_folder && (folder = folder_map[last_folder])) {
+                choose_folder(folder.id, folder.name);
+            } else {
+                show_folder(0);
+            }
+
+            $("#doc-select-folder").click(function () {
+                var last_folder = localStorage.getItem(memory_last_folder);
+                if (last_folder && (folder = folder_map[last_folder])) {
+                    show_folder(folder.parent_id);
+                } else {
+                    show_folder(0);
+                }
+            });
+        });
+
+        function load_folder(callback) {
+            function on_success(data) {
+                if (data.success) {
+                    callback && callback(data.results);
+                }
+            }
+
+            $.ajax({
+                url: "/fatch",
+                data: {
+                    type: "clue",
+                    perm: "upload",
+                    method: "getNewsPlanFolders",
+                    loToken: loToken
+                },
+                dataType: "json",
+                success: on_success
+            })
+        }
+
+        function choose_folder(id) {
+            var folder = folder_map[id];
+            $select_folder.attr("select-folder-id", folder.id).text(folder.name);
+            localStorage.setItem(memory_last_folder, folder.id);
+            back_to_main();
+        }
+
+        function show_folder(id) {
+            var folder = folder_map[id];
+            if (!folder || !folder.children || !folder.children.length) {
+                fn_show_tips('已经没有下一级了。');
+                return;
+            }
+
+            var $folder_list = $("#doc-folder-list").empty();
+            var $ul = $("<ul></ul>", {"class": "am-list am-avg-sm-1"}).appendTo($folder_list);
+
+            if (folder.id > 0) {
+                var $li = $("<li></li>", {"class": "return-parent"}).appendTo($ul);
+                $li.click(function () {
+                    show_folder(folder.parent_id);
+                });
+                var $a = $("<a></a>", {"class": "am-list-item-hd"}).appendTo($li);
+                $("<img/>", {"src": "../../images/return-level.png"}).css({"height": "1.6rem"}).appendTo($a);
+                var text = " 返回上一级" + "  (" + folder.name + ")";
+                $("<span></span>", {text: text}).appendTo($a);
+            }
+
+            $.each(folder.children, function (i, v) {
+                var $li = $("<li></li>").appendTo($ul);
+                if (v.trans) {
+                    $li.click(function () {
+                        choose_folder(v.id);
+                    });
+                }
+
+                // 添加 name
+                $("<a></a>", {"class": "am-list-item-hd"}).append($("<span></span>", {text: v.name})).appendTo($li);
+
+                if (v.children && v.children.length) {
+                    // 添加箭头 >
+                    var $span = $("<span></span>", {"class": "am-list-item-hd am-fr"}).appendTo($li);
+                    $span.append($("<i></i>", {"class": "am-icon-angle-right"}));
+                    $span.click(function () {
+                        show_folder(v.id);
+                        return false;
+                    });
+                }
+            });
+
+            choose_view("folder");
+        }
+    });
+</script>
+
+<script type="text/javascript">
+
+    var refIDs = {};
+
+    var $doc_title = $("#doc-title");
+    var $doc_content = $("#doc-content");
+
+    var $clueAuthor = $("#clueAuthor");
+    var $authorMoBile = $("#authorMoBile");
+
+    // 稿件提交相关
+    $(function () {
+        function create() {
+            var $select_quality = $quality_list.find(".selected");
+
+            var title = $doc_title.val();
+            var content = $doc_content.val();
+            var clueAuthor = $clueAuthor.val();
+            var authorMoBile = $authorMoBile.val();
+
+            var qualityName = $select_quality.text();
+            var quality = $select_quality.attr("quality");
+
+            var folder_id = $select_folder.attr("select-folder-id");
+            var param = {
+                FVID: folder_id,
+                clueTopic: title,
+                clueContent: content,
+                clueQuality: quality,
+                clueQualityName: qualityName,
+                clueAuthor: clueAuthor,
+                authorMoBile: authorMoBile,
+                address: positionDetail.address,
+                lat: positionDetail.coords.lat,
+                lng: positionDetail.coords.lng,
+                refIDs: $.map(refIDs, function (v, k) { return v; })+","
+            };
+            if(refIDs==""){
+                refIDs: $.map(refIDs, function (v, k) { return v; })
+            }
+            if (validate(param)) {
+               submit(param);
+            }
+
+            function validate(param) {
+                if (!param.clueTopic) {
+                    fn_show_tips("标题不能为空");
+                    return false;
+                }
+                if (!param.clueContent) {
+                    fn_show_tips("内容不能为空");
+                    return false;
+                }
+                if (!param.FVID) {
+                    fn_show_tips("请选择上传位置");
+                    return false;
+                }
+/*
+                if (param.authorMoBile && /\d{13}/.test(authorMoBile)) {
+                    fn_show_tips("请输入合法的联系电话");
+                    return false;
+                }
+*/
+                return true;
+            }
+
+            function on_success(data) {
+                if (data.success) {
+                    fn_show_tips("创建线索成功", function () {
+                        back();
+                    });
+                }
+            }
+
+            function submit(param) {
+                $.ajax({
+                    url: "/fatch",
+                    method: "post",
+                    data: $.extend(param, {
+                        method: "createClue",
+                        loToken: loToken
+                    }),
+                    dataType: "json",
+                    traditional:true,
+                    success: on_success
+                });
+            }
+        }
+
+        $("#ok").click(create);
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $(".status-list").delegate(".btn-status", "click", function () {
+        $(this).siblings().removeClass("selected");
+        $(this).addClass("selected");
+    });
+    $("#cancle").click(back);
+
+</script>
+<script type="text/javascript">
+
+    // 上传文件大小
+
+
+    // 支持的文件类型映射
+    var fileTypeMap = {};
+
+    // 图片支持格式
+    fileTypeMap["picture"] = {
+        "jpeg": "image/jpeg",
+        "jpg": "image/jpeg",
+        "tif": "image/tiff",
+        "gif": "image/gif",
+        "png": "image/png",
+        "bmp": "image/bmp"
+    };
+
+    // 视音频支持格式
+    fileTypeMap["video"] = {
+        "swf": "application/x-shockwave-flash",
+        "mov": "video/quicktime",
+        "wmv": "video/x-ms-wmv",
+        "mp4": "video/mpeg4",
+//            "3gp":"video/3gpp",
+//            "ogg":"audio/ogg",
+        "mpg": "video/mpg",
+        "avi": "video/avi",
+        // flv 类型没有 contentType, 这里暂时写成 video/flv
+        "flv": "video/flv",
+        // 音频
+//            "aac":"audio/vnd.dlna.adts",
+//            "m4a":"audio/audio/x-m4a",
+        "mp3": "audio/mp3"
+    };
+
+    // 截取图片 base64 为文件名
+    function interceptBase64Filename(sBase64) {
+        //截取图片base64后20位为文件起名字(将“+”换位“y”，将“/”换位“p”)，因为ios不兼容，取不到文件名
+        //fileName = sBase64.substring(sBase64.length - 20,sBase64.length).split("+").join("y").split("=").join("r").split("/").join("p")+format_param;
+        return (
+                sBase64.substring(35, 45) +
+                sBase64.substring(135, 145) +
+                sBase64.substring(sBase64.length - 140, sBase64.length - 130) +
+                sBase64.substring(sBase64.length - 10, sBase64.length)
+        ).replace(/[+]/g, "y").replace(/[=]/g, "r").replace(/[\/]/g, "p");
+    }
+
+    function compressImg(imgData, maxHeight, sizePic, kindPic, onCompress) {
+
+        if (!imgData)return;
+        onCompress = onCompress || function () { };
+
+        maxHeight = maxHeight || 200;//默认最大高度200px
+
+        var img = new Image();
+
+        img.onload = function () {
+
+            var canvas = document.createElement('canvas');
+            canvas.width = this.width * sizePic;
+            canvas.height = this.height * sizePic;
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // canvas清屏
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 将图像绘制到canvas上 imgData
+            onCompress(canvas.toDataURL(kindPic, 1));//必须等压缩完才读取canvas值，否则canvas内容是黑帆布
+
+        };
+        // 记住必须先绑定事件，才能设置src属性，否则img没内容可以画到canvas
+        img.src = imgData;
+    }
+
+    function uploadFile($img_div, picdata) {
+
+        var $upload_progress = $img_div.find(".upload-progress");
+
+        //处理上传进度
+        function progressHandlingFunction(e) {
+            if (e.lengthComputable) {
+                var per = Math.round((e.loaded / e.total) * 100);
+                $upload_progress.text(per + "%");
+            }
+        }
+
+        //处理返回状态
+        function readyStateChangeHandle(e) {
+            if (e.currentTarget.readyState > 2 && e.currentTarget.status != 200) {
+                $upload_progress.html('<span style="font-size: 15px">上传错误！' + e.currentTarget.status + '</span>');
+            }
+        }
+
+        var ajax_promise_obj = $.ajax({
+            type: "POST",
+            url: "/fatch",
+            dataType: 'json',
+            data: JSON.stringify(picdata),
+            contentType: "application/json",
+            xhr: function () {  // custom xhr
+                var myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) { // check if upload property exists
+                    myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+                    myXhr.onreadystatechange = readyStateChangeHandle
+                }
+                return myXhr;
+            },
+            success: function (data) {
+                if(data.success){
+                    refIDs[picdata.name] = data.refId;
+                    $img_div.attr("allFileName", data.url);
+                    $upload_progress.remove();
+                }
+            }
+        });
+
+        return ajax_promise_obj;
+    }
+
+    function append_upload_img(fileName, background, picdata) {
+        var $img_div = $("<div></div>", { "class": "upload-img-div", "allFileName": fileName });
+        $img_div.css({"border": "0", "background-image": background});
+        $("#upload-img-div").before($img_div);
+
+        var $span = $("<span></span>").appendTo($img_div);
+        $span.click(function () {
+            delete refIDs[picdata.name];
+            var ajax_promise_obj = $img_div.data("ajax_promise_obj");
+            ajax_promise_obj && ajax_promise_obj.abort();
+            $img_div.remove();
+        });
+
+        $("<img/>", {src: "/images/image_remove.png", "class": "upload-img-remove-img"}).appendTo($span);
+
+        $img_div.data("ajax_promise_obj", uploadFile($img_div, picdata));
+    }
+
+    //监控选择文件组件，显示添加的图片
+    $("#doc-form-file").on("change", function () {
+        $.each(this.files, function () {
+            var file = this;
+            var fileName = file.name.toLowerCase();
+
+            var name_match = fileName.match(/[.]([^.]+$)/i);
+            var fileExtName = name_match && name_match[1];
+            var format_param = name_match && name_match[0];
+
+            var articleKind = "";
+            var has = false;
+            $.each(fileTypeMap, function (k, v) {
+                $.each(v, function (k, v) {
+                    if (k == fileExtName) { has = true; return false; }
+                });
+                if (has) { articleKind = k; return false; }
+            });
+
+            // 检查上传文件格式
+            var typeMap = fileTypeMap[articleKind];
+            if (!typeMap || typeMap[fileExtName] === null || typeMap[fileExtName] === undefined) {
+                fn_show_tips("上传文件包含不支持的文件格式: " + fileExtName);
+                return;
+            }
+
+
+
+            // 将文件大小转换为描述的大小
+            var convertDescribeSize = function (size) {
+                if (size < 1024) {
+                    return size + " 字节";
+                }
+                size = size / 1024;
+                if (size < 1024) {
+                    return size + " KB";
+                }
+                size = size / 1024;
+                return size + " MB";
+            };
+
+           /* if (file.size > upload_max_size) {
+                fn_show_tips("上传文件超过 " + convertDescribeSize(upload_max_size) + " 大小, 无法上传");
+                return;
+            }*/
+
+
+            var fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                // data:image/png;base64, ...
+                var base64_str = e.target.result;
+
+                var newFileName = interceptBase64Filename(base64_str) + format_param;
+
+                var method = articleKind == "picture" ? "uploadImgFile" : "uploadVideoFile";
+                var picdata = {
+                    method: method,
+                    name: newFileName,
+                    loToken: loToken,
+                    attStr: base64_str.replace(/^data:[^;]*;base64,\s*/, "")
+                };
+
+                if (articleKind == "picture") {
+                    var sizePic = 1 / 2, kindPic = typeMap[fileExtName];
+                    compressImg(base64_str, 1024, sizePic, kindPic, function (data) {
+                        append_upload_img(fileName, "url('" + data + "')", picdata);
+                    });
+                } else {
+                    append_upload_img(fileName, "url('/images/audio.png')", picdata);
+                }
+            };
+            //console.log("开始上传："+new Date());
+            fileReader.readAsDataURL(file);
+
+            fileReader.onerror = function (e) {
+                switch (e.target.error.code) {
+                    case e.target.error.NOT_FOUND_ERR:
+                        alert('File Not Found!');
+                        break;
+                    case e.target.error.NOT_READABLE_ERR:
+                        alert('File is not readable');
+                        break;
+                    case e.target.error.ABORT_ERR:
+                        break; // noop
+                    default:
+                        alert('An error occurred reading this file.');
+                }
+                fn_show_tips('文件上传过程中出现问题。');
+            };
+            fileReader.onloadend = function () {
+
+            }
+        });
+    });
+</script>
+</body>
+</html>

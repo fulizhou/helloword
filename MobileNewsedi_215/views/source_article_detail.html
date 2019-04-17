@@ -1,0 +1,211 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+</head>
+<body>
+<div class="am-text-danger">
+    <h2 id = "doc-article-title" style="padding:2%; margin-bottom: 0%;"></h2>
+    <div class="am-article-hd">
+        <p id="doc-article-meta" class="am-article-meta" style="padding-left:2%"></p>
+    </div>
+</div>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+<article data-am-widget="paragraph" style="padding:2%; margin-bottom: 0%;" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+    <div id = "doc-article-content" class="am-article-bd">
+     </div>
+
+
+</article>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+     id="">
+    <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4">
+     <!--
+        <li>
+            <a href="javascript:history.back(-1);">
+                <i class="am-icon-arrow-left"></i>
+                <span class="am-navbar-label">返回</span>
+            </a>
+        </li>
+        -->
+    </ul>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+
+    function load_article_detail(article_id){
+        var loToken = localStorage.getItem('loToken');
+        var data = {"article_id":article_id, "lib_type":"source","loToken":loToken , "timestamp": (new Date()).getTime()};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/article_detail/detail",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    show_article_detail(jsonData.results);
+                }
+            }
+        });
+
+    }
+
+    function show_article_detail(article){
+
+        document.getElementById('doc-article-title').innerText = article.title;
+        var meta_info = "";
+        meta_info += article.author;
+        meta_info += '&nbsp;&nbsp;';
+        meta_info += article.opt_time;
+
+        if(article.text_count > 0){
+            meta_info += '&nbsp;&nbsp;';
+            meta_info += article.text_count;
+            meta_info += '字';
+        }
+
+        document.getElementById('doc-article-meta').innerHTML = meta_info;
+        document.getElementById('doc-article-content').innerHTML = article.content;
+
+        var operation_list_node = document.getElementById('doc-operation-list');
+        operation_list_node.innerHTML = "";
+
+        var operate_perm = article.opt_perm;
+
+        if(operate_perm.indexOf('auditing') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_auditing();';
+
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/auditing.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "审核";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+/* 选用 签发功能还未开发，暂时去掉
+        //if(operate_perm.indexOf('choose') >= 0)
+         {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_choose();';
+             var operation_i = document.createElement('img');
+             operation_i.src = "images/navbar/choose.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "选用";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+        //if(operate_perm.indexOf('sign') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_publish_sign();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/sign.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "签发";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_sign();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/sign.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "纸媒签发";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+//*/
+    };
+
+    $(function(){
+
+        load_article_detail("<%= article_id %>");
+    });
+
+    function article_auditing(){
+        var href = "/article_detail/auditing?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+
+    function article_choose(){
+        var href = "/article_detail/choose?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+
+    function article_sign(){
+        var href = "/article_detail/sign?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+
+    function article_publish_sign(){
+        var href = "/article_detail/publish_sign?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+
+
+
+</script>
+</body>
+</html>

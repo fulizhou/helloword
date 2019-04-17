@@ -1,0 +1,207 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件签发</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+</head>
+<body>
+<div class="am-g" style="background-color:rgb(8,122,203);padding:1.5%;">
+    <div class="am-u-sm-3">
+        <a href="javascript:return_back_home();" style="color:rgb(255,255,255);">
+            <i class="am-icon-arrow-left"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </a>
+    </div>
+    <div id ="doc-dept-operation" class="am-u-sm-4">
+        <a style="float:right;color:rgb(255,255,255)" href="javascript:choose_article();">
+            <span><small>签发</small></span>
+            <i class="am-icon-check"></i>
+        </a>
+    </div>
+</div>
+
+<div>
+    <div id="doc-catalog-list" style="margin-top: 0.5%">
+        <a id="doc-select-catalog" data_catalog_id="-1" style="display: none;"></a>
+        <div id = "doc-catalog-list-tpl" class="am-list-news-bd">
+        </div>
+    </div>
+</div>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+
+<script type="text/javascript">
+
+    function get_catalog_info(catalog_id){
+
+        var catalog_info = {"id":0,"parent_id":0};
+        $.each(g_catalogs, function(){
+            if(this.id == catalog_id){
+
+                catalog_info = this;
+            }
+        });
+        return catalog_info;
+    };
+
+    function is_catalog_has_child(catalog_id){
+
+        var has_child = false;
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+
+                has_child = true;
+            }
+        });
+        return has_child;
+    }
+    //展示某个分类下的所有子分类
+    function list_child_catalog(catalog_id){
+
+        if(is_catalog_has_child(catalog_id) == false){
+
+            fn_show_tips('已经没有下一级了。');
+            return;
+        }
+
+        var catalog_list_html = '<div id = "doc-catalog-list-tpl" class="am-list-news-bd">';
+        catalog_list_html += '<ul class="am-list am-avg-sm-2" style="padding-left:5%;padding-right:5%; ">';
+
+        if(catalog_id > 0){
+
+            var catalog_info = get_catalog_info(catalog_id);
+            catalog_list_html += '<li onclick="list_child_catalog(' + catalog_info.parent_id + ');"><a class="am-list-item-hd">' + '返回上一级' + '</a></li>';
+            catalog_list_html += '<li onclick="list_child_catalog(' + catalog_info.parent_id + ');" class="am-fr"><a class="am-list-item-hd am-fr"><i class="am-icon-level-up"></i></a></li>';
+        }
+
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+
+                if(is_catalog_has_child(this.id)){
+                    catalog_list_html += '<li><a onclick="select_catalog(' + this.id + ');" class="am-list-item-hd">';
+                    catalog_list_html += '<i name="catalog-select-check" id="' + 'doc-catalog-select-' + this.id + '" class="am-icon-square-o"></i>';
+                    catalog_list_html += '&nbsp;&nbsp;' + this.name + '</a></li>';
+                    catalog_list_html += '<li onclick="list_child_catalog(' + this.id + ');" class="am-fr"><a class="am-list-item-hd am-fr">＋</a></li>';
+                }
+                else{
+                    catalog_list_html += '<li><a onclick="select_catalog(' + this.id + ');" class="am-list-item-hd">';
+                    catalog_list_html += '<i name="catalog-select-check" id="' + 'doc-catalog-select-' + this.id + '" class="am-icon-square-o"></i>';
+                    catalog_list_html += '&nbsp;&nbsp;' + this.name + '</a></li>';
+                    catalog_list_html += '<li onclick="select_catalog(' + this.id + ');" class="am-fr"><a class="am-list-item-hd am-fr">&nbsp;</a></li>';
+                }
+
+            }
+        });
+        catalog_list_html += '</ul>';
+        catalog_list_html += '</div>';
+
+        $("#doc-catalog-list-tpl").replaceWith(catalog_list_html);
+    };
+
+    var g_catalogs = "";
+    function choose_catalog_list(){
+        var loToken = localStorage.getItem('loToken');
+        var data = {"perm":"choose","loToken":loToken};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/catalog/publish_catalogs",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    g_catalogs = jsonData.results;
+                    var catalog_info = get_catalog_info(0);
+                    list_child_catalog(catalog_info.parent_id);
+                }
+            }
+        });
+    }
+
+    function select_catalog(catalog_id){
+
+        var catalog_checks = document.getElementsByName('catalog-select-check');
+        $.each(catalog_checks, function(){
+
+            var catalog_check_id = "doc-catalog-select-" + catalog_id;
+            if(this.id == catalog_check_id ){
+
+                this.className = "am-icon-check-square";
+                var select_catalog = document.getElementById("doc-select-catalog");
+                select_catalog.setAttribute("data_catalog_id", catalog_id);
+            }
+
+            else
+                this.className = "am-icon-square-o";
+        });
+    };
+
+    $(function(){
+        choose_catalog_list();
+    });
+
+    function return_back_home(){
+
+        window.history.go(-1);
+    }
+
+    function choose_article(){
+
+        var catalog_id =  document.getElementById("doc-select-catalog").getAttribute("data_catalog_id");
+        var loToken = localStorage.getItem('loToken');
+        var data = {"catalog_id":catalog_id, "loToken":loToken};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/article_detail/choose_opt",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    fn_show_tips("稿件签发成功。");
+                    setTimeout(function () {
+                        window.history.go(-1);
+                    }, 1500);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

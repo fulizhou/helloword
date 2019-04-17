@@ -1,0 +1,165 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>纸媒发布库</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="stylesheets/common.css">
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="assets/js/cookie.js"></script>
+    <script type="text/javascript" src="javascripts/common.js"></script>
+</head>
+<body style="background-color: #EEEFF1">
+<div id = "doc-form-all">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <div>
+                <a id="doc-header-return-a" href="javascript:returnBack();" ><img src="../images/navbar/return.png"></a><span>&nbsp;</span><span id="doc-select-catalog-name" style="color: #FFFFFF">纸媒发布</span>
+            </div>
+        </div>
+        <div class="am-header-right am-header-nav">
+            <div>
+                <a href="javascript:list_articles_refresh();"><img src="../images/list/refresh-icon.png"></a><a href="javascript:returnHome()"><img src="../images/list/home-icon.png"></a>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div id="doc-catalog-list">
+    <div id = "doc-catalog-list-tpl" class="am-list-news-bd">
+     </div>
+</div>
+
+<script>
+    var g_is_choose_catalog = false;//是否弹出选择分类树
+    var g_articles_begin = 0;//从第几个稿件位置开始加载
+    var g_select_catalog_id = -1;
+    var g_is_article_list = false;//是否在文章列表界面
+
+    function list_articles_refresh(){
+        choose_catalog_list();
+    }
+
+    function newArticle(){
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    //导航栏返回按钮
+    function returnBack(){
+        var terminalType = "<%= terminalType %>";
+        if(terminalType && terminalType == "app"){
+            returnHome();
+        }else{
+            //history.go(-1);
+            returnHome();
+        }
+    }
+
+    //返回首页
+    function returnHome(){
+        window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+    }
+
+    //展示某个分类下的所有子分类
+    function list_main_catalog(catalog_id){
+
+        var catalog_list_html = '<div id = "doc-catalog-list-tpl" class="am-list-news-bd">';
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+                catalog_list_html += '<ul class="am-list" style="margin: 1rem 0 0 0">';
+//                catalog_list_html += '<li><a onclick="select_paper(' + this.paper_id + ',\''+this.name+'\');" class="am-list-item-hd" style="font-weight:bold">' + "&nbsp;&nbsp;&nbsp;&nbsp;"+this.name + '<span style="float: right">&nbsp;&nbsp;&nbsp;&nbsp;</span><div style="text-align:center;border: solid 1px #59B19A;color:#59B19A;height: 2rem;width: 5rem;font-size: 1rem;line-height: 1.8rem;float: right">查看大样</div></a></li>';
+                if(this.canViewLayout){
+                    catalog_list_html += '<li><a onclick="select_paper(' + this.paper_id + ',\''+this.name+'\',\''+this.paperMinDate+'\');" class="am-list-item-hd" style="font-weight:bold">' + "&nbsp;&nbsp;&nbsp;&nbsp;"+this.name + '<span style="float: right">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="float: right;line-height: 1.7rem" class="am-badge am-badge-secondary am-radius">查看大样</span></a></li>';
+                }else{
+                    catalog_list_html += '<li><a onclick="" class="am-list-item-hd" style="font-weight:bold">' + "&nbsp;&nbsp;&nbsp;&nbsp;"+this.name + '</a></li>';
+                }
+//                catalog_list_html += '<li><a onclick="select_paper(' + this.paper_id + ',\''+this.name+'\');" class="am-list-item-hd" style="font-weight:bold">' + "&nbsp;&nbsp;&nbsp;&nbsp;"+this.name + '<span style="float: right">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="float: right;line-height: 1.7rem" class="am-badge am-badge-secondary am-radius">查看大样</span></a></li>';
+                catalog_list_html += '<li><a onclick="select_catalog(' + this.paper_id + ',\''+this.name+'\','+this.id + ');" class="am-list-item-hd" >&nbsp;&nbsp;&nbsp;&nbsp;栏目<i class="am-icon-angle-right" style="color: #98999D;float: right">&nbsp;&nbsp;&nbsp;&nbsp;</i></a></li>';
+                catalog_list_html += '</ul>';
+            }
+        });
+        catalog_list_html += '</div>';
+        $("#doc-catalog-list-tpl").replaceWith(catalog_list_html);
+
+    };
+
+    //点击报纸大样，进入大样列表界面
+    function select_paper(paper_id, name,paperMinDate){
+//        var paper_date = localStorage.getItem("paper_select_date_" + paper_id);
+//        localStorage.setItem("paper_layout_date",paper_date);
+        window.location.href = "/paper_article_list/paperList?paper_paper_id=" + paper_id + "&catalog_name=" + name+"&paperMinDate="+paperMinDate;
+    }
+
+    //点击栏目进入栏目列表
+    function select_catalog(paper_id, name, id){
+//        var paper_date = localStorage.getItem("paper_select_date_" + paper_id);
+//        localStorage.setItem("paper_column_date",paper_date);
+        window.localStorage.setItem('now-column-id',id);
+        window.location.href = "/paper_article_list/childTree?column_paper_id=" + paper_id + "&paper_name=" + name + "&column_id=" + id;
+    }
+
+    //点击弹出选择分类页面
+    var g_catalogs = "";
+    function choose_catalog_list(){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=paperCatalog" + "&perm=browser" + "&layoutmake=sign" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+//            url: "/catalog/paper_columns",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    g_catalogs = jsonData.results;
+                    list_main_catalog(0);
+
+                }
+            }
+        });
+
+    }
+
+    $(function(){
+
+        if(g_select_catalog_id <= 0){
+            choose_catalog_list();
+            return;
+        }
+
+    });
+
+
+</script>
+</body>
+</html>

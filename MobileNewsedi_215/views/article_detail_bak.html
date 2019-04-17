@@ -1,0 +1,433 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <!--<link rel="stylesheet" href="../assets/css/playpictures.css">-->
+</head>
+<body>
+<div class="am-text-danger">
+    <h2 id = "doc-article-title" style="padding:2%; margin-bottom: 0%;"></h2>
+    <div class="am-article-hd">
+        <p id="doc-article-meta" class="am-article-meta" style="padding-left:2%"></p>
+    </div>
+</div>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+<article data-am-widget="paragraph" style="padding:2%; margin-bottom: 0%;" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+    <div id = "doc-article-content" class="am-article-bd">
+    </div>
+    <!--<div style="border: 1px solid red; width: 50px; height: 50px; position: absolute; left: 870px; top: 300px;"></div>-->
+</article>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+     id="">
+    <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4">
+        <!--
+           <li>
+               <a href="javascript:history.back(-1);">
+                   <i class="am-icon-arrow-left"></i>
+                   <span class="am-navbar-label">返回</span>
+               </a>
+           </li>
+           -->
+    </ul>
+</div>
+<div> </div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.lazyload.min.js"></script>
+<!--<![endif]-->
+<script type="text/javascript" src="../javascripts/common.js"></script>
+
+<script>
+
+    var g_article;
+    var g_picCount;
+    var g_picNum;
+
+
+    function load_article_detail(article_id){
+        var q = "method=articleDetail&article_id=" + article_id + "&position=" + "<%= position %>" + "&nocache=" + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+//        var q = "method=articleDetail&article_id=" + article_id + "&position=" + "<%= position %>" + "&nocache=" + (new Date()).getTime();
+//        var data = {"m":"", "q":q};
+        $.ajax({
+            type: "GET",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            cache:true,
+            contentType: "application/json",
+            success:function(jsonData){
+
+//                jsonData.results = {"fileId":"2363603","version":"1437925434424","title":"德国工程院院士安德尔教授揭秘如何实现工业4.0","attAbstract":"达姆施塔特工业大学（以下简称达姆工大）成立于1877年，曾被爱因斯坦赞誉为“一所杰出的理工学院”，是德国人心中的“传统理工三强”。其机械工程系产品数据处理研究所（DIK）成立于1993年，是最早开始从事机械制造信息化研究的德国高校院系之一，该系的研究成果在机械制造领域及产品研发设计过程中具有巨大的理...","publishtime":"2015-07-15 00:24:23","source":null,"author":"鲜虹","editor":null,"subtitle":null,"introtitle":null,"content":"<body xmlns=\"http://www.w3.org/1999/xhtml\"><p> </p><h2 align=\"center\"><!--IMAGES#1--><!--IMAGEARRAY#0--></h2><p>    达姆施塔特工业大学（以下简称达姆工大）成立于1877年，曾被爱因斯坦赞誉为“一所杰出的理工学院”，是德国人心中的“传统理工三强”。其机械工程系产品数据处理研究所（DIK）成立于1993年，是最早开始从事机械制造信息化研究的德国高校院系之一，该系的研究成果在机械制造领域及产品研发设计过程中具有巨大的理论研究意义与实际应用价值。作为德国工程院院士、工业4.0及数字工厂和计算机辅助设计领域的顶尖专家及德国工业4.0组织的重要顾问，安德尔教授接受了《中国汽车报》记者的独家专访，权威解析了实现工业4.0的路线图</p></body>","extproperty":null,"commentCount":0,"images":[{"ref":"<!--IMAGES#1-->","imageGroupType":1,"imagearray":[{"ref":"<!--IMAGEARRAY#0-->","title":"att_788","fileAbstract":"att_788","imageUrl":"http://if.mobilereader.cn/cms_if/image?articleId=2363603&attId=2212583&name=CqBDmFWlN7-mkIoSAAAsKlL38ek088.jpg","picType":1}]}],"videos":[],"category":null,"readCount":121,"shareCount":0,"shareReadCount":0,"audios":[],"wantCount":0,"haveBeenCount":0,"greatCount":0,"artiposition":null};
+                jsonData.results = {
+                    "fileId":"2363603",
+                    "version":"1437925434424",
+                    "title":"德国工程院院士安德尔教授揭秘如何实现工业4.0",
+                    "attAbstract":"达姆施塔特工业大学（以下简称达姆工大）成立于1877年，曾被爱因斯坦赞誉为“一所杰出的理工学院”，是德国人心中的“传统理工三强”。其机械工程系产品数据处理研究所（DIK）成立于1993年，是最早开始从事机械制造信息化研究的德国高校院系之一，该系的研究成果在机械制造领域及产品研发设计过程中具有巨大的理...",
+                    "publishtime":"2015-07-15 00:24:23",
+                    "source":null,"author":"鲜虹",
+                    "editor":null,"subtitle":null,
+                    "introtitle":null,
+                    "content":"<body xmlns=\"http://www.w3.org/1999/xhtml\"><p> </p><h2 align=\"center\"><!--IMAGES#1--><!--IMAGEARRAY#0--><!--IMAGEARRAY#1--></h2><p>    达姆施塔特工业大学（以下简称达姆工大）成立于1877年，曾被爱因斯坦赞誉为“一所杰出的理工学院”，是德国人心中的“传统理工三强”。其机械工程系产品数据处理研究所（DIK）成立于1993年，是最早开始从事机械制造信息化研究的德国高校院系之一，该系的研究成果在机械制造领域及产品研发设计过程中具有巨大的理论研究意义与实际应用价值。作为德国工程院院士、工业4.0及数字工厂和计算机辅助设计领域的顶尖专家及德国工业4.0组织的重要顾问，安德尔教授接受了《中国汽车报》记者的独家专访，权威解析了实现工业4.0的路线图</p></body>",
+                    "extproperty":null,
+                    "commentCount":0,
+                    "images":[{"ref":"<!--IMAGES#1-->",
+                    "imageGroupType":1,
+                    "imagearray":[{"ref":"<!--IMAGEARRAY#0-->","title":"att_788","fileAbstract":"att_788","imageUrl":"http://if.mobilereader.cn/cms_if/image?articleId=2363603&attId=2212583&name=CqBDmFWlN7-mkIoSAAAsKlL38ek088.jpg","picType":1},{"ref":"<!--IMAGEARRAY#1-->","title":"att_788","fileAbstract":"att_788","imageUrl":"http://if.mobilereader.cn/cms_if/image?articleId=2363603&attId=2212583&name=CqBDmFWlN7-mkIoSAAAsKlL38ek088.jpg","picType":1}]}],
+                    "videos":[],
+                    "category":null,
+                    "readCount":121,"shareCount":0,"shareReadCount":0,
+                    "audios":[],"wantCount":0,"haveBeenCount":0,"greatCount":0,
+                    "artiposition":null
+                };
+
+
+                if(jsonData.success == true){
+
+                    show_article_detail(jsonData.results);
+                    g_article = jsonData;
+                }
+            }
+        });
+
+    };
+
+    function left_pic_click(){
+
+        document.getElementById('array-pic').src = g_article.image[0].imagearray[g_picNum-1].imageUrl;
+        g_picNum -= 1;
+        if(g_picNum == 1){
+            document.getElementById('pic-left-a').hide();
+        }else{
+            document.getElementById('pic-left-a').show();
+        }
+    }
+
+    function right_pic_click(){
+
+        document.getElementById('array-pic').src = g_article.image[0].imagearray[g_picNum+1].imageUrl;
+        g_picNum += 1;
+        if(g_picNum == g_picCount){
+            document.getElementById('pic-right-a').hide();
+        }else{
+            document.getElementById('pic-right-a').show();
+        }
+    }
+
+    function contentToTrim(content){
+
+        var str = "";
+        var trimHtmlStrings = ["size","TEXT-ALIGN","TEXT-INDENT","PADDING-RIGHT","PADDING-BOTTOM","PADDING-LEFT","PADDING-TOP","TEXT-TRANSFORM","FONT-SIZE","LINE-HEIGHT"];
+        for(var i = 0; i < trimHtmlStrings.length; i++)
+        {
+            var regs_ = new RegExp(trimHtmlStrings[i]+".*?\"","gi");
+            content = content.replace(regs_,"\"");
+            var regs = new RegExp(trimHtmlStrings[i]+".*?\;","gi");
+            content = content.replace(regs,"");
+        }
+
+        var c = content.split("<p");
+        for(var i = 0; i < c.length; i++){
+
+            c[i] = c[i].replace(">\u3000\u3000",">");
+            if (i == 0)
+                str = c[i];
+            else
+                str+="<p style='text-indent:2em;' "+c[i];
+        }
+
+        return str;
+    };
+
+    function show_article_detail(article){
+        document.getElementById('doc-article-title').innerText = article.title;
+        var meta_info = "";
+        meta_info += article.author;
+        meta_info += '&nbsp;&nbsp;';
+//        meta_info += article.opt_time;
+        meta_info += article.publishtime;
+
+        if(article.text_count > 0){
+            meta_info += '&nbsp;&nbsp;';
+//            meta_info += article.text_count;
+            meta_info += article.readCount;
+            meta_info += '字';
+        }
+        document.getElementById('doc-article-meta').innerHTML = meta_info;
+        document.getElementById('doc-article-content').innerHTML = article.content;
+        var step1 = contentToTrim(article.content);
+        var bNewImagestyle = 0;
+        if(step1.indexOf("IMAGEARRAY") > 0)
+            bNewImagestyle = 1;
+        var step2 = "";
+//        alert(articleJson.images.length+"jjjj");
+        if(article.images.length!=0){
+            if(bNewImagestyle == 1){
+                for(var i = 0; i < article.images.length; i++){
+                    var replace = "" ;
+                    for(var j = 0; j < article.images[i].imagearray.length;j++){
+                        var reg = article.images[i].imagearray[j].ref;
+                        var temp = article.images[i].imagearray[j];
+                        var RimageUrl = temp.imageUrl;
+                        RimageUrl += "&size=3";
+                        var title = temp.title == null ? "":temp.title;
+                        replace = '<div id="article-img-div"><img class="lazy" width="100%" src="../images/default.png" data-original="'+RimageUrl+'"/><div class="news-detail-caption">'+title+'</div></div>';
+                        if (bNewImagestyle == 1)
+                            step1 = step1.replace(reg,replace);
+                    }
+                }
+            }
+            else{
+                for(var i = 0;i < article.images.length; i++){
+                    alert(999999);
+                    var replace = "" ;
+                    for(var j = 0; j < article.images[i].imagearray.length; j++){
+                        var reg = article.images[i].imagearray[j].ref;
+                        var temp = article.images[i].imagearray[j];
+                        var RimageUrl = temp.imageUrl;
+                        var title = temp.title == null ? "":temp.title;
+                        var replaceimage = '<div><img class="news-detail-image" src="'+RimageUrl+'" /><div class="news-detail-caption">'+title+'</div></div>';
+                        replace += replaceimage;
+                    }
+                }
+                step1 = step1.replace("<!--IMAGES#0-->",replace);
+            }
+        }
+
+
+       /* jsonData.results = {
+            "fileId":"2363603",
+            "version":"1437925434424",
+            "title":"德国工程院院士安德尔教授揭秘如何实现工业4.0",
+            "attAbstract":"达姆施塔特工业大学（以下简称达姆工大）成立于1877年，曾被爱因斯坦赞誉为“一所杰出的理工学院”，是德国人心中的“传统理工三强”。其机械工程系产品数据处理研究所（DIK）成立于1993年，是最早开始从事机械制造信息化研究的德国高校院系之一，该系的研究成果在机械制造领域及产品研发设计过程中具有巨大的理...",
+            "publishtime":"2015-07-15 00:24:23",
+            "source":null,"author":"鲜虹",
+            "editor":null,"subtitle":null,
+            "introtitle":null,
+            "content":"<body xmlns=\"http://www.w3.org/1999/xhtml\"><p> </p><h2 align=\"center\"><!--IMAGES#1--><!--IMAGEARRAY#0--><!--IMAGEARRAY#1--></h2><p>    达姆施塔特工业大学（以下简称达姆工大）成立于1877年，曾被爱因斯坦赞誉为“一所杰出的理工学院”，是德国人心中的“传统理工三强”。其机械工程系产品数据处理研究所（DIK）成立于1993年，是最早开始从事机械制造信息化研究的德国高校院系之一，该系的研究成果在机械制造领域及产品研发设计过程中具有巨大的理论研究意义与实际应用价值。作为德国工程院院士、工业4.0及数字工厂和计算机辅助设计领域的顶尖专家及德国工业4.0组织的重要顾问，安德尔教授接受了《中国汽车报》记者的独家专访，权威解析了实现工业4.0的路线图</p></body>",
+            "extproperty":null,
+            "commentCount":0,
+            "images":[{"ref":"<!--IMAGES#1-->",
+            "imageGroupType":1,
+            "imagearray":[{
+                                "ref":"<!--IMAGEARRAY#0-->",
+                                "title":"att_788",
+                                "fileAbstract":"att_788",
+                                "imageUrl":"http://if.mobilereader.cn/cms_if/image?articleId=2363603&attId=2212583&name=CqBDmFWlN7-mkIoSAAAsKlL38ek088.jpg","picType":1
+                           },
+                          {
+                                 "ref":"<!--IMAGEARRAY#1-->",
+                                 "title":"att_788",
+                                 "fileAbstract":"att_788",
+                                 "imageUrl":"http://if.mobilereader.cn/cms_if/image?articleId=2363603&attId=2212583&name=CqBDmFWlN7-mkIoSAAAsKlL38ek088.jpg","picType":1
+                           }]}],
+            "videos":[],
+            "category":null,
+            "readCount":121,"shareCount":0,"shareReadCount":0,
+            "audios":[],"wantCount":0,"haveBeenCount":0,"greatCount":0,
+            "artiposition":null
+        };*/
+        //判断Android/Iphone
+            if(article.videos.length != 0){
+                for(var i = 0; i < article.videos.length; i++){
+                    var videomark = "<!--VIDEOS#"+i+"-->";
+                    var reg = new RegExp(videomark);
+                    var replace = "";
+                    step2 = step1;
+                    for(var j = 0;j < article.videos[i].videoarray.length; j++){
+                        var temp = article.videos[i].videoarray[j];
+                        var RviedoUrl = temp.videoUrl;
+                        var title = temp.title == null ? "":temp.title;
+                        replace = '<div><video class="news-detail-video" src="' + RviedoUrl + '" /></div><div class="news-detail-caption">'+title+'</div>';
+                    }
+                    if(step2.indexOf(videomark, 0) == -1){
+                        step2 =replace + step2;
+                    }
+                    else{
+                        step2 = step2.replace(reg,replace);
+                    }
+                }
+            }else{
+                step2 = step1;
+            }
+
+
+        document.getElementById('doc-article-content').innerHTML = step2;
+//        document.getElementById('doc-other-info').style.display = "block";
+        $("img.lazy").lazyload();
+
+        var operation_list_node = document.getElementById('doc-operation-list');
+        operation_list_node.innerHTML = "";
+
+        var operate_perm = "|" + article.opt_perm + "|";
+
+        if(operate_perm.indexOf('|auditing|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+
+            var operation_a = document.createElement('a');
+
+            operation_a.href = 'javascript:article_auditing();';
+
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/auditing.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "审核";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+        if(operate_perm.indexOf('|choose|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_choose();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/choose.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "选用";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+        if(operate_perm.indexOf('|get|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_get();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/choose.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "取稿";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+        if(operate_perm.indexOf('|transfer|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_transfer();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/choose.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "传递";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+        if(operate_perm.indexOf('|sign|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_sign();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/sign.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "签发";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+        if(operate_perm.indexOf('|unsign|') >= 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_unsign();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/sign.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "撤签";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+    };
+
+    $(function(){
+
+        load_article_detail("<%= article_id %>");
+    });
+
+    function article_auditing(){
+
+        var href = "/article_detail/auditing?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+
+    function article_choose(){
+
+        //选用直接在当前页面完成
+        var href = "/article_detail/choose?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+    function article_get(){
+
+        var href = "/article_detail/choose?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+    function article_transfer(){
+
+        var href = "/article_detail/choose?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+    function article_sign(){
+
+        var href = "/article_detail/sign?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+
+    function article_unsign(){
+
+        //撤签直接在当前页面完成
+    }
+</script>
+</body>
+</html>

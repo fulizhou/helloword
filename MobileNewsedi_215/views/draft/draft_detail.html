@@ -1,0 +1,360 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>报题详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/report/detail.css">
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../assets/js/cookie.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <style type="text/css">
+        .am-list-news-bd {
+            width: 100%;
+            float: left;
+        }
+
+        .timeDate {
+            border: 1px solid #59B19A;
+            color: #59B19A;
+            border-radius: 0.3rem;
+            padding: 0 0.5rem !important;
+            font-size: 1.2rem;
+            margin-left: 1rem;
+        }
+
+        .am-list-item-text {
+            min-height: 1em;
+            font-size: 1.2rem;
+            color: #666;
+            width: 100%;
+        }
+
+        .auditPass {
+            font-size: 1.3rem;
+            float: left;
+        }
+
+        .am-list {
+            background: #999;
+            margin-bottom: 0;
+        }
+
+        .am-list > li {
+            border: none;
+            margin-left: 0.5rem;
+            background: transparent;
+        }
+
+        .am-list-item-hd {
+            height: 2.5rem;
+            line-height: 2.5rem;
+        }
+
+        #aduiting-list {
+            margin: -1rem;
+            background: #fff;
+        }
+
+        #aduiting-list li{
+            margin-left: 1.5rem;
+            padding: 0 0.5rem 0.5rem 1.5rem ;
+            border-left: 1px solid #59B19A !important;
+        }
+
+        #aduiting-list li::before {
+            top: 0.7rem;
+            left: -0.75rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            content: " ";
+            display: block;
+            position: absolute;
+            background-size: 1.5rem 1.5rem;
+            background-image: url("../images/icon-clock.png") ;
+        }
+
+        #placehold{
+            margin-bottom: 70px
+        }
+        #default-div ul{
+            background-color: #59B19A;
+        }
+        #default-div li a .am-navbar-label{
+            color:#fff;
+            font-size: 1.3rem;
+        }
+
+        #default-div, #submit-div, #auditing-box, #feedback-box{
+            z-index: 999;
+        }
+
+        #status-select {
+            width: 100%;
+            font-size: 1.2rem;
+            text-align: center;
+            padding-bottom: 1.5rem;
+        }
+
+        #status-select .selected{
+            color: #FFFFFF;
+            background: #59B19A;
+        }
+
+        #article-detail{
+            display: none;
+        }
+
+        #article-content{
+            min-height: 100px;
+        }
+
+        #article-content-text{
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+        .btn-status {
+            width: 21.5%;
+            color: #333;
+            margin: 0 1%;
+            line-height: 2rem;
+            font-size: 1.2rem;
+            background: #eeeeee;
+            border-radius: 0.5rem;
+            border: 1px solid #dddddd;
+        }
+    </style>
+</head>
+<body>
+<!--头部开始-->
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <div>
+            <a href="javascript:back()"><img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+            <span id="doc-select-catalog-name" style="font-size:1.5rem;color: #FFFFFF">报题详情</span>
+        </div>
+    </div>
+    <div class="am-header-right am-header-nav">
+        <div>
+            <a href=""><img src="../images/list/refresh-icon.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+        </div>
+    </div>
+</header>
+<!--头部结束-->
+<div id="article-detail">
+    <!--文章开始-->
+    <div class="am-text-danger contentBg">
+        <h2 id="article-title" style="margin-bottom: 0;"></h2>
+        <div class="am-article-hd">
+            <p id="article-meta" class="am-article-meta" style="margin: 0">
+                <span id="article-meta-date"></span>
+                <span id="article-meta-author"></span>
+            </p>
+        </div>
+        <article data-am-widget="paragraph"class="am-paragraph am-paragraph-default am-no-layout"
+                 data-am-paragraph="{ tableScrollable: true, pureview: true }" style=" margin:0;">
+            <div id="article-content" class="am-article-bd">
+                <p id="article-content-picture">
+                    <!--<img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"/>-->
+                </p>
+                <p id="article-content-text"></p>
+            </div>
+        </article>
+    </div>
+    <!--文章结束-->
+
+    <!--审核流程开始-->
+    <div class="am-intro am-cf am-intro-default contentBg">
+        <ul id="aduiting-list" class="am-list">
+            <li class="am-list-item-desced">
+                <div class="am-list-item-hd ">
+                    <span class="auditPass">审核通过</span>
+                    <div style="float: right">
+                        <span class="am-article-meta">张丽</span>
+                        <a class="timeDate">03-15 08:55</a>
+                    </div>
+                </div>
+                <div class="am-list-item-text more-two-line">
+                    <span>审核意见: 审核通过</span>
+                </div>
+            </li>
+            <li class="am-list-item-desced">
+                <div class="am-list-item-hd ">
+                    <span class="auditPass">修改报题</span>
+
+                    <div style="float: right">
+                        <span class="am-article-meta">张丽</span>
+                        <a class="timeDate">03-15 08:55</a>
+                    </div>
+                </div>
+                <div class="am-list-item-text more-two-line"></div>
+            </li>
+            <li class="am-list-item-desced">
+                <div class="am-list-item-hd ">
+                    <span class="auditPass">新建报题</span>
+
+                    <div style="float: right">
+                        <span class="am-article-meta">张丽</span>
+                        <a class="timeDate">03-15 08:55</a>
+                    </div>
+                </div>
+                <div class="am-list-item-text more-two-line"></div>
+            </li>
+        </ul>
+
+    </div>
+    <!--审核流程结束-->
+
+    <!--列表开始-->
+    <div class="contentBg">
+        <div class="am-form-group" style="margin-bottom: 0;">
+            <a>
+                <span>相关稿件</span>
+                <i class="am-icon-angle-right" style="position: relative;float: right;margin-right: 1rem;"></i>
+            </a>
+        </div>
+    </div>
+    <!--列表结束-->
+
+<!--
+    <div id="default-div" data-am-widget="navbar" class="am-navbar am-cf am-navbar-default am-no-layout">
+        <ul class="am-navbar-nav am-cf am-avg-sm-4">
+            <li>
+                <a id="auditing" href="javascript://">
+                    <img src="../../images/home1/upload_article.png" alt="审核">
+                    <span class="am-navbar-label">审核</span>
+                </a>
+            </li>
+            <li>
+                <a id="feedback" href="javascript://">
+                    <img src="../../images/home1/sourcelib.png" alt="报稿反馈">
+                    <span class="am-navbar-label">报题反馈</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+-->
+
+    <div id="submit-div" class="btnBg" style="display: none">
+        <button id="submit" class="am-btn am-btn-primary">提交到编前会</button>
+    </div>
+
+    <!--审核意见开始-->
+    <div id="auditing-box" class="bottomBg" style="display: none">
+        <div class="am-form-group">
+            <textarea class="auditOpinion" rows="5" id="doc-ta-1" placeholder="请输入审核意见"></textarea>
+        </div>
+        <div>
+            <button id="overrule" class="btn_cancel am-btn am-btn-default">驳回</button>
+            <button id="pass" class="btn_determine am-btn am-btn-default">通过</button>
+        </div>
+    </div>
+    <!--审核意见结束-->
+
+    <!---->
+    <div id="feedback-box" class="bottomBg" style="display: none">
+        <div id="status-select">
+            <button class="btn-status selected">当天完成</button>
+            <button class="btn-status">暂缓备后</button>
+            <button class="btn-status">未确认</button>
+            <button class="btn-status">遗留</button>
+        </div>
+        <div>
+            <button id="cancle" class="btn_cancel am-btn am-btn-default">取消</button>
+            <button id="ok" class="btn_determine am-btn am-btn-default">确定</button>
+        </div>
+    </div>
+</div>
+<!---->
+
+<script type="text/javascript">
+
+    $(function () {
+        var query = {}, regExpResult;
+        var search = location.search;
+        var regExp = /([^?&]+)=([^?&]*)/g;
+        while(regExpResult = regExp.exec(search)){
+            query[regExpResult[1]] = regExpResult[2];
+        }
+
+        var loToken = localStorage.getItem("loToken");
+        $.ajax({
+            url:"/fatch",
+            data:{
+                id: query.id,
+                libId: query.libId,
+                method: "viewBaoti",
+                loToken: loToken
+            },
+            dataType:"json",
+            success: on_success
+        });
+
+        function on_success(data) {
+            if(data.success && data.results){
+                var results = data.results;
+                $("#article-title").text(results.title);
+                $("#article-meta-date").text(results.createTime);
+                $("#article-meta-author").text(results.author);
+                $("#article-content-text").text(results.content);
+
+                var $aduiting_list = $("#aduiting-list").empty();
+
+                $.each(data.results.record, function (i, v) {
+                    var $li = $("<li></li>", {"class": "am-list-item-desced"}).appendTo($aduiting_list);
+                    var $div = $("<div></div>", {"class": "am-list-item-hd"}).appendTo($li);
+                    $("<span></span>", {"class": "auditPass", text: v.operation}).appendTo($div);
+                    var $right = $("<div></div>").css({"float": "right"}).appendTo($div);
+                    $("<span></span>", {"class":"am-article-meta", text: v.operator}).appendTo($right);
+                    $("<span></span>", {"class":"timeDate", text: new Date(v.startTime.time).Format("MM-dd hh:mm")}).appendTo($right);
+                    $("<div></div>", {"class": "am-list-item-text more-two-line", text: v.detail}).appendTo($li);
+                });
+
+                $("#article-detail").show();
+            }
+        }
+    });
+</script>
+<script type="text/javascript">
+    // 审核按钮事件
+    $("#auditing").click(function () { $("#auditing-box").show() });
+
+    $("#auditing-box .am-btn").click(function () { $("#auditing-box").hide(); });
+
+    // 报稿反馈
+    $("#feedback").click(function () { $("#feedback-box").show() });
+
+    $("#feedback-box .am-btn").click(function () { $("#feedback-box").hide(); });
+
+    // 报稿反馈状态选择
+    $("#status-select").delegate(".btn-status", "click", function () {
+        $("#status-select .selected").removeClass("selected");
+        $(this).addClass("selected");
+    });
+</script>
+</body>
+</html>

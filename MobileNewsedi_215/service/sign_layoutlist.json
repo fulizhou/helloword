@@ -1,0 +1,12 @@
+{
+  "success":true,
+  "results":
+    [{"id": 1,"name": "A01版","parent_id":0}
+    ,{"id": 12,"name": "A02版","parent_id":0}
+    ,{"id": 13,"name": "A03版","parent_id":0}
+    ,{"id": 14,"name": "A04版","parent_id":0}
+    ,{"id": 15,"name": "A05版","parent_id":0}
+    ,{"id": 16,"name": "A06版","parent_id":0}
+    ,{"id": 17,"name": "A07版","parent_id":0}
+    ]
+}

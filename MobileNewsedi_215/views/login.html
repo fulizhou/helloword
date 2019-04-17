@@ -1,0 +1,644 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>欢迎登录</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="../javascripts/fzcommon.js?v=2"></script>
+    <script type="text/javascript" src="../javascripts/json2.js"></script>
+    <script type="text/javascript" src="../assets/js/cookie.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+
+    <style type="text/css">
+        @font-face {
+            font-family: FZQKBYSJW--GB1-0; /*这里是说明调用来的字体名字*/
+            src: url("../assets/fonts/FZQKBYSJW--GB1-0.TTF"); /*这里是字体文件路径*/
+        }
+
+        @media screen and (min-width: 768px) {
+            .aotuWidth {
+                width: 740px;
+                margin-left: auto;
+                margin-right: auto;
+
+            }
+        }
+        .footerBtom1{
+            line-height: 2rem;
+            color: darkgrey;
+            width: 100%;
+            height: 2rem;
+            text-align: center;
+        }
+        .logoinfo span{
+            font-family: FZQKBYSJW--GB1-0;
+            font-size: 36px;
+            color: #59B19A;
+        }
+        .logoinfo{
+            width: 100%;
+            text-align: center;
+            margin-top: 35px;
+        }
+        .user-info{
+            margin-top: 66px;
+            margin-bottom: 37px;
+        }
+        #doc-username,#doc-password{
+            border: none;
+            width: 61%;
+            margin-left: 76px;
+            background-color: #FFFFFF !important;
+            color: #59B19A !important;
+        }
+        .password-info{
+            margin-bottom: 36px;
+        }
+        .am-btn-default {
+            margin-top: 39px;
+            color: #fff;
+            background: #59B19A;
+            border-color: #59B19A;
+            width: 77%;
+            margin-left: 38px;
+        }
+        .iconSmall{
+            position: absolute;
+            margin-left: 54px;
+            margin-top: 4px;
+        }
+        #doc-check{
+            border: 0px solid #59b19a;
+        }
+        .vaild-password-info{
+            width: 38%;
+            display: inline;
+            float: left;
+            margin-left: 40px;
+            margin-right: 14px;
+        }
+        hr{
+            margin: 0 39px;
+            height: 3px;
+            border: 0px;
+            background-color: #59b19a;
+            color: #59B19A;
+            width: 76%;
+        }
+        .hr1{
+            background-color: #59b19a;
+        }
+        .hr2{
+            opacity: 0.5;
+            background: rgba(45,47,59,0.30);
+        }
+        input{
+            background-color: #FFFFFF !important;
+            color: #59b19a !important;
+            -webkit-box-shadow: 0 0 0 1000px white inset !important;
+        }
+        input:focus{
+            background-color: #FFFFFF !important;
+        }
+
+
+    </style>
+</head>
+<body class="aotuWidth">
+
+<form class="am-form">
+    <fieldset>
+        <div class="logoinfo">
+            <span>方正移动采编</span>
+        </div>
+        <div class="user-info">
+            <div class="iconSmall"><img id="usericon" src="../images/user.png"></div>
+            <input type="text" spellcheck="false" class="" id="doc-username" placeholder="请输入用户名">
+            <hr class="hr1">
+        </div>
+
+        <div class="password-info">
+            <div class="iconSmall"><img id="keyicon" src="../images/key-grey.png"></div>
+            <input type="password" spellcheck="false" class="" id="doc-password" placeholder="请输入密码"/>
+            <hr class="hr2">
+        </div>
+        <div style="width: 100%;">
+            <div class="vaild-password-info">
+                <input type="text" spellcheck="false" class="" id="doc-check" placeholder="请输入验证码"/>
+            </div>
+            <div id="vCode1" style="width:30%; height: 40px; display: inline-block;"></div>
+            <hr class="hr2">
+            <!--<div id="vCode1" style="width:20%; height: 40px; border: 1px solid #ccc; display: inline-block;"></div>-->
+        </div>
+
+        <p>
+            <button type="button" class="am-u-sm-12 am-btn am-btn-default" id="doc-submit" onclick="fn_submit()">登录
+            </button>
+        </p>
+    </fieldset>
+
+</form>
+<div style="text-align: center;margin-top: 47px;">
+    <span class="footerBtom1">版本 : M2.1.5-20180123</span>
+</div>
+<script type="text/javascript">
+
+    var g_check_code;
+
+    function fn_submit() {
+
+        var username = $('#doc-username').val();
+        var password = $('#doc-password').val();
+        var b = new Base64();
+        //var base64username = username;
+        var base64username = b.encode(username);
+        password = b.encode(password);
+        if (username.length == 0) {
+
+            fn_show_tips('请输入用户名');
+            location.reload();
+
+        }
+        var checkTure = g_check_code.verify(document.getElementById("doc-check").value.toLowerCase());
+        if (checkTure) {
+
+        } else {
+            fn_show_tips("验证码输入错误！");
+            location.reload();
+        }
+        /*
+         if(password.length == 0){
+
+         fn_show_tips('请填写密码');
+         return;
+         }
+         */
+        if (window.localStorage) {
+
+            try {
+                localStorage.setItem('login_name', username);
+            }
+            catch (e) {
+
+                fn_show_tips('请关闭浏览器的“无痕浏览”模式。');
+                return;
+            }
+        }
+
+//    var loToken = localStorage.getItem('loToken');
+        //var data = {"username":username, "password": $.md5(password)};
+//    var data = {"username":username, "password": password, "loToken":loToken};
+        var data = {"username": base64username, "password": password};
+        $('#doc-submit').button('loading');
+        //以post方式提交数据
+        $.ajax({
+            type: "POST",
+            url: "/login" + "?timestamp=" + (new Date()).getTime(),
+
+            dataType: 'json',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (jsonData) {
+
+                $('#doc-submit').button('reset');
+                if (jsonData.success == true) {
+
+                    localStorage.setItem('loToken', jsonData.results.loToken);
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 7 * 24 * 60 * 60 * 1000);
+                    document.cookie = "user_key=" + jsonData.user_key + ";expires=" + exp.toGMTString();
+                    var re_login = '<%= re_login %>';
+                    if (re_login == 1 || re_login == 3){
+                        window.location.reload(true);
+                    } else {
+//                      removeHistoryPage();
+                        removeSourceHistoryPage();
+                        removeDeptHistoryPage();
+                        removeXhsHistoryPage();
+                        removeSiteHistoryPage();
+                        removeWeiboHistoryPage();
+                        localStorage.setItem('user_name', jsonData.user_name);
+
+                        var modulePerm = {};
+
+                        var module_param = jsonData.results.modulePerm;
+
+                        // 这部分是为了兼容旧的权限判断
+                        if(typeof module_param === "string"){
+                            console.info("Interface use old module param!");
+                            module_param = $.map(module_param.split("|"), function (v) {
+                                return {name: "", value: v};
+                            });
+                        }
+
+                        $.each(module_param, function (i, v) {
+                            modulePerm[v.value] = v;
+                        });
+
+                        localStorage.setItem('modulePerm', JSON.stringify(modulePerm));
+
+                        window.location.href = "/home?loginToHome=1&user_name=" + jsonData.user_name + "&timestamp" + (new Date()).getTime();
+
+
+                    }
+
+                }else{
+                    location.reload();
+                }
+            }
+        });
+//    select_paper_date();
+
+    }
+    ;
+
+    //  function select_paper_date(){
+    //
+    //    //请求报纸的查看日期
+    //    var data = {"da":"da"};
+    //    //以post方式提交数据
+    //    $.ajax({
+    //      type: "GET",
+    //      url: "/configure",
+    //
+    //      dataType:'json',
+    //      data: data,
+    //      contentType: "application/json",
+    //      success:function(jsonData){
+    //        alert(jsonData.success);
+    //        if(jsonData.success){
+    //          alert(111111);
+    //          alert(jsonData.session-internal);
+    //        }else{
+    //          alert(000000);
+    //        }
+    //        if(jsonData.success){
+    //          alert(jsonData.session-internal);
+    //          var dateList = jsonData.results;
+    //          for(var i in dateList){
+    //            localStorage.setItem("paper_select_date_" + dateList[i].paper_id,dateList[i].view_day);
+    //          }
+    //
+    //        }
+    //      }
+    //    });
+    //  }
+
+    $(function () {
+        var container1 = document.getElementById("vCode1");
+        g_check_code = new vCode(container1);
+
+        if (window.localStorage) {
+
+            var login_name = localStorage.getItem('login_name');
+            if (login_name) {
+
+                document.getElementById('doc-username').value = login_name;
+            }
+        }
+
+        $("#doc-username").focus(function(){
+            $("input").css("color","#ccc !important");
+            $("hr").css("background-color","rgba(45,47,59,0.30)");
+            $(this).next("hr").css("background-color", "rgb(89, 177, 154)");
+            $("hr").css("opacity","0.5");
+            $(this).next("hr").css("opacity","inherit");
+            $("#usericon").attr("src","../images/user.png");
+            $("#keyicon").attr("src","../images/key-grey.png");
+        });
+        $("#doc-password").focus(function(){
+            $("input").css("color","#ccc !important");
+            $("hr").css("opacity","0.5");
+            $("hr").css("background-color","rgba(45,47,59,0.30)");
+            $(this).next("hr").css("background-color", "rgb(89, 177, 154)");
+            $(this).next("hr").css("opacity","inherit");
+            $("#keyicon").attr("src","../images/key.png");
+            $("#usericon").attr("src","../images/user-grey.png");
+        });
+        $("#doc-check").focus(function(){
+            $("input").css("color","#ccc !important");
+            $("hr").css("opacity","0.5");
+            $("hr").css("background-color","rgba(45,47,59,0.30)");
+            $(this).parent().nextAll("hr").css("background-color", "rgb(89, 177, 154)");
+            $(this).parent().nextAll("hr").css("opacity","inherit");
+            $("#usericon").attr("src","../images/user-grey.png");
+            $("#keyicon").attr("src","../images/key-grey.png");
+        });
+
+        var re_login = '<%= re_login %>';
+        if (re_login == 1)
+            fn_show_tips('您太久没有操作了，请重新登录。');
+        else if (re_login == 2)
+            fn_show_tips('登录超时，请重新登录。');
+        else if (re_login == 3)
+            fn_show_tips('您的账号在其他设备登录，请重新登录。');
+        else if (re_login == 4)
+            fn_show_tips('钉钉自动登录失败，请手动登录。');
+    });
+
+    (function () {
+        var randstr = function (length) {
+            var key = {
+
+//        str : [
+//          'a','b','c','d','e','f','g','h','i','j','k','l','m',
+//          'o','p','q','r','s','t','x','u','v','y','z','w','n',
+//          '0','1','2','3','4','5','6','7','8','9'
+//        ],
+                str: [
+                    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+                ],
+
+                randint: function (n, m) {
+                    var c = m - n + 1;
+                    var num = Math.random() * c + n;
+                    return Math.floor(num);
+                },
+
+                randStr: function () {
+                    var _this = this;
+                    var leng = _this.str.length - 1;
+                    var randkey = _this.randint(0, leng);
+                    return _this.str[randkey];
+                },
+
+                create: function (len) {
+                    var _this = this;
+                    var l = len || 10;
+                    var str = '';
+
+                    for (var i = 0; i < l; i++) {
+                        str += _this.randStr();
+                    }
+
+                    return str;
+                }
+
+            };
+
+            length = length ? length : 10;
+
+            return key.create(length);
+        };
+
+        var randint = function (n, m) {
+            var c = m - n + 1;
+            var num = Math.random() * c + n;
+            return Math.floor(num);
+        };
+
+        var vCode = function (dom, options) {
+            this.codeDoms = [];
+            this.lineDoms = [];
+            this.initOptions(options);
+            this.dom = dom;
+            this.init();
+            this.addEvent();
+            this.update();
+            this.mask();
+        };
+
+        vCode.prototype.init = function () {
+            this.dom.style.position = "relative";
+            this.dom.style.overflow = "hidden";
+            this.dom.style.cursor = "pointer";
+            this.dom.title = "点击更换验证码";
+            this.dom.style.background = this.options.bgColor;
+            this.w = this.dom.clientWidth;
+            this.h = this.dom.clientHeight;
+            this.uW = this.w / this.options.len;
+        };
+
+        vCode.prototype.mask = function () {
+            var dom = document.createElement("div");
+            dom.style.cssText = [
+                "width: 100%",
+                "height: 100%",
+                "left: 0",
+                "top: 0",
+                "position: absolute",
+                "cursor: pointer",
+                "z-index: 9999999"
+            ].join(";");
+
+            dom.title = "点击更换验证码";
+
+            this.dom.appendChild(dom);
+        };
+
+        vCode.prototype.addEvent = function () {
+            var _this = this;
+            _this.dom.addEventListener("click", function () {
+                _this.update.call(_this);
+            });
+        };
+
+        vCode.prototype.initOptions = function (options) {
+
+            var f = function () {
+                this.len = 4;
+                this.fontSizeMin = 20;
+                this.fontSizeMax = 48;
+                this.colors = [
+                    "green",
+                    "red",
+                    "blue",
+                    "#53da33",
+                    "#AA0000",
+                    "#FFBB00"
+                ];
+                this.bgColor = "#FFF";
+                this.fonts = [
+                    "Times New Roman",
+                    "Georgia",
+                    "Serif",
+                    "sans-serif",
+                    "arial",
+                    "tahoma",
+                    "Hiragino Sans GB"
+                ];
+                this.lines = 8;
+                this.lineColors = [
+                    "#888888",
+                    "#FF7744",
+                    "#888800",
+                    "#008888"
+                ];
+
+                this.lineHeightMin = 1;
+                this.lineHeightMax = 3;
+                this.lineWidthMin = 1;
+                this.lineWidthMax = 60;
+            };
+
+            this.options = new f();
+
+            if (typeof options === "object") {
+                for (i in options) {
+                    this.options[i] = options[i];
+                }
+            }
+        };
+
+        vCode.prototype.update = function () {
+            for (var i = 0; i < this.codeDoms.length; i++) {
+                this.dom.removeChild(this.codeDoms[i]);
+            }
+            for (var i = 0; i < this.lineDoms.length; i++) {
+                this.dom.removeChild(this.lineDoms[i]);
+            }
+            this.createCode();
+            this.draw();
+        };
+
+        vCode.prototype.createCode = function () {
+            this.code = randstr(this.options.len);
+        };
+
+        vCode.prototype.verify = function (code) {
+            return this.code === code;
+        };
+
+        vCode.prototype.draw = function () {
+            this.codeDoms = [];
+            for (var i = 0; i < this.code.length; i++) {
+                this.codeDoms.push(this.drawCode(this.code[i], i));
+            }
+
+            this.drawLines();
+        };
+
+        vCode.prototype.drawCode = function (code, index) {
+            var dom = document.createElement("span");
+
+            dom.style.cssText = [
+                "font-size:" + randint(this.options.fontSizeMin, this.options.fontSizeMax * 0.7) + "px",
+                "color:" + this.options.colors[randint(0, this.options.colors.length - 1)],
+                "position: absolute",
+                "left:" + randint(this.uW * index, this.uW * index + this.uW - 20) + "px",
+                "top:" + randint(-5, this.h - 50) + "px",
+                "transform:rotate(" + randint(-30, 30) + "deg)",
+                "-ms-transform:rotate(" + randint(-30, 30) + "deg)",
+                "-moz-transform:rotate(" + randint(-30, 30) + "deg)",
+                "-webkit-transform:rotate(" + randint(-30, 30) + "deg)",
+                "-o-transform:rotate(" + randint(-30, 30) + "deg)",
+                "font-family:" + this.options.fonts[randint(0, this.options.fonts.length - 1)],
+                "font-weight:" + randint(400, 600)
+            ].join(";");
+
+            dom.innerHTML = code;
+            this.dom.appendChild(dom);
+
+            return dom;
+        };
+
+        vCode.prototype.drawLines = function () {
+            this.lineDoms = [];
+            for (var i = 0; i < this.options.lines; i++) {
+                var dom = document.createElement("div");
+
+                dom.style.cssText = [
+                    "position: absolute",
+                    "opacity: " + randint(3, 8) / 10,
+                    "width:" + randint(this.options.lineWidthMin, this.options.lineWidthMax) + "px",
+                    "height:" + randint(this.options.lineHeightMin, this.options.lineHeightMax) + "px",
+                    "background: " + this.options.lineColors[randint(0, this.options.lineColors.length - 1)],
+                    "left:" + randint(0, this.w - 20) + "px",
+                    "top:" + randint(0, this.h) + "px",
+                    "transform:rotate(" + randint(-30, 30) + "deg)",
+                    "-ms-transform:rotate(" + randint(-30, 30) + "deg)",
+                    "-moz-transform:rotate(" + randint(-30, 30) + "deg)",
+                    "-webkit-transform:rotate(" + randint(-30, 30) + "deg)",
+                    "-o-transform:rotate(" + randint(-30, 30) + "deg)",
+                    "font-family:" + this.options.fonts[randint(0, this.options.fonts.length - 1)],
+                    "font-weight:" + randint(400, 900)
+                ].join(";");
+                this.dom.appendChild(dom);
+
+                this.lineDoms.push(dom);
+            }
+        };
+
+        this.vCode = vCode;
+
+    }).call(this);
+
+    function Base64() {
+
+        // private property
+        _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+        // public method for encoding
+        this.encode = function (input) {
+            var output = "";
+            var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+            var i = 0;
+            input = _utf8_encode(input);
+            while (i < input.length) {
+                chr1 = input.charCodeAt(i++);
+                chr2 = input.charCodeAt(i++);
+                chr3 = input.charCodeAt(i++);
+                enc1 = chr1 >> 2;
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = chr3 & 63;
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64;
+                } else if (isNaN(chr3)) {
+                    enc4 = 64;
+                }
+                output = output +
+                _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+                _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+            }
+            return output;
+        }
+        // private method for UTF-8 encoding
+        _utf8_encode = function (string) {
+            string = string.replace(/\r\n/g,"\n");
+            var utftext = "";
+            for (var n = 0; n < string.length; n++) {
+                var c = string.charCodeAt(n);
+                if (c < 128) {
+                    utftext += String.fromCharCode(c);
+                } else if((c > 127) && (c < 2048)) {
+                    utftext += String.fromCharCode((c >> 6) | 192);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                } else {
+                    utftext += String.fromCharCode((c >> 12) | 224);
+                    utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                }
+
+            }
+            return utftext;
+        }
+    }
+</script>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+
+<!--<![endif]-->
+</body>
+</html>

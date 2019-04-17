@@ -1,0 +1,21 @@
+{
+  "success":true,
+  "results":
+    [{"id": 1,"name": "自采稿库-个人","parent_id":0}
+    ,{"id": 12,"name": "记者库","parent_id":1}
+    ,{"id": 13,"name": "编辑库","parent_id":1}
+    ,{"id": 14,"name": "总编库","parent_id":1}
+    ,{"id": 121,"name": "记者库-1","parent_id":12}
+    ,{"id": 122,"name": "记者库-2","parent_id":12}
+    ,{"id": 123,"name": "记者库-3","parent_id":12}
+    ,{"id": 1211,"name": "记者库-1-1","parent_id":121}
+    ,{"id": 1212,"name": "记者库-2-2","parent_id":121}
+    ,{"id": 1213,"name": "记者库-3-3","parent_id":121}
+    ,{"id": 2,"name": "文字稿库","parent_id":0}
+    ,{"id": 21,"name": "摄影库","parent_id":2}
+    ,{"id": 22,"name": "编辑库","parent_id":2}
+    ,{"id": 23,"name": "总编库","parent_id":2}
+    ,{"id": 3,"name": "图片稿库","parent_id":0}
+    ,{"id": 4,"name": "视频稿库","parent_id":0}
+    ]
+}

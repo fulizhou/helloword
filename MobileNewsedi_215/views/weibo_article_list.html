@@ -1,0 +1,642 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>微博发布稿库</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/weibo.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <style>
+
+        .nine-pic-div {
+            padding-top:0px;
+            border: none;
+            min-height: 100px;
+            overflow: hidden;
+            float: left;
+            position: relative;
+            background-origin:content;
+            background-position:50% 50%;
+            background-size:auto 100%;
+            background-repeat:no-repeat;
+            background-color: black;
+
+        }
+        .list-head-img-div{
+            position: relative;
+            float: left;
+            margin: 10px;
+            margin-left: 2px;
+            margin-bottom: 0px;
+        }
+        .list-head-img-div div a img{
+            width: 45px;
+        }
+        .list-content-info-div a{
+            font-size: 12px;color: #808080;
+        }
+        .list-content-nine-div{
+            margin-top: 6px;width: 100%;text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id = "doc-form-all">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <div>
+                <a href="javascript:returnBack();"><img src="../images/navbar/return.png"></a><span>&nbsp;</span><a href="javascript:choose_catalog_list();" ><span id="doc-select-catalog-name" style="color: #FFFFFF"></span><img src="../images/list/xiala.png"  style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+            </div>
+        </div>
+        <div class="am-header-right am-header-nav">
+            <div>
+                <a href="javascript:list_articles_refresh();"><img src="../images/list/refresh-icon.png"></a><a id="publish-weibo-a" style="display: none" href="javascript:new_or_edit_article(0,'');"><img src="../images/list/plus-icon.png"></a><a href="javascript:returnHome()"><img src="../images/list/home-icon.png"></a>
+            </div>
+        </div>
+    </header>
+    <div id = "doc-scroll-wrapper" class="am-list-news-bd" style="border: none">
+        <ul id = "doc-article-list" class="am-list" style="padding-left: 5px;padding-right: 5px">
+            <!--<li style="margin-bottom: 15px;border: none">-->
+                <!--<div>-->
+                    <!--<div class="list-head-img-div">-->
+                        <!--<div>-->
+                            <!--<a>-->
+                                <!--<img class="am-circle" src="../images/touxiang.jpg">-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="list-content-div">-->
+                        <!--<div class="list-content-name-div" style="border: 0px;font-weight: bold;padding-top: 8px">-->
+                            <!--<a>英国报哥</a><a style="float: right" href="">取消发布</a><a href="" style="float: right">修改&nbsp;&nbsp;</a>-->
+                        <!--</div>-->
+                        <!--<div class="list-content-info-div" style="margin-top: 3px">-->
+                            <!--<a>-->
+                                <!--12月28日 22:25 来自 十万伏特的iPhone6s-->
+                            <!--</a>-->
+                        <!--</div>-->
+                        <!--<div style="clear: both"></div>-->
+                        <!--<span>#尚语贤老炮儿# 就是剧里那个每天不工作，跟一群小炮儿混在一起，扎着脏辫儿的小姑娘不？看片子的时候别提多羡慕她了....有李易峰有吴亦凡还不用上班多开心啊......如果这个变身只需要一个脏辫...那么...老板给我来十根！</span>-->
+                        <!--<div class="list-content-nine-div">-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<hr data-am-widget="divider" class="am-divider am-divider-default" />-->
+            <!--</li>-->
+            <!--<li style="margin-bottom: 15px;border: none">-->
+                <!--<div>-->
+                    <!--<div class="list-head-img-div">-->
+                        <!--<div>-->
+                            <!--<a>-->
+                                <!--<img class="am-circle" src="../images/touxiang.jpg">-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="list-content-div">-->
+                        <!--<div class="list-content-name-div" style="border: 0px;font-weight: bold;padding-top: 8px">-->
+                            <!--<a>英国报哥</a><a style="float: right" href="">取消发布</a><a href="" style="float: right">修改&nbsp;&nbsp;</a>-->
+                        <!--</div>-->
+                        <!--<div class="list-content-info-div" style="margin-top: 3px">-->
+                            <!--<a>-->
+                                <!--12月28日 22:25 来自 十万伏特的iPhone6s-->
+                            <!--</a>-->
+                        <!--</div>-->
+                        <!--<div style="clear: both"></div>-->
+                        <!--<span>#尚语贤老炮儿# 就是剧里那个每天不工作，跟一群小炮儿混在一起，扎着脏辫儿的小姑娘不？看片子的时候别提多羡慕她了....有李易峰有吴亦凡还不用上班多开心啊......如果这个变身只需要一个脏辫...那么...老板给我来十根！</span>-->
+                        <!--<div class="list-content-nine-div">-->
+                            <!--&lt;!&ndash;<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<hr data-am-widget="divider" class="am-divider am-divider-default" />-->
+            <!--</li>-->
+            <!--<li style="margin-bottom: 15px;border: none">-->
+                <!--<div>-->
+                    <!--<div class="list-head-img-div">-->
+                        <!--<div>-->
+                            <!--<a>-->
+                                <!--<img class="am-circle" src="../images/touxiang.jpg">-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="list-content-div">-->
+                        <!--<div class="list-content-name-div" style="border: 0px;font-weight: bold;padding-top: 8px">-->
+                            <!--<a>英国报哥</a><a style="float: right" href="">取消发布</a><a href="" style="float: right">修改&nbsp;&nbsp;</a>-->
+                        <!--</div>-->
+                        <!--<div class="list-content-info-div" style="margin-top: 3px">-->
+                            <!--<a>-->
+                                <!--12月28日 22:25 来自 十万伏特的iPhone6s-->
+                            <!--</a>-->
+                        <!--</div>-->
+                        <!--<div style="clear: both"></div>-->
+                        <!--<span>#尚语贤老炮儿# 就是剧里那个每天不工作，跟一群小炮儿混在一起，扎着脏辫儿的小姑娘不？看片子的时候别提多羡慕她了....有李易峰有吴亦凡还不用上班多开心啊......如果这个变身只需要一个脏辫...那么...老板给我来十根！</span>-->
+                        <!--<div class="list-content-nine-div">-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                            <!--<div class="nine-pic-div nine-pic-div-css" style="background-image: url('../images/touxiang.jpg')"></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<hr data-am-widget="divider" class="am-divider am-divider-default" />-->
+            <!--</li>-->
+        </ul>
+        <div id = "doc-scroll-more" style="display: none;" class="am-pagination-centered" data-am-scrollspy="{animation: 'fade', delay: 300}">加载更多</div>
+    </div>
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+        <a href="#top" title="回到顶部">
+            <img style="height: 3rem" src="../images/top.png">
+        </a>
+    </div>
+</div>
+<div id="doc-catalog-list" style="display: none; margin-top: 0.5%">
+    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" style="margin-top: 0%">
+        <h2 class="am-titlebar-title">选择稿库</h2>
+    </div>
+    <div id = "doc-catalog-list-tpl" class="am-list-news-bd">
+    </div>
+</div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-bd" id="modal-content-div">
+            <!--啦啦啦啦啦-->
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        </div>
+    </div>
+</div>
+<script>
+//    var g_is_choose_catalog = false;//是否弹出选择分类树
+//    var g_articles_begin = 0;//从第几个稿件位置开始加载
+    var g_published_begin = 0;//从第几个稿件位置开始加载
+    var g_wait_publish_begin = 0;//从第几个稿件位置开始加载
+    var g_time_publish_begin = 0;//从第几个稿件位置开始加载
+    var g_has_more = false;
+    var g_weibo_perm = "";
+    var g_group_id = 0;
+//    var g_select_catalog_id = -1;
+
+    //导航栏返回按钮
+    function returnBack(){
+        history.go(-1);
+    }
+
+    //返回首页
+    function returnHome(){
+        window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+    }
+
+    function new_or_edit_article(doc_id, content){
+
+        if(!doc_id == 0){
+            localStorage.setItem('weibo_content',content);
+        }
+        window.location.href = "/weibo_article_list/publish?group_id=" + g_group_id + "&doc_id=" + doc_id;
+
+    }
+
+    function choose_catalog_list(){
+
+        window.location.href = "/weibo_article_list/listTree";
+
+    }
+
+    function list_articles_refresh(){
+        g_published_begin = 0;
+        g_wait_publish_begin = 0;
+        load_article_list();
+
+    }
+
+    function click_load_published(){
+        localStorage.setItem("isPublishList",1);
+        g_published_begin = 0;
+        g_wait_publish_begin = 0;
+        g_time_publish_begin = 0;
+        load_article_list();
+    }
+
+    function click_wait_publish(){
+        localStorage.setItem("isPublishList",0);
+        g_published_begin = 0;
+        g_wait_publish_begin = 0;
+        g_time_publish_begin = 0;
+        load_article_list();
+    }
+
+    function click_time_published(){
+        localStorage.setItem("isPublishList",2);
+        g_published_begin = 0;
+        g_wait_publish_begin = 0;
+        g_time_publish_begin = 0;
+        load_article_list();
+    }
+
+    function load_article_list(){
+
+        var isPublishList = localStorage.getItem("isPublishList");
+        if(isPublishList == 2){
+            load_time_publish();
+        }else if(isPublishList == 0){
+            load_wait_publish();
+        }else{
+            load_published();
+        }
+
+    }
+
+    function publish_weibo(doc_id, content, imageUrl, weibo_type){
+        content = encodeURIComponent(content);
+
+        if(imageUrl == 0){
+            imageUrl = "";
+        }
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=weibopublish" + "&loToken=" + loToken + "&doc_id=" + doc_id + "&content=" + content + "&group_id=" + g_group_id + "&weibo_type=" + weibo_type + "&is_publish=1" + "&imageUrl=" + imageUrl + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+                    fn_show_tips("微博发布成功！");
+                    g_published_begin = 0;
+                    g_wait_publish_begin = 0;
+                    load_article_list();
+                }
+            }
+        });
+
+    }
+
+    function unPublish_weibo(doc_id){
+
+        document.getElementById('modal-content-div').innerText = "确定删除?";
+        $('#my-confirm').modal({
+
+            onConfirm: function(){
+                var loToken = localStorage.getItem('loToken');
+                var q = "method=unSignWeibo" + "&loToken=" + loToken + "&doc_id=" + doc_id + '&nocache=' + (new Date()).getTime();
+                var data = {"m":"", "q":q};
+                //以post方式提交数据
+                $.ajax({
+                    type: "GET",
+                    url: "/get",
+
+                    dataType:'json',
+                    data: data,
+                    contentType: "application/json",
+                    success:function(jsonData){
+
+                        if(jsonData.success == true){
+                            fn_show_tips("稿件删除成功！");
+                            g_published_begin = 0;
+                            g_wait_publish_begin = 0;
+                            load_article_list();
+
+                        }
+                    }
+                });
+
+            },
+            onCancel: function(){
+                //啥也不干
+            }
+
+        })
+
+    }
+
+    var g_published = "";
+    //显示已发的微博列表
+    function load_published(){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=getWeiboCatalog" + "&group_id=" + g_group_id + "&begin=" + g_published_begin + "&current_node=0&count=20" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+//        var q = "method=getWeiboPublish" + "&group_id=" + group_id + "&begin=" + g_published_begin + "&current_node=0&count=20" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    g_published = jsonData.results;
+                    show_published_weibo_list(jsonData.has_more);
+                }
+            }
+        });
+
+    }
+
+    var g_wait_publish = "";
+    //显示待发布的微博列表
+    function load_wait_publish(){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=getWeiboCatalog" + "&group_id=" + g_group_id + "&begin=" + g_wait_publish_begin + "&current_node=1&count=20" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    g_wait_publish = jsonData.results;
+                    show_wait_publish_weibo_list(jsonData.has_more);
+                }
+            }
+        });
+
+    }
+
+var g_time_publish = "";
+//显示定时发布的微博列表
+function load_time_publish(){
+    var loToken = localStorage.getItem('loToken');
+    var q = "method=getWeiboCatalog" + "&group_id=" + g_group_id + "&begin=" + g_wait_publish_begin + "&current_node=2&count=20" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+    var data = {"m":"", "q":q};
+    //以post方式提交数据
+    $.ajax({
+        type: "GET",
+        url: "/get",
+
+        dataType:'json',
+        data: data,
+        contentType: "application/json",
+        success:function(jsonData){
+
+            if(jsonData.success == true){
+
+                g_time_publish = jsonData.results;
+                show_time_publish_weibo_list(jsonData.has_more);
+            }
+        }
+    });
+
+}
+
+    function show_published_weibo_list(has_more){
+
+        if(g_weibo_perm.indexOf('|publishList|') >= 0){
+
+            g_has_more = has_more;
+            if(g_published_begin == 0){
+//            g_published_begin = 0;
+                var list = document.getElementById('doc-scroll-wrapper');
+                list.innerHTML = "";
+//            removeWeiboHistoryPage();
+                $('html, body').animate({scrollTop: 0}, '500');
+            }
+//        localStorage.setItem("groupHead","http://59.108.121.216/newsedit/newsedit/img/AppHeader/weibo/7/jiangzz_1451870525967.jpg");
+            var groupHead = localStorage.getItem("groupHead");
+            var catalog_list_html = '<div id = "doc-scroll-wrapper" class="am-list-news-bd" style="border: none">';
+            catalog_list_html += '<ul id = "doc-article-list" class="am-list" style="padding-left: 5px;padding-right: 5px">';
+
+            $.each(g_published, function(){
+
+                catalog_list_html += '<li style="margin-bottom: 15px;border: none"><div><div class="list-head-img-div"><div><a><img class="am-circle" src="' + groupHead + '"></a></div></div><div class="list-content-div">';
+                catalog_list_html += '<div class="list-content-name-div" style="border: 0px;font-weight: bold;padding-top: 8px">';
+                catalog_list_html += '<a>' + this.group_name + '&nbsp;</a>';
+
+                if(g_weibo_perm.indexOf('|delete|') >= 0){
+
+                    catalog_list_html += '<a style="float: right;text-decoration:none;color: #59B19A;font-weight: 100;font-size: 15px;padding-right:5px;" href="javascript:unPublish_weibo('+ this.id +')">删除</a>';
+                }
+
+                catalog_list_html += '</div><div class="list-content-info-div" style="margin-top: 3px"><a>' + this.author + ' '+ this.creat_time + '</a></div><div style="clear: both"></div>';
+                catalog_list_html += '<span>' + this.content + '</span>';
+                catalog_list_html += '<div class="list-content-nine-div">';
+                for(var i in this.imageUrl){
+                    catalog_list_html += '<div class="nine-pic-div nine-pic-div-css" style="background-image: url(' + this.imageUrl[i] +')"></div>';
+                }
+                catalog_list_html += '</div></div></div><hr data-am-widget="divider" class="am-divider am-divider-default" /></li>';
+                g_published_begin += 1;
+            });
+            catalog_list_html += '</ul>';
+            catalog_list_html += '</div>';
+            $("#doc-scroll-wrapper").replaceWith(catalog_list_html);
+
+
+            if(has_more){
+                $("#doc-scroll-more").show();
+            }
+            else{
+                $("#doc-scroll-more").hide();
+            }
+
+
+        }else{
+//            alert("您没有权限查看发布微博列表。");
+            fn_show_tips("您没有权限查看发布微博列表。");
+        }
+    }
+
+    function show_wait_publish_weibo_list(has_more){
+
+        if(g_weibo_perm.indexOf('|unPublishList|') >= 0){
+
+            g_has_more = has_more;
+            if(g_wait_publish_begin == 0){
+//            g_published_begin = 0;
+                var list = document.getElementById('doc-scroll-wrapper');
+                list.innerHTML = "";
+//            removeWeiboHistoryPage();
+                $('html, body').animate({scrollTop: 0}, '500');
+            }
+
+            var groupHead = localStorage.getItem("groupHead");
+            var catalog_list_html = '<div id = "doc-scroll-wrapper" class="am-list-news-bd" style="border: none">';
+            catalog_list_html += '<ul id = "doc-article-list" class="am-list" style="padding-left: 5px;padding-right: 5px">';
+
+            $.each(g_wait_publish, function(){
+
+                catalog_list_html += '<li style="margin-bottom: 15px;border: none"><div><div class="list-head-img-div"><div><a><img class="am-circle" src="' + groupHead + '"></a></div></div><div class="list-content-div">';
+                catalog_list_html += '<div class="list-content-name-div" style="border: 0px;font-weight: bold;padding-top: 8px">';
+
+                if(g_weibo_perm.indexOf('|publish|') >= 0){
+                    if(this.imageUrl == ""){
+                        catalog_list_html += '<a>' + this.group_name + '&nbsp;</a><a style="float: right;text-decoration:none;color: #59B19A;font-weight: 100;font-size: 15px;" href="javascript:publish_weibo(' + this.id + ',\''+this.content+'\','+0+','+ this.weibo_type +')">发布</a>';
+                    }else{
+                        catalog_list_html += '<a>' + this.group_name + '&nbsp;</a><a style="float: right;text-decoration:none;color: #59B19A;font-weight: 100;font-size: 15px;" href="javascript:publish_weibo(' + this.id + ',\''+this.content+'\','+this.imageUrl+','+ this.weibo_type +')">发布</a>';
+                    }
+                }
+
+                if(g_weibo_perm.indexOf('|save|') >= 0){
+                    if(this.weibo_type == 1){
+                        catalog_list_html += '<a href="javascript:new_or_edit_article('+ this.id +',\''+ this.content +'\')" style="float: right;text-decoration:none;color: #59B19A;padding-right:0.5rem;font-weight: 100;font-size: 15px;">修改</a>';
+                    }
+                }
+
+                catalog_list_html += '</div><div class="list-content-info-div" style="margin-top: 3px"><a>' + this.author + ' '+ this.creat_time + '</a></div><div style="clear: both"></div>';
+                catalog_list_html += '<span>' + this.content + '</span>';
+                catalog_list_html += '<div class="list-content-nine-div">';
+                for(var i in this.imageUrl){
+                    catalog_list_html += '<div class="nine-pic-div nine-pic-div-css" style="background-image: url(' + this.imageUrl[i] +')"></div>';
+                }
+                catalog_list_html += '</div></div></div><hr data-am-widget="divider" class="am-divider am-divider-default" /></li>';
+                g_wait_publish_begin += 1;
+            });
+            catalog_list_html += '</ul>';
+            catalog_list_html += '</div>';
+            $("#doc-scroll-wrapper").replaceWith(catalog_list_html);
+
+
+            if(has_more){
+                $("#doc-scroll-more").show();
+            }
+            else{
+                $("#doc-scroll-more").hide();
+            }
+
+        }else{
+//            alert("您没有权限查看未发布微博列表。");
+            fn_show_tips("您没有权限查看未发布微博列表。");
+        }
+
+    }
+
+    function show_time_publish_weibo_list(has_more){
+
+        if(g_weibo_perm.indexOf('|timePublishList|') >= 0){
+
+            g_has_more = has_more;
+            if(g_time_publish_begin == 0){
+    //            g_published_begin = 0;
+                var list = document.getElementById('doc-scroll-wrapper');
+                list.innerHTML = "";
+    //            removeWeiboHistoryPage();
+                $('html, body').animate({scrollTop: 0}, '500');
+            }
+
+            var groupHead = localStorage.getItem("groupHead");
+            var catalog_list_html = '<div id = "doc-scroll-wrapper" class="am-list-news-bd" style="border: none">';
+            catalog_list_html += '<ul id = "doc-article-list" class="am-list" style="padding-left: 5px;padding-right: 5px">';
+
+            $.each(g_time_publish, function(){
+
+                catalog_list_html += '<li style="margin-bottom: 15px;border: none"><div><div class="list-head-img-div"><div><a><img class="am-circle" src="' + groupHead + '"></a></div></div><div class="list-content-div">';
+                catalog_list_html += '<div class="list-content-name-div" style="border: 0px;font-weight: bold;padding-top: 8px">';
+                catalog_list_html += '<a>' + this.group_name + '&nbsp;</a>';
+
+                if(g_weibo_perm.indexOf('|delete|') >= 0){
+
+                    catalog_list_html += '<a style="float: right;text-decoration:none;color: #59B19A;font-weight: 100;font-size: 15px;padding-right: 5px;" href="javascript:unPublish_weibo('+ this.id +')">删除</a>';
+                }
+
+                catalog_list_html += '</div><div class="list-content-info-div" style="margin-top: 3px"><a>' + this.author + ' '+ this.creat_time + '</a></div><div style="clear: both"></div>';
+                catalog_list_html += '<span>' + this.content + '</span>';
+                catalog_list_html += '<div class="list-content-nine-div">';
+                for(var i in this.imageUrl){
+                    catalog_list_html += '<div class="nine-pic-div nine-pic-div-css" style="background-image: url(' + this.imageUrl[i] +')"></div>';
+                }
+                catalog_list_html += '</div></div></div><hr data-am-widget="divider" class="am-divider am-divider-default" /></li>';
+                g_time_publish_begin += 1;
+            });
+            catalog_list_html += '</ul>';
+            catalog_list_html += '</div>';
+            $("#doc-scroll-wrapper").replaceWith(catalog_list_html);
+
+
+            if(has_more){
+                $("#doc-scroll-more").show();
+            }
+            else{
+                $("#doc-scroll-more").hide();
+            }
+
+        }else{
+    //            alert("您没有权限查看未发布微博列表。");
+            fn_show_tips("您没有权限查看定时发布微博列表。");
+        }
+
+    }
+
+    $(function(){
+
+        var isPublishList = localStorage.getItem("isPublishList");
+        if(isPublishList == 2){
+            document.getElementById('doc-select-catalog-name').innerHTML = "定时发布微博";
+        }else if(isPublishList == 0){
+            document.getElementById('doc-select-catalog-name').innerHTML = "待发布微博";
+        }else{
+            document.getElementById('doc-select-catalog-name').innerHTML = "已发布微博";
+        }
+
+        g_group_id = localStorage.getItem('group_id');
+//        alert(g_group_id);
+        g_weibo_perm = localStorage.getItem("weiboPerm");
+        if(g_weibo_perm.indexOf('|publish|') >= 0 || g_weibo_perm.indexOf('|save|') >= 0){
+            $("#publish-weibo-a").show();
+        }
+
+        load_article_list();
+
+        $('#doc-scroll-more').on('inview.scrollspy.amui', function() {
+
+            load_article_list();
+        });
+
+
+        $('#doc-scroll-refresh').on('inview.scrollspy.amui', function() {
+
+            load_article_list();
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "server_port": "8008",
+  "service_url": "http://172.19.208.100:8080/newsedit",
+  "server_img_url":"http://172.19.32.134:8008",
+  "app_title": "方正畅享全媒体采编系统",
+  "article_list_count": 30,
+  "dd_corpid":"dingeff7634cf906dca6",
+  "dd_secret":"aczRW8896lXbXD5MF8lkHOR6ota4JqqVij38uvEoKLkIur6pL-5wNqaJzCTSEqoa",
+  "dd_agentid":"20381373",
+  "upload_max_size": "80MB",
+  "app_type":"web_app",
+  "personality":{
+    "article_to_relation": 0
+  },
+  "upload_choose_dept":0,
+  "is_demo":0,
+  "appkey":"founder",
+  "appsecret":"allmedia"
+}

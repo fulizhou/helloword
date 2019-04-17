@@ -1,0 +1,158 @@
+
+body {
+    background: #eee;
+}
+
+li {
+    list-style: none;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+    width: 0;
+}
+
+.upload-img-div {
+    width: 8rem;
+    height: 8rem;
+    margin: 3px;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #cccccc;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.upload-img-remove-img {
+    width: 20px;
+    height: 20px;
+    float: right;
+}
+
+.upload-img-wait-img {
+    position: absolute;
+    margin-left: 22px;
+    margin-top: 17px;
+}
+
+.am-form-group {
+    margin-bottom: 0.5rem;
+}
+
+.whiteBg {
+    width: 100%;
+    padding: 1rem;
+    background: #fff;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+}
+
+.am-icon-angle-right{
+    color: #999;
+}
+
+.contact {
+    padding: 0;
+    margin: -1rem 0;
+}
+
+.contact li {
+    height: 4.5rem;
+    line-height: 4.5rem;
+}
+
+.contact li:first-child {
+    border-bottom: 1px solid #ddd;
+}
+
+.contact li label{
+    font-weight: normal;
+}
+
+.contact li input {
+    border: none;
+    float: right;
+    height: 2.5rem;
+    padding: 0 5px;
+    line-height: 2.5rem;
+    margin-top:1rem;
+    width: calc(100% - 5em);
+}
+
+.upload, .location {
+    width: 1.5rem;
+}
+
+.docText {
+    border: none !important;
+}
+
+.am-form div {
+    border-bottom: 1px solid #ddd;
+}
+.am-form div:last-child {
+    border-bottom: none;
+}
+.am-form div textarea{
+    border: none;
+}
+
+.btnSect {
+    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
+}
+.btnSect> .am-btn{
+    width: 45%;
+    padding: 0;
+    margin: 0 2%;
+    font-size: 1.6rem;
+    line-height: 3.5rem;
+    border-radius: 0.3rem;
+}
+
+.btn_cancel {
+    background: #eeeeee;
+    border: 1px solid #59B19A;
+    color: #59B19A;
+}
+
+.btn_determine {
+    color: #fff;
+    background: #59B19A;
+    border: 1px solid #59B19A;
+}
+
+.status-list {
+    width: 100%;
+    padding: 10px 0;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.status-list .selected{
+    color: #FFFFFF;
+    background: #59B19A;
+}
+
+.btn-status {
+    width: 22%;
+    color: #333;
+    margin: 0 1%;
+    line-height: 2rem;
+    font-size: 1.3rem;
+    background: #eeeeee;
+    border-radius: 0.5rem;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+}
+
+.am-datepicker tr.am-datepicker-header{
+    background:#59B19A;
+}

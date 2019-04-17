@@ -1,0 +1,237 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>修改内容</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/simditor.css">
+    <link rel="stylesheet" href="../assets/css/mobile.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <style>
+        .edit-div img ,table  {
+            max-width: 100%;
+        }
+        pre{
+            padding: 0 0 0 1rem;
+            margin: 0 0 0 1rem;
+        }
+        #editor code{
+            padding: 0;
+            font-size: 1.3rem;
+            color: #555;
+            background-color: #f8f8f8;
+            white-space: pre-wrap;
+            border-radius: 0;
+        }
+        *+p{
+            margin-top: 0rem;
+        }
+        p{
+            margin: 0;
+        }
+       body{
+           padding-bottom: 54px;
+       }
+
+     </style>
+</head>
+<body>
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <div>
+            <!--<a><img style="height: 1.7rem;" src="images/list/1.png"></a><span>&nbsp;&nbsp;</span><a><img style="height: 1.6rem;" src="images/list/1.png"></a><span>&nbsp;&nbsp;</span><span id="doc-select-catalog-name" style="color: #FFFFFF"></span>-->
+            <a href="javascript:returnBack()"><img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a><span>&nbsp;&nbsp;&nbsp;</span><span id="doc-select-catalog-name" style="font-size:1.6rem;color: #FFFFFF">修改内容</span>
+        </div>
+    </div>
+    <div class="am-header-right am-header-nav">
+        <div>
+            <a href="javascript:clickRefresh();"><img src="../images/list/refresh-icon.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+        </div>
+    </div>
+</header>
+
+<div class="am-text-danger">
+    <h2 id = "doc-article-title" style="padding:2%; margin-bottom: 0%;text-align: center;"></h2>
+    <div class="am-article-hd" style="text-align: center;">
+        <p id="doc-article-meta" class="am-article-meta" style="padding-left:2%;;margin: 0px"></p>
+    </div>
+</div>
+<!--<hr data-am-widget="divider" style="" class="am-divider am-divider-default" />-->
+<!--<article data-am-widget="paragraph" style="padding:2%; margin-bottom: 0%;" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: true }">-->
+    <!--<div id = "doc-article-content" class="am-article-bd">-->
+    <!--</div>-->
+<!--</article>-->
+<input type="hidden" id="isGroup" value="">
+<div class="edit-div" style="padding:2%; margin-bottom: 0%;">
+    <div id="editor-topic" style="text-align: center;font-weight: bold"></div>
+    <div contenteditable="true" id="editor" style="width: 100%;height:29rem;border:1px solid #ddd;overflow-y: auto;" >
+    </div>
+</div>
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="" style="left: auto">
+    <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4" style="border-top: solid 3px #59b19a">
+       <li id = 'edit-save'>
+           <a href="#">
+               <i class="am-icon-check"></i>
+               <span class="am-navbar-label">保存</span>
+           </a>
+       </li>
+        <li>
+            <a href="javascript:unlock();">
+                <i class="am-icon-close"></i>
+                <span class="am-navbar-label">取消</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>-->
+<script type="text/javascript" src="../assets/js/module.js"></script>
+<script type="text/javascript" src="../assets/js/hotkeys.js"></script>
+<script type="text/javascript" src="../assets/js/simditor.js"></script>
+<script type="text/javascript" src="../assets/js/uploader.js"></script>
+<script type="text/javascript" src="../assets/js/bootstrap-wysiwyg.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+<script>
+    $(function(){
+        load_article(editor);
+        $('#edit-save').on('click',function(){
+            save_article(editor);
+        })
+        if (window.history && window.history.pushState)
+        {
+            $(window).on('popstate', function() { var hashLocation = location.hash; var hashSplit = hashLocation.split("#!/");
+            var hashName = hashSplit[1];
+            if (hashName !== '') { var hash = window.location.hash; if (hash === '') {unlock(); } } });
+            window.history.pushState('forward', null, './#forward');
+
+        }
+    });
+
+    var type = "";
+    var load_article = function(editor){
+        var loToken = localStorage.getItem('loToken');
+        //改稿获取稿件时，传入locked=true参数，锁定稿件
+        var q = "method=articleDetail&lock=true&article_id=" + "<%= article_id%>" + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>" + "&loToken=" + loToken + "&nocache=" + (new Date()).getTime()+"&operation="+"<%= operation %>";
+        var param = {"m":"", "q":q};
+
+        $.get("/get",param,function(data){
+            if(data.success){
+                var content = data.results.content;
+                $('#editor-topic').html(data.results.title.replace(/\n/g,'<br>'));
+                type = data.results.type;
+                $("#editor").html(content);
+                $("#isGroup").val(data.results.isGroup);//增加是否是组图 参数，用于修改内容时特殊处理
+            }else{
+                fn_show_tips(data.results);
+                $(".am-navbar-label").css("display","none");
+                $("#edit-save").css("display","none");
+            }
+
+        });
+    }
+    var unlock = function(){
+        var loToken = localStorage.getItem('loToken');
+        //改稿获取稿件时，传入locked=true参数，锁定稿件
+        var q = "method=unlock&article_id=" + "<%= article_id%>" + "&article_libid=" + "<%= article_libid %>"+ "&loToken=" + loToken;
+        var param = {"m":"", "q":q};
+
+        $.get("/get",param,function(data){
+            if(data.success){
+                history.go(-1);
+            }else{
+                history.go(-1);
+            }
+
+        });
+    }
+    var returnBack = function(){
+        unlock();
+        history.go(-1);
+    };
+
+    var save_article = function(editor){
+        $('#edit-save').addClass('am-disabled').find('i').removeClass().addClass('am-icon-spinner am-icon-spin');
+        var loToken = localStorage.getItem('loToken');
+        var text = $("#editor").html();
+        text = text.replace("<p></p>","");
+        //text =  text.substring(text.indexOf("<code "));
+//        text =  text.substring(0,text.lastIndexOf("<p></p>"));
+        var isGroup = $("#isGroup").val()=="true"?true:false;//如果是组图，增加参数
+        if("image" == type && !isGroup){
+            $("#editor img").remove();
+            var text = $("#editor").html();
+            text = text.replace("<p></p>","");
+        }
+        var topics,contents;//组图各个图片标题 和内容
+        if(isGroup){
+            text = $(".groupImageContent").html();//组图内容
+            var singleImageTopics = [];
+            var singleImageContents = [];
+            $(".singleImageTopic").each(function(){
+                var single = {};
+                single.id = $(this).attr("id");
+                single.topic = $(this).html();
+                singleImageTopics.push(single);
+            })
+            $(".singleImageContent").each(function(){
+                var single = {};
+                single.id = $(this).attr("id");
+                single.content = $(this).html();
+                singleImageContents.push(single);
+            })
+            topics = JSON.stringify(singleImageTopics);
+            contents = JSON.stringify(singleImageContents);
+        }
+        $.post('/article_edit/save',
+                {article_libid:'<%= article_libid %>'
+                ,article_id:'<%= article_id%>'
+                ,content:text
+                ,topics:topics
+                ,contents:contents
+                ,loToken:loToken
+                }
+        ,function(data){
+            if(data.success){
+                fn_show_tips('保存成功！',function(){
+                history.go(-1);
+                })
+            }else{
+                fn_show_tips('保存失败！'+data.msg);
+            }
+                    $('#edit-save').removeClass('am-disabled').find('i').removeClass().addClass('am-icon-check');
+        });
+    }
+
+</script>
+</body>
+</html>

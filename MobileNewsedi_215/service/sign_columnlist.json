@@ -1,0 +1,22 @@
+{
+  "success":true,
+  "results":
+    [{"id": 1,"name": "方正日报","type":"paper","parent_id":0}
+    ,{"id": 12,"name": "栏目组1","type":"group","parent_id":1}
+    ,{"id": 13,"name": "栏目组2","type":"group","parent_id":1}
+    ,{"id": 14,"name": "栏目组3","type":"group","parent_id":1}
+    ,{"id": 121,"name": "栏目-1","type":"column","parent_id":12}
+    ,{"id": 122,"name": "栏目-2","type":"column","parent_id":12}
+    ,{"id": 123,"name": "栏目-3","type":"column","parent_id":12}
+    ,{"id": 121,"name": "栏目-1","type":"column","parent_id":13}
+    ,{"id": 122,"name": "栏目-2","type":"column","parent_id":13}
+    ,{"id": 123,"name": "栏目-3","type":"column","parent_id":13}
+    ,{"id": 121,"name": "栏目-1","type":"column","parent_id":14}
+    ,{"id": 122,"name": "栏目-2","type":"column","parent_id":14}
+    ,{"id": 123,"name": "栏目-3","type":"column","parent_id":14}
+    ,{"id": 2,"name": "方正晚报","type":"paper","parent_id":0}
+    ,{"id": 21,"name": "栏目组1","type":"group","parent_id":2}
+    ,{"id": 22,"name": "栏目组2","type":"group","parent_id":2}
+    ,{"id": 23,"name": "栏目组3","type":"group","parent_id":2}
+    ]
+}

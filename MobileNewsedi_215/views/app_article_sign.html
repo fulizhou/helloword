@@ -1,0 +1,294 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>app稿件签发</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/override.css">
+</head>
+<body>
+<header id ="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <a href="javascript:returnBack();">
+            <img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+        </a>
+    </div>
+    <h1 id="header-title" class="am-header-title" style="font-size: 1.5rem">APP</h1>
+    <div class="am-header-right am-header-nav">
+        <a href="javascript:sign_article();" id="ok">
+            <img src="../images/navbar/submit.png"><span class="am-header-nav-title">签发</span>
+        </a>
+    </div>
+</header>
+
+<div>
+    <a id="doc-select-column" data_column_id="-1" style="padding-left: 4%;display: none"><small><i class="am-icon-bars"></i>发布栏目</small></a>
+    <div style="padding-left: 5%;margin-top: 4%;margin-bottom: 3%"><small>请选择APP栏目</small></div>
+    <div id="doc-catalog-list" style="margin-top: 0.5%">
+        <div id = "doc-catalog-list-tpl" class="am-list-news-bd" style="font-size: 1.3rem">
+        </div>
+    </div>
+</div>
+
+<div>
+    <form class="am-form">
+        <fieldset style="background-color: #FFFFFF;margin: 0px;padding: 0px">
+            <div>
+                <div class = "am-form-group" >
+                    <textarea class="" rows="2" id="doc-note" placeholder="请输入签发意见" minlength="1" style="border: none"></textarea>
+                </div>
+                <hr data-am-widget="divider" class="am-divider am-divider-default" />
+                <!--<hr data-am-widget="divider" style="position:relative;width: 106%;left:-3%" class="am-divider am-divider-default" />-->
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+
+    /*----------加载栏目树------*/
+
+    function get_catalog_info(catalog_id){
+
+        var catalog_info = {"id":0,"parent_id":0};
+        $.each(g_catalogs, function(){
+            if(this.id == catalog_id){
+
+                catalog_info = this;
+            }
+        });
+        return catalog_info;
+    };
+
+    function is_catalog_has_child(catalog_id){
+
+        var has_child = false;
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+
+                has_child = true;
+            }
+        });
+        return has_child;
+    }
+    //展示某个分类下的所有子分类
+    function list_child_catalog(catalog_id){
+
+        if(is_catalog_has_child(catalog_id) == false){
+
+            fn_show_tips('已经没有下一级了。');
+            return;
+        }
+
+        var $ul = $("<ul></ul>", {"class": "am-list am-avg-sm-1"}).appendTo($("#doc-catalog-list-tpl").empty());
+
+        if(catalog_id > 0) {
+            var catalog_info = get_catalog_info(catalog_id);
+            $ul.append(
+                '<li style="width:100%;text-align:center" onclick="list_child_catalog(' + catalog_info.parent_id + ')">' +
+                    '<a class="am-list-item-hd" style="color: #98999D">' +
+                    '<img style="height: 1.6rem" src="../images/return-level.png">' + '&nbsp;返回上一级&nbsp;&nbsp;(' + catalog_info.name + ')' +
+                    '</a>' +
+                '</li>'
+            )
+        }
+
+        $.each(g_catalogs, function(){
+            if(this.parent_id == catalog_id){
+                var id = this.id, name = this.name, code= this.code;
+
+                var $li = $("<li></li>").appendTo($ul).click(function () { select_catalog(id, code); });
+
+                // 添加 name
+                var $img = $('<img name="catalog-select-check" id="' + 'doc-catalog-select-' + id + '" style="height: 1rem" src="../images/no-choose.png">');
+                $("<a></a>", { "class":"am-list-item-hd"}).appendTo($li)
+                        .append($img).append($("<span></span>", { text:name }));
+
+                if (is_catalog_has_child(id)){
+                    // 添加箭头 >
+                    $("<a></a>", { "class":"am-list-item-hd am-fr"}).appendTo($li)
+                            .append($("<i></i>", {"class": "am-icon-angle-right"}))
+                            .click(function () { list_child_catalog(id); return false; });
+
+                }
+            }
+        });
+    }
+
+    //点击弹出选择报纸栏目分类页面
+    var g_catalogs = "";
+    function choose_catalog_list(){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=appCatalog" + "&perm=browser" + "&loToken=" + loToken;
+        var data = {"m":"", "q":q};
+
+//        var data = {"perm":"sign|presign"};
+//        var q = "method=siteCatalog" + "&perm=browser"  + '&nocache=' + (new Date()).getTime();
+//        var q = "method=siteCatalog" + "&perm=browser";
+//        var data = {"m":"", "q":q};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+//            url: "/catalog/site_catalogs",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    g_catalogs = jsonData.results;
+                    var catalog_info = get_catalog_info(0);
+                    list_child_catalog(catalog_info.parent_id);
+                }
+            }
+        });
+    };
+    /*------加载栏目树end-----------*/
+
+    /*-----加载栏目下的版面列表--------*/
+    var g_code = "";
+    var g_layouts = "";
+    function select_catalog(column_id,code){
+
+        g_code = code;
+//        var column_checks = document.getElementsByName('column-select-check');
+        var column_checks = document.getElementsByName('catalog-select-check');
+        $.each(column_checks, function(){
+
+//            var column_check_id = "doc-column-select-" + column_id;
+            var column_check_id = "doc-catalog-select-" + column_id;
+            if(this.id == column_check_id ){
+
+                this.src = "../images/choose.png";
+                this.parentElement.style.color = "#59B19A";
+                var select_column = document.getElementById("doc-select-column");
+                select_column.setAttribute("data_column_id", column_id);
+            }
+            else{
+                this.src = "../images/no-choose.png";
+                this.parentElement.style.color = "#454545";
+            }
+        });
+    };
+
+    /*------加载版面列表end----------*/
+
+    function GetDateStr(AddDayCount)
+    {
+        var dd = new Date();
+        dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y+"-"+m+"-"+d;
+    }
+
+    $(function(){
+//        var dateInput = document.getElementById('public-time-input');
+//        dateInput.value = GetDateStr(1);
+        choose_catalog_list();
+    });
+
+    function return_back_home(){
+
+        window.history.go(-1);
+    }
+
+    function returnBack(){
+        history.go(-1);
+    }
+
+    function sign_article(){
+
+        var column_id =  document.getElementById("doc-select-column").getAttribute("data_column_id");
+
+        var signDate = GetDateStr(0);
+//
+//        if(signDate == ""){
+//            var myDate = new Date();
+//            var nowDate = myDate.Format("yyyy-MM-dd").toString();
+//            signDate = nowDate;
+//        }
+
+        if(column_id <= 0){
+            fn_show_tips('请选择栏目');
+            return;
+        }
+
+        var note = document.getElementById('doc-note').value;
+//        if(note.length == 0){
+//            fn_show_tips('请填写签发意见');
+//            return;
+//        }
+        note = encodeURIComponent(note);
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=signAPP" + "&article_id=" + '<%= article_id %>' + "&article_libid=" + '<%= article_libid %>' + "&code=" + g_code + "&column_id="+ column_id + "&ispublish=true" + "&sign_date=" + signDate + "&note="+ note + "&ispublish=true" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+//            url: "/article_detail/site_sign_opt",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            beforeSend:function(){
+                $("#ok").attr("href","#");
+            },
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    fn_show_tips("稿件签发成功。");
+                    setTimeout(function () {
+                        window.history.go(-3);
+//                        var artId = "<%= article_id %>";
+//                        window.location.href = "/article_detail?articleId="+artId;
+                    }, 1500);
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

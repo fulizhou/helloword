@@ -1,0 +1,43 @@
+/* create by shangfanfan at 2016-04-14 */
+/*
+    这个样式表是为了覆盖原有的 amazeui 中的样式
+*/
+
+/* 栏目、版面等的 选择菜单样式 */
+ul.am-list.am-avg-sm-1 .am-list-item-hd{
+    width: 77%;
+    float: left;
+    padding-left: 2%;
+    overflow: hidden;
+    white-space: nowrap
+    text-overflow: ellipsis;
+}
+ul.am-list.am-avg-sm-1 .am-list-item-hd img{
+  margin-right: 1rem;
+}
+ul.am-list.am-avg-sm-1 .am-list-item-hd.am-fr{
+    margin: 12px 0;
+    width: 22%;
+    float: right;
+    padding: 0 5%;
+    overflow: visible;
+    border-left: solid 1px #e0e0e0;
+}
+ul.am-list.am-avg-sm-1 .am-list-item-hd.am-fr i.am-icon-angle-right{
+    float: right;
+    color: #98999D;
+    text-align: right;
+    padding-left: 1.6rem;
+}
+
+.return-parent {
+    text-align: center;
+}
+
+.return-parent > a {
+    color: #98999D;
+}
+
+.am-alert{
+    z-index: 10001;
+}

@@ -1,0 +1,483 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="save" content="history">
+    <title>组建报道团队</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../../../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../../assets/css/app.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+    <link rel="stylesheet" href="../../stylesheets/bmap-custorm.css">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+    <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/cookie.js"></script>
+    <script type="text/javascript" src="../../javascripts/common.js"></script>
+    <script type="text/javascript" src="../../javascripts/bmap-custorm.js"></script>
+    <script type="text/javascript" src="../../javascripts/base64.js"></script>
+    <style>
+        /*列表左边标题图样式*/
+        li {
+            list-style: none;
+        }
+
+        .clearfix:after {
+            content: " ";
+            display: block;
+            clear: both;
+            height: 0;
+        }
+
+        .clearfix {
+            zoom: 1;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .am-tabs-default .am-tabs-nav li:last-child a {
+            border-right: none;
+        }
+
+        .am-tabs-bd {
+            border: none;
+        }
+
+        .wrapwith {
+            margin: 10px 0 0 0;
+        }
+
+        .am-tabs-bd .am-tab-panel {
+            padding: 0;
+        }
+
+        .member-list {
+            margin: 0;
+            padding: 0;
+        }
+
+        .member-list li {
+            margin: 1rem 0 0 0;
+            padding: 0 1rem 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .member-list span {
+            margin: 0 0.2rem;
+        }
+
+        .head_portrait {
+            width: 3.5rem;
+            height: 3.5rem;
+        }
+
+        .mode {
+            width: 2rem;
+            margin-left: 0.3rem;
+            display: block;
+            float: left;
+        }
+
+        .name {
+            color: #333;
+            display: block;
+        }
+
+        .information {
+            position: relative;
+        }
+
+        .icon-contact {
+            position: absolute;
+            right: 0;
+            top: 0.3rem;
+        }
+
+        .am-form-field {
+            height: 3.5rem;
+            border: 1px solid #ddd;
+            font-size: 1.2rem;
+        }
+
+        .am-btn {
+            height: 3.5rem;
+            width: 4rem;
+            line-height: 3.5rem;
+            padding: 0;
+            border-radius: 0.3rem;
+        }
+
+        .am-g {
+            margin-top: 1rem;
+        }
+
+        .location, .current-task {
+            color: #999;
+            display: block;
+            font-size: 1.3rem;
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: break-all;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+        }
+
+        .location::before{
+            color: #333;
+            content:"位置: ";
+        }
+
+        .current-task::before{
+            color: #333;
+            content: '当前: ';
+        }
+
+        .btnSelect{
+            color: #fff;
+            background: #59B19A;
+            font-size: 1.3rem;
+            padding: 0.3rem 1rem;
+            border-radius: 0.3rem;
+            border: 1px solid #59B19A;
+        }
+
+        .btnCancel {
+            color: #59B19A;
+            background: #fff;
+            font-size: 1.3rem;
+            padding: 0.3rem 1rem;
+            border-radius: 0.3rem;
+            border: 1px solid #59B19A;
+        }
+
+        .place{
+            min-height: 2rem;
+            position: relative;
+        }
+        .place .btnCancel, .place .btnSelect{
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            display: none;
+        }
+
+        .selected .place::after{
+            right: 0;
+            bottom: 0;
+            color: #fff;
+            z-index: 1000;
+            width: 2.5em;
+            height: 2.5em;
+            display: block;
+            content: "已选";
+            text-align: center;
+            line-height: 2.5em;
+            border-radius: 2em;
+            position: absolute;
+            background: limegreen;
+            -webkit-transform: rotate(-15deg);
+            -moz-transform: rotate(-15deg);
+            -ms-transform: rotate(-15deg);
+            -o-transform: rotate(-15deg);
+            transform: rotate(-15deg);
+        }
+        .bottom-placehold{
+            margin-bottom: 18rem;
+        }
+
+        .selected-member {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 999;
+            position: fixed;
+            background: #eee;
+            border-top: 1px solid #ccc;
+        }
+        #selected-list{
+            overflow: scroll;
+            max-height: 15rem;
+        }
+
+        #search-list .current-task:nth-child(n+4),
+        #recommend-list .current-task:nth-child(n+4) {
+            display: none;
+        }
+        #search-list .btnSelect,
+        #recommend-list .btnSelect {
+            display: block;
+        }
+        #search-list .selected .btnSelect,
+        #recommend-list .selected .btnSelect {
+            display: none;
+        }
+
+
+        #selected-list .current-task:not(:first-child){
+            display: none;
+        }
+        #selected-list .btnCancel{
+            display: block;
+        }
+
+        #baidu-map{
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div id="doc-form-all">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back()">
+                <img src="../../images/navbar/return.png">
+            </a>
+            <span>组建报道团队</span>
+        </div>
+        <div class="am-header-right am-header-nav">
+            <a href="javascript:submit()">
+                <img src="../../images/navbar/submit.png"/>
+                <span class="am-header-nav-title">确定</span>
+            </a>
+        </div>
+    </header>
+    <div id="doc-scroll-wrapper" class="am-list-news-bd am-margin-left-sm" style="margin-left: 0px">
+        <div data-am-widget="tabs" class="am-tabs am-tabs-default wrapwith">
+            <ul class="am-tabs-nav">
+<!--
+                <li class=""><a href="[data-tab-panel-0]">附近的人</a></li>
+-->
+                <li class="am-active"><a href="[data-tab-panel-1]">推荐</a></li>
+                <li class=""><a href="[data-tab-panel-2]">搜索</a></li>
+            </ul>
+            <div class="am-tabs-bd">
+                <!--附近的人&地图开始-->
+<!--
+                <div data-tab-panel-0 class="am-tab-panel">
+                    <div id="baidu-map"></div>
+                </div>
+-->
+                <!--附近的人&地图结束-->
+                <!--推荐开始-->
+                <div data-tab-panel-1 class="am-tab-panel am-active">
+                    <ul id="recommend-list" class="member-list clearfix"></ul>
+                    <div class="bottom-placehold"></div>
+                </div>
+                <!--推荐结束-->
+                <!--搜索开始-->
+                <div data-tab-panel-2 class="am-tab-panel ">
+                    <div class="am-g">
+                        <div class="am-u-lg-6">
+                            <div class="am-input-group">
+                                <input id="search-keyword" placeholder="输入关键词" type="text" class="am-form-field">
+                                <span id="btn-search" class="am-input-group-btn">
+                                    <button class="am-btn am-btn-default">
+                                        <span class="am-icon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul id="search-list" class="member-list clearfix"></ul>
+                    <div class="bottom-placehold"></div>
+                </div>
+                <!--搜索结束-->
+            </div>
+        </div>
+    </div>
+    <!--已选人员开始-->
+    <div class="selected-member">
+        <span style="margin: 0 1rem">已选人员</span>
+        <ul id="selected-list" class="member-list"></ul>
+    </div>
+    <!--已选人员结束-->
+</div>
+
+<script type="text/javascript">
+
+    var loToken = localStorage.getItem("loToken");
+
+</script>
+
+<script type="text/javascript">
+    var selected_map = {};
+
+    var $search_list = $("#search-list").empty();
+    var $selected_list = $("#selected-list").empty();
+    var $recommend_list = $("#recommend-list").empty();
+
+    function fill_member_list(v, $target){
+
+        var location = v.userLocation || "暂无上传位置";
+
+        var $li = $("<li>", {"user-id": v.userId}).data("user", v).appendTo($target);
+
+        var $information = $("<div>", {"class": "information clearfix"}).appendTo($li);
+        $information.append(
+            '<span class="left"><img class="head_portrait" /></span>' +
+                '<span class="left">' +
+                '<span class="name">' + v.userName + " (" + v.folderName + ')</span>' +
+                '<span class="location">' + location + '</span>' +
+                '</span>' +
+                '<span class="icon-contact">' +
+                '<img class="mode" src="../../images/icon/video.png"/>' +
+                '<img class="mode" src="../../images/icon/telephone.png"/>' +
+                '<img class="mode" src="../../images/icon/weixin.png"/>' +
+                '</span>'
+        );
+
+        var $place = $("<div></div>", {"class": "place"}).appendTo($li);
+
+        for(var i = 0; i < 3 && v.userTasks[i]; i++){
+            $place.append('<span class="current-task">' + v.userTasks[i] + '</span>');
+        }
+
+        $place.append('<button class="right btnSelect">选择</button>');
+        $place.append('<button class="right btnCancel">取消</button>');
+    }
+
+    // 组建报道团队列表
+    $(function () {
+
+        load_member_list(function (data) {
+            $.each(data, function (i, v) {
+                fill_member_list(v, $recommend_list);
+            });
+        });
+
+        function load_member_list(callback){
+            $.ajax({
+                url:"/fatch",
+                data:{
+                    method:"getTaskPersons",
+                    loToken:loToken
+                },
+                dataType:"json",
+                success: on_success
+            });
+            function on_success(data) {
+                callback && callback(data);
+                /*if(data.success){ callback && callback(data.results); }*/
+            }
+        }
+
+        $("#recommend-list, #search-list").delegate(".btnSelect", "click", function () {
+            var $li = $(this).closest("li");
+            var user = $li.data("user");
+            if(selected_map[user.userId]) return;
+
+            selected_map[user.userId] = user;
+            fill_member_list(user, $selected_list);
+            $("#recommend-list, #search-list").find("[user-id='" + user.userId + "']").addClass("selected");
+            $(document).trigger("selectMember.buildTeam", user);
+        });
+
+        $selected_list.delegate(".btnCancel", "click", function () {
+            var $li = $(this).closest("li");
+            var user_id = $li.attr("user-id");
+            $li.remove();
+
+            var user = selected_map[user_id];
+            delete selected_map[user_id];
+            $("[user-id='" + user_id + "']").removeClass("selected");
+            $(document).trigger("removeMember.buildTeam", user);
+        });
+    });
+
+    function submit(){
+        $(document).trigger("submit.buildTeam", selected_map);
+    }
+</script>
+
+<script type="text/javascript">
+    var $search_list = $("#search-list");
+
+    $("#btn-search").click(function () {
+        var keyword = $("#search-keyword").val();
+        $search_list.empty();
+        $("#recommend-list").children().each(function () {
+            var text = $(this).find(".name").text();
+            if(text.indexOf(keyword) >= 0){
+                $search_list.append($(this).clone(true, true));
+            }
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(window).on("resize", function () {
+        $("#baidu-map").height($(window).height() - 55 -49);
+    }).triggerHandler("resize");
+
+    var map = new BMap.Map("baidu-map");
+
+    // 编写自定义函数,创建标注
+    function addMarker(point, label) {
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+        marker.setLabel(label);
+    }
+    getLocation({
+        before: function () {
+            fn_show_tips("正在获取位置信息，请稍后...");
+        },
+        showPosition: function (x, y) {
+            // 创建百度地图实例
+            var center = new BMap.Point(x, y);
+            map.centerAndZoom(center, 16);
+
+            // 设置当前位置
+            var mk = new BMap.Marker(center);  // 创建标注
+            map.addOverlay(mk);              // 将标注添加到地图中
+
+            // 随机向地图添加标注
+            var bounds = map.getBounds();
+            var sw = bounds.getSouthWest();
+            var ne = bounds.getNorthEast();
+            var lngSpan = Math.abs(sw.lng - ne.lng);
+            var latSpan = Math.abs(ne.lat - sw.lat);
+
+            for (var i = 1; i <= 6; i++) {
+                var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+                map.addOverlay(new ComplexCustomOverlay(point, "<img class='baidu-photo' src='http://lorempixel.com/32/32/?t="+ i +"' />"));
+            }
+        },
+        error: function (msg) {
+            fn_show_tips(msg);
+            // 创建百度地图实例
+            map.centerAndZoom(new BMap.Point(116.4035, 39.915), 16);
+        },
+        option: {
+            enableHighAccuracy: true
+        }
+    });
+</script>
+
+</body>
+</html>

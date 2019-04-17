@@ -1,0 +1,1335 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no ,minimal-ui">
+    <title>写稿</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/override.css">
+    <!--<link rel="stylesheet" href="../assets/css/webuploader.css">-->
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <script type="text/javascript" src="../javascripts/exif.js"></script>
+    <script type="text/javascript" src="../javascripts/fzcommon.js"></script>
+    <!--<script type="text/javascript" src="../assets/js/flowplay.min.js"></script>-->
+    <!--<script src="../assets/js/webuploader.js"></script>-->
+
+    <style>
+        ul,li{
+            list-style: none;
+            padding:0;
+            margin:0;
+        }
+        .img-return {
+            height: 2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .white-bar {
+            margin: 1.6rem 0;
+            background: white;
+        }
+
+        .bottomBg{
+            background: #eee;
+            border-top: 1px solid #ddd;
+            width: 100%;
+            text-align: center;
+            height: 5rem;
+            line-height: 5rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+        }
+        .return-parent {
+            text-align: center;
+        }
+
+        .return-parent > a {
+            color: #98999D;
+        }
+
+        .upload-img-div {
+            padding-top: 0;
+            margin: 3px;
+            border: 1px solid #cccccc;
+            width: 10rem;
+            height: 31.5%;
+            /*width: 100;*/
+            /*height: 100;*/
+            min-height: 100px;
+            overflow: hidden;
+            float: left;
+            position: relative;
+            background-origin: content;
+            background-size: auto 100%;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-image: url('/images/image_add.png');
+        }
+
+        .upload-progress{
+            text-align: center;
+        }
+
+        .doc-choose-list{
+            display: none;
+            margin-top: 0;
+        }
+
+        .des-label{
+            padding: 4% 0 3% 5%;
+        }
+        .am-datepicker-date{
+            width: 100%;
+        }
+        .public-time-input{
+            width: 94%;
+            padding: 2%;
+            font-size: 80%;
+            margin-left: 5%;
+            display: inline-block;
+        }
+        .doc-datepicker{
+            border: none;
+            background-color: transparent;
+        }
+
+        #doc-select-catalog-div, #doc-select-relation-div {
+            padding: 1rem;
+            margin-bottom: 0;
+        }
+
+        .am-form-group i {
+            color: #59B19A;
+        }
+
+        #cancel-relation, #cancel-relation-root, #relation-search{
+            width: 90%;
+            color: #FFFFFF;
+            border-radius: 5px;
+            background: #59B19A;
+        }
+        #doc-select-relation::after{
+            clear: both;
+            content: " ";
+            display: block;
+        }
+        #doc-select-relation>span{
+            float: left;
+            display: block;
+        }
+        #list{
+            width:100%;
+            margin-top:5px;
+        }
+        #list li{
+            float:left;
+            width:40%;
+            margin:3px 5%;
+            border:1px solid #59b19a;
+            border-radius:8px;
+            height:33px;
+            line-height:33px;
+        }
+        #list li span{
+            display: block;
+            text-align: center;
+        }
+
+        /* 默认不显示的的标签 */
+        .visible-hide{
+            display: none;
+        }
+    </style>
+</head>
+<body style="background-color: #EEEFF1;">
+
+<!--<input type="file" accept="video/*;capture=camcorder" value="录像"/>
+<input type="file" accept="audio/*;capture=microphone" />
+<input type="file" accept="image/*;capture=camera" value="照相"/>
+<input type="file" accept="image/*" value="相册"/>-->
+<div id="doc-main" class="doc-choose-list view-main" style="display: block">
+    <header id="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:returnBack();">
+                <img src="images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+            </a>
+        </div>
+        <h1 id="header-title" class="am-header-title">新建文章稿</h1>
+
+        <div class="am-header-right am-header-nav" id="ok">
+            <a href="javascript:submit_doc('submit');" id="submitDiv">
+                <img src="images/navbar/submit.png"><span class="am-header-nav-title">提交</span>
+            </a>
+        </div>
+    </header>
+
+    <div id="doc-form-all">
+        <form class="am-form">
+            <fieldset style="background-color: #FFFFFF">
+                <div>
+                    <div class="am-form-group">
+                        <textarea class="" rows="2" id="doc-title" placeholder="请输入标题" minlength="1"
+                                  style="border: none"></textarea>
+                    </div>
+                    <!--<hr data-am-widget="divider" style="" class="am-divider am-divider-default" />-->
+                    <hr data-am-widget="divider" style="position:relative;width: 100%;left:0"
+                        class="am-divider am-divider-default"/>
+                    <div class="am-form-group">
+                        <textarea class="" rows="6" id="doc-content" placeholder="请输入内容或说明" style="border: none"></textarea>
+                    </div>
+                </div>
+                <hr id="doc-line-onthepic" data-am-widget="divider" style="position:relative;width: 100%;left:0"
+                    class="am-divider am-divider-default"/>
+                <div id="doc-upload-img-list" class="am-form-group am-u-g"
+                     style="float:left;margin-top:1%;padding-left: 0;padding-right: 0">
+                    <div id="upload-img-div" class="am-form-file upload-img-div" style="border: none">
+                        <input id="doc-form-file" type="file" multiple="multiple">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="white-bar visible-hide">
+            <div id="doc-select-relation-div" class="am-form-group">
+                <span id="doc-select-relation" class="am-text-truncate">
+                    <span style="margin: 0 0.5rem">稿件关联</span>
+                    <span id="doc-select-relation-name" class="am-text-truncate"
+                          data-relation-docid="-1" data-relation-doclibid="-1" style="width: 60%;">未选择</span>
+                    <i class="am-icon-angle-right" style="float: right;"></i>
+                </span>
+            </div>
+        </div>
+        <div class="white-bar">
+            <div id="doc-select-catalog-div" onclick="select_lib_list('source')" class="am-form-group">
+                <span id="doc-select-catalog" class="am-text-truncate">
+                    <i class="am-icon-upload"></i>
+                    <span style="margin: 0 0.5rem">上传到</span>
+                    <span id="doc-select-catalog-name" class="am-text-truncate" data-catalog-id="-1"
+                          data-catalog-type="source" style="width: 60%;">稿源中心</span>
+                    <i class="am-icon-angle-right" style="float: right;"></i>
+                </span>
+            </div>
+          <!--  <lbs-geo id="doc-geo" city="北京" enable-modified="true" style="display:none;"></lbs-geo>-->
+        </div>
+        <div style="height:12rem;" class="white-bar">
+            <h3 style="font-size:15px;height:20px;line-height:20px;padding:5px 0 0 5px;margin:0;">历史位置:</h3>
+            <ul style="font-size:14px;padding:5px;" id="list">
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="doc-relation-search" class="doc-choose-list">
+
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:choose_view('relation-list-root')" >
+                <img class="img-return" src="images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a id="search-title" href="#title-link">搜索</a>
+        </h1>
+    </header>
+
+    <div id="search-item" style="background: #FFFFFF;padding-bottom: 5%">
+        <div class="des-label">
+            <small>请选择开始日期</small>
+        </div>
+        <div id="datepicker-start" class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
+            <input id="search-date-start" type="text" class="input-date public-time-input" placeholder="" readonly>
+            <span class="am-input-group-btn am-datepicker-add-on">
+                <button class="doc-datepicker" type="button">
+                    <img src="../images/date-no-choose-grey.png">
+                </button>
+            </span>
+        </div>
+        <div class="des-label">
+            <small>请选择结束日期</small>
+        </div>
+        <div id="datepicker-end" class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
+            <input id="search-date-end" type="text" class="input-date public-time-input" placeholder="" readonly>
+            <span class="am-input-group-btn am-datepicker-add-on">
+                <button class="doc-datepicker" type="button">
+                    <img src="../images/date-no-choose-grey.png">
+                </button>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="bottomBg">
+        <button id="relation-search" class="btn_determine am-btn am-btn-default">搜索</button>
+    </div>
+</div>
+
+<div id="doc-relation-list" class="doc-choose-list">
+
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:choose_view('relation-search')" class="">
+                <img class="img-return" src="images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a id="relation-title" href="#title-link">关联</a>
+        </h1>
+    </header>
+
+    <div id="doc-relation-list-tpl" class="am-list-news-bd" style="padding-bottom: 15%">
+
+    </div>
+
+    <div class="bottomBg">
+        <button id="cancel-relation" class="btn_determine am-btn am-btn-default">取消关联</button>
+    </div>
+</div>
+
+<div id="doc-relation-list-root" class="doc-choose-list">
+
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:return_back_to_main()" class="">
+                <img class="img-return" src="images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="#title-link">选择关联类型</a>
+        </h1>
+    </header>
+
+    <div class="am-list-news-bd">
+        <ul id="relation-item-list" class="am-list am-avg-sm-1">
+            <li id="relation-topic" relation-item="topic">
+                <a class="am-list-item-hd"> <span>关联报题</span> </a>
+                <a class="am-list-item-hd am-fr"><i class="am-icon-angle-right"></i></a>
+            </li>
+            <li id="relation-interview" relation-item="interview">
+                <a class="am-list-item-hd"> <span>关联采访任务</span> </a>
+                <a class="am-list-item-hd am-fr"><i class="am-icon-angle-right"></i></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="bottomBg">
+        <button id="cancel-relation-root" class="btn_determine am-btn am-btn-default">取消关联</button>
+    </div>
+</div>
+
+<div id="doc-catalog-list" class="doc-choose-list">
+
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:return_back_to_main()" class="">
+                <img class="img-return" src="images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="#title-link">上传至</a>
+        </h1>
+
+    </header>
+
+    <div id="doc-catalog-list-tpl" class="am-list-news-bd">
+    </div>
+</div>
+
+<div id="doc-catalog-list-root" class="doc-choose-list">
+
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:return_back_to_main()" class="">
+                <img class="img-return" src="images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="#title-link" class="">上传至</a>
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <a href="" class="">
+                <span>确定</span>
+            </a>
+        </div>
+    </header>
+
+    <div id="doc-catalog-list-tpl-root" class="am-list-news-bd">
+        <ul class="am-list am-avg-sm-1">
+            <li onclick="select_lib_list('source');" id="select-source">
+                <a class="am-list-item-hd">
+                    <span>稿源中心</span>
+                </a>
+                <a class="am-list-item-hd am-fr" onclick="select_lib_list('source');">
+                    <i class="am-icon-angle-right"></i>
+                </a>
+            </li>
+            <li onclick="select_lib_list('department');" id="select-dept">
+                <a class="am-list-item-hd">
+                    <span>部门稿库</span>
+                </a>
+                <a class="am-list-item-hd am-fr" onclick="select_lib_list('department');">
+                    <i class="am-icon-angle-right"></i>
+                </a>
+            </li>
+            <!--
+                <li onclick="select_lib_list('xhs');">
+                    <a class="am-list-item-hd">
+                        <span>电稿库</span>
+                    </a>
+                    <a class="am-list-item-hd am-fr" onclick="select_lib_list('xhs');">
+                        <i class="am-icon-angle-right"></i>
+                    </a>
+                </li>
+            -->
+        </ul>
+    </div>
+</div>
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0; bottom: 15%;">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+
+<script src="http://api.map.baidu.com/components?ak=1ZtQkeXgxF3TsxWbQxUOTAYW&v=1.0"></script>
+<script>
+    var arrs = localStorageGetItem('arrs');
+    var arrids = localStorageGetItem('arrids');
+    var doc_select=document.getElementById("doc-select-catalog-name");
+
+    var upload_choose_dept = "<%= upload_choose_dept %>";
+    if(upload_choose_dept == 1){//隐藏部门库选项
+        $("#select-dept").css("display","none");
+    }
+    function sele(obj){
+        $("#doc-select-catalog-name").text($(obj).find("span").text());
+        $("#doc-select-catalog-name").attr("data-catalog-id",$(obj).attr("id"));
+    }
+    if(arrs!=null){
+        var len = arrs.split(",").reverse();
+        var ids = arrids.split(",").reverse();
+        var s = len.length;
+        if(s>3){
+            s=3;
+        }
+        for(var i=0;i<s;i++){
+            $("#list").append("<li onclick='sele(this)' id='"+ids[i]+"'><span class='dept'>"+len[i]+"</span></li>");
+        }
+       }
+
+</script>
+<script type="text/javascript">
+    // 上传文件大小
+    var upload_max_size = parseInt("<%= upload_max_size %>");
+
+    // 支持的文件类型映射
+    var fileTypeMap = {};
+
+    // 图片支持格式
+    fileTypeMap["picture"] = {
+        "jpeg": "image/jpeg",
+        "jpg": "image/jpeg",
+        "tif": "image/tiff",
+        "gif": "image/gif",
+        "png": "image/png",
+        "bmp": "image/bmp"
+    };
+
+    // 视音频支持格式
+    fileTypeMap["video"] = {
+        "swf": "application/x-shockwave-flash",
+        "mov": "video/quicktime",
+        "wmv": "video/x-ms-wmv",
+        "mp4": "video/mpeg4",
+//            "3gp":"video/3gpp",
+//            "ogg":"audio/ogg",
+        "mpg": "video/mpg",
+        "avi": "video/avi",
+        // flv 类型没有 contentType, 这里暂时写成 video/flv
+        "flv": "video/flv",
+        // 音频
+//            "aac":"audio/vnd.dlna.adts",
+//            "m4a":"audio/audio/x-m4a",
+        "mp3": "audio/mp3"
+    };
+
+    var query = location.search;
+    // 稿件类型
+    var articleKind = /articleKind=([^&]*)(&|$)/.exec(query)[1];
+    // 稿件类型
+    var kind = '<%= kind %>';
+    // 稿件类型对应参数映射
+    var articleTypeMapping = {
+        article: "text",
+        picture: "image",
+        video: "video"
+    };
+
+    // 切换显示外层的 div, 达到伪翻页的效果
+    function choose_view(view_name){
+        $(".doc-choose-list").hide();
+        $("#doc-" + view_name).show();
+    }
+
+    var methodMapping = {
+        source: "sourceCatalog",
+        department: "deptCatalog",
+        xhs: "xhsCatalog"
+    };
+
+    var kind = '<%= kind %>';
+    if (kind == 'article') {
+        $('#header-title').html("新建文章稿");
+        $('#doc-upload-img-list').hide();
+        $('#doc-line-onthepic').hide();
+    } else if (kind == 'picture') {
+        $('#header-title').html("新建图片稿");
+    } else if (kind == 'video') {
+        $('#header-title').html("新建视音频稿");
+        $('#upload-img-div').css({"background-image": "url('../images/audio_image.png')"});
+    }
+
+    //初始化选择上次上传的稿库分类
+    var catalog_type = '<%= catalog_type %>';
+    if (catalog_type == 1) {
+        $("#doc-dept-check").uCheck('check');
+        $("#doc-select-catalog").hide();
+        $("#doc-select-dept").show();
+    } else {
+        $("#doc-catalog-check").uCheck('check');
+        $("#doc-select-catalog").show();
+        $("#doc-select-dept").hide();
+    }
+
+</script>
+<script type="text/javascript">
+
+    $(function () {
+        // 是否启用 稿件和选题, 采访任务关联
+        var article_to_relation = parseInt("<%= article_to_relation %>");
+        if (!article_to_relation) {
+            return;
+        }
+
+        var relation_map = {};
+        relation_map.topic = {
+            name:"报题",
+            method:"getUserBaoti",
+            dataAdapter: function (data) {
+                data = data[0];
+                if(data.success){
+                    return { success: true, results: data.btList}
+                } else {
+                    return { success: false, results: { error_info: data.error }}
+                }
+            }
+        };
+        relation_map.interview = {
+            name:"采访任务",
+            method:"getUserTask",
+            dataAdapter: function (data) {
+                data = data[0];
+                if(data.success){
+                    return { success: true, results: data.taskList}
+                } else {
+                    return { success: false, results: { error_info: data.error }}
+                }
+            }
+        };
+
+        var relation_item = null;
+        var now_date = new Date();
+
+        var $relation_list = $("#doc-relation-list-tpl");
+        var $date_start = $("#search-date-start"), $date_end = $("#search-date-end");
+        var $datepicker_start = $("#datepicker-start"), $datepicker_end = $("#datepicker-end");
+
+        var $select_relation_div = $("#doc-select-relation-div");
+        $select_relation_div.parent().css({display: article_to_relation ? "block" :"none"});
+
+        // 设置日期选择器的默认值
+        $datepicker_start.datepicker("setValue", now_date.getTime() - (1000 * 60 * 60 * 24));
+        $datepicker_end.datepicker("setValue", now_date.getTime());
+
+        // 打开选择关联选题, 采访任务的页面
+        $select_relation_div.click(function () { choose_view("relation-list-root"); });
+
+        // 选择关联类型
+        $("#relation-item-list").delegate("[relation-item]", "click", function () {
+            relation_item = $(this).attr("relation-item");
+            $("#search-title").text("搜索" + relation_map[relation_item].name);
+            $("#relation-title").text("关联" + relation_map[relation_item].name);
+            choose_view("relation-search");
+        });
+
+        // 选中关联关系
+        function select_relation(relation_obj) {
+            $("#doc-select-relation-name").attr({
+                "data-relation-docid": relation_obj.docID,
+                "data-relation-doclibid": relation_obj.docLibID
+            }).text(relation_obj.topic);
+            choose_view("main");
+        }
+
+        function fill_relation_list($target, data) {
+
+            var $ul = $("<ul></ul>", {"class": "am-list am-avg-sm-1"}).appendTo($target.empty());
+            // 数据为空
+            if(!data || data.length == 0){
+                $ul.append(
+                    $("<li></li>", { "class": "return-parent"}).append(
+                        '<a class="am-list-item-hd" style="width: 95%">' + '没有数据' + '</a>'
+                    )
+                );
+            }
+
+            $.each(data, function () {
+                var me = this;
+                var $li = $("<li></li>").appendTo($ul).click(function () { select_relation(me); });
+
+                // 添加显示文本
+                $("<a></a>", {"class": "am-list-item-hd"}).append($("<span></span>", {text: me.topic})).appendTo($li);
+            });
+        }
+
+        function load_relation(callback) {
+            var relation = relation_map[relation_item];
+            var loToken = localStorage.getItem('loToken');
+            var data = {
+                method: relation.method,
+                starttime: $date_start.val(),
+                endtime: $date_end.val(),
+                loToken: loToken
+            };
+
+            $.ajax({
+                url: "/upload/relation_list",
+                data: data,
+                dataType: 'json',
+
+                success: function (data) {
+                    // 如果返回数据是数组
+                    if($.isArray(data)){
+                        data = relation.dataAdapter ? relation.dataAdapter(data) : data;
+                    }
+                    if (data.success) {
+                        callback(data.results);
+                    }
+                }
+            });
+        }
+
+        $("#relation-search").click(function () {
+            load_relation(function (data) {
+                fill_relation_list($relation_list, data);
+                choose_view("relation-list");
+            })
+        });
+
+        $("#cancel-relation, #cancel-relation-root").click(function(){
+            select_relation({
+                topic: "未选择",
+                docID: "-1",
+                docLibID: "-1"
+            })
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    var g_is_choose_dept = true;
+    var g_location_coords_x = 0.0;
+    var g_location_coords_y = 0.0;
+    var g_location_address = "";
+    var g_ArrayUrl = [];
+    var g_image_count = 0;
+    var Orientation = null;
+
+    //点击弹出选择上传分类页面
+    var g_catalogs = "";
+
+    function choose_lib() {
+        choose_view("catalog-list-root");
+    }
+
+    function return_catalog_root() {
+        choose_view("catalog-list-root");
+    }
+
+    function return_back_to_main() {
+        choose_view("main");
+    }
+
+    //点击选择分类后，返回写稿页面
+    var arr = new Array();
+    var arrid = new Array();
+    function select_catalog(id) {
+        $.each(g_catalogs, function () {
+            if (this.id == id) {
+                document.getElementById('doc-select-catalog-name').setAttribute('data-catalog-id', this.id);
+                document.getElementById('doc-select-catalog-name').innerText = this.name;
+                localStorageSetItem('local_catalog_id', id);
+                localStorageSetItem('local_catalog_name', this.name);
+                if(localStorageGetItem('arrs')==null){
+                    arr.push(this.name);
+                    localStorageSetItem('arrs', arr);
+                    arrid.push(id);
+                    localStorageSetItem('arrids', arrid);
+                }else{
+                    var arrs = localStorageGetItem('arrs');
+                    var arrids = localStorageGetItem('arrids');
+                    arr = arrs.split(",");
+                    arrid = arrids.split(",");
+                    var flag=0;
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i]==this.name){
+                            flag=1;
+                            arr.splice(i,1);
+                            arrid.splice(i,1);
+                            arr.push(this.name);
+                            arrid.push(id);
+                            break;
+                        }
+                    }
+                    if(flag==0){
+                        arr.push(this.name);
+                        arrid.push(id);
+                    }
+                    localStorageSetItem('arrs', arr);
+                    localStorageSetItem('arrids', arrid);
+                }
+
+                return false;
+            }
+        });
+
+        choose_view("main");
+    }
+
+    function get_catalog_info(catalog_id) {
+        var catalog_info = {"id": 0, "parent_id": 0};
+        $.each(g_catalogs, function () {
+            if (this.id == catalog_id) {
+                catalog_info = this; return false;
+            }
+        });
+        return catalog_info;
+    }
+    function is_catalog_has_child(catalog_id) {
+        var has_child = false;
+        $.each(g_catalogs, function () {
+            if (this.parent_id == catalog_id) {
+                has_child = true; return false;
+            }
+        });
+        return has_child;
+    }
+
+    function select_lib_list(lib) {
+
+        $('#doc-select-catalog-name').attr('data-catalog-type', lib);
+        var method = methodMapping[lib] || "";
+
+        var article_type = articleTypeMapping[kind] || "";
+
+        var loToken = localStorage.getItem('loToken');
+
+        var q = "method=" + method + "&article_type=" + article_type + "&perm=upload" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m": "", "q": q};
+
+        $.ajax({
+            type: "GET",
+            url: "/get",
+
+            dataType: 'json',
+            data: data,
+
+            contentType: "application/json",
+            success: function (jsonData) {
+                if (jsonData.success == true) {
+
+                    g_catalogs = jsonData.results;
+
+                    localStorageSetItem('catalogs',JSON.stringify(g_catalogs));
+                    var local_catalog_id = localStorageGetItem('local_catalog_id');
+                    var catalog_info = get_catalog_info(local_catalog_id);
+                    if (local_catalog_id > 0) {
+                        list_child_catalog(catalog_info.parent_id);
+                    } else {
+                        list_child_catalog(0);
+                    }
+
+                    choose_view("catalog-list");
+                }
+            }
+        });
+    }
+
+    //展示某个分类下的所有子分类
+    function list_child_catalog(catalog_id) {
+
+        if (is_catalog_has_child(catalog_id) == false) {
+            fn_show_tips('已经没有下一级了。');
+            return;
+        }
+
+        var $ul = $("<ul></ul>", {"class": "am-list am-avg-sm-1"}).appendTo($("#doc-catalog-list-tpl").empty());
+
+        if (catalog_id > 0) {
+            var catalog_info = get_catalog_info(catalog_id);
+            $ul.append(
+                '<li class="return-parent" onclick="list_child_catalog(' + catalog_info.parent_id + ')">' +
+                    '<a class="am-list-item-hd">' +
+                        '<img style="height: 1.6rem" src="../images/return-level.png">' + '&nbsp;返回上一级&nbsp;&nbsp;(' + catalog_info.name + ')' +
+                    '</a>' +
+                '</li>'
+            )
+        } else {
+            $ul.append(
+                '<li class="return-parent" onclick="return_catalog_root()">' +
+                    '<a class="am-list-item-hd">' +
+                        '<img style="height: 1.6rem" src="../images/return-level.png">' + '&nbsp;返回上一级' +
+                    '</a>' +
+                '</li>'
+            )
+        }
+
+        $.each(g_catalogs, function () {
+            if (this.parent_id == catalog_id) {
+
+                var id = this.id, name = this.name;
+
+                var $li = $("<li></li>").appendTo($ul);
+                if (this.trans) { $li.click(function () { select_catalog(id); }); }
+
+                // 添加 name
+                $("<a></a>", {"class": "am-list-item-hd"}).append($("<span></span>", {text: name})).appendTo($li);
+
+                if (is_catalog_has_child(id)) {
+                    // 添加箭头 >
+                    var $a = $("<a></a>", {"class": "am-list-item-hd am-fr"}).appendTo($li);
+                    $a.append($("<i></i>", {"class": "am-icon-angle-right"}));
+                    $a.click(function () { list_child_catalog(id); return false; });
+                }
+            }
+        });
+    }
+
+    // 将文件大小转换为描述的大小
+    var convertDescribeSize = function (size) {
+        if (size < 1024) {
+            return size + " 字节";
+        }
+        size = size / 1024;
+        if (size < 1024) {
+            return size + " KB";
+        }
+        size = size / 1024;
+        return size + " MB";
+    };
+
+
+    $(function () {
+        $("#doc-select-catalog-div").delegate("a", "click", function () {
+            select_lib_list('source');
+        });
+
+        //初始化上次选择的稿库
+        var local_catalog_id = localStorageGetItem('local_catalog_id');
+        var local_catalog_name = localStorageGetItem('local_catalog_name');
+
+        if (local_catalog_id > 0) {
+            document.getElementById('doc-select-catalog-name').setAttribute('data-catalog-id', local_catalog_id);
+            document.getElementById('doc-select-catalog-name').innerText = local_catalog_name;
+        }
+
+        //getLocation();
+
+        // 截取图片 base64 为文件名
+        function interceptBase64Filename(sBase64) {
+            //截取图片base64后20位为文件起名字(将“+”换位“y”，将“/”换位“p”)，因为ios不兼容，取不到文件名
+            //fileName = sBase64.substring(sBase64.length - 20,sBase64.length).split("+").join("y").split("=").join("r").split("/").join("p")+format_param;
+            return (
+                    sBase64.substring(35, 45) +
+                    sBase64.substring(135, 145) +
+                    sBase64.substring(sBase64.length - 140, sBase64.length - 130) +
+                    sBase64.substring(sBase64.length - 10, sBase64.length)
+                    ).replace(/[+]/g, "y").replace(/[=]/g, "r").replace(/[\/]/g, "p");
+        }
+
+
+        function uploadFile($img_div, picdata) {
+
+            var $upload_progress = $img_div.find(".upload-progress");
+
+            //处理上传进度
+            function progressHandlingFunction(e) {
+                if (e.lengthComputable) {
+                    var per = Math.round((e.loaded / e.total) * 100);
+                    $upload_progress.text(per + "%");
+                }
+            }
+
+            //处理返回状态
+            function readyStateChangeHandle(e) {
+                if (e.currentTarget.readyState > 2 && e.currentTarget.status != 200) {
+                    $upload_progress.html('<span style="font-size: 15px">上传错误！' + e.currentTarget.status + '</span>');
+                }
+            }
+
+            var ajax_promise_obj = $.ajax({
+                type: "POST",
+                url: "/upload/upload_file",
+                dataType: 'json',
+                data: JSON.stringify(picdata),
+                contentType: "application/json",
+                xhr: function () {  // custom xhr
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) { // check if upload property exists
+                        myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+                        myXhr.onreadystatechange = readyStateChangeHandle
+                    }
+
+                    return myXhr;
+                },
+                success: function (data) {
+                    $img_div.attr("allFileName", data.url);
+                    $upload_progress.remove();
+                }
+            });
+
+            return ajax_promise_obj;
+        }
+
+        //监控选择文件组件，显示添加的图片
+        $("#doc-form-file").on("change", function () {
+            $.each(this.files, function () {
+                var file = this;
+                //获取照片方向角属性，用户旋转控制
+                EXIF.getData(file, function() {
+                    // alert(EXIF.pretty(this));
+                    EXIF.getAllTags(this);
+                    //alert(EXIF.getTag(this, 'Orientation'));
+                    Orientation = EXIF.getTag(this, 'Orientation');
+                    //return;
+                });
+                //alert(this);
+                var fileName = file.name.toLowerCase();
+                var name_match = fileName.match(/[.]([^.]+$)/i);
+                var fileExtName =name_match && name_match[1];
+                var format_param = name_match && name_match[0];
+
+
+                // 检查上传文件格式
+                var typeMap = fileTypeMap[articleKind];
+                if (!typeMap || typeMap[fileExtName] === null || typeMap[fileExtName] === undefined) {
+                    fn_show_tips("上传文件包含不支持的文件格式: " + fileExtName);
+                    return;
+                }
+
+                if (file.size > upload_max_size) {
+                    fn_show_tips("上传文件超过 " + convertDescribeSize(upload_max_size) + " 大小, 无法上传");
+                    return;
+                }
+               /* var aa=file.size;
+                alert("大小:"+convertDescribeSize(aa));*/
+
+                var fileReader = new FileReader();
+                fileReader.onload = function (e) {
+                    // data:image/png;base64, ...
+                    var base64_str = e.target.result;
+
+                    fileName = interceptBase64Filename(base64_str) + format_param;
+                    var md5_param = $.md5(fileName);
+                    /*var data = {
+                        "md5_param": md5_param,
+                        "format_param": format_param,
+                        "fileName": fileName,
+                        "oldFileName": file.name
+                    };*/
+                    function append_upload_img(background_image) {
+                        var $img_div = $("<div></div>", {
+                            "id":"video",
+                            "class": "upload-img-div",
+                            "allFileName": fileName,
+                            "controls":"controls"
+                        });
+
+                        $img_div.css({"border":"0", "background-image": background_image});
+                        $("#upload-img-div").before($img_div);
+
+                        var $span = $("<span></span>").appendTo($img_div);
+                        $span.click(function () {
+                            var allFileName = $img_div.attr("allFileName");
+                            var ajax_promise_obj = $img_div.data("ajax_promise_obj");
+                            ajax_promise_obj && ajax_promise_obj.abort();
+                            $img_div.remove();
+                        });
+
+                        $("<img/>", { src: "/images/image_remove.png", "class": "upload-img-remove-img"}).appendTo($span);
+
+                        $("<div></div>", {"class": "upload-progress"}).appendTo($span);
+
+                        g_image_count += 1;
+                        var picdata = {
+                            "image_index": g_image_count,
+                            "picfile": base64_str,
+                            "fileName": fileName,
+                            "md5_param": md5_param
+                        };
+
+                        $img_div.data("ajax_promise_obj", uploadFile($img_div, picdata));
+
+                    }
+                    if (articleKind == "picture") {
+                        var sizePic = 1 / 2, kindPic = typeMap[fileExtName];
+                        compressImg(base64_str, 1024, sizePic, kindPic, function (data) {
+                            append_upload_img("url('" + data + "')");
+                        });
+                    } else {
+                        append_upload_img("url('/images/audio.png')");
+                    }
+                    /*$.ajax({
+                        type: "GET",
+                        url: "/upload/isExist",
+                        dataType: 'json',
+                        data: data,
+
+                        contentType: "application/json",
+                        success: function (jsonData) {
+
+                            var isHas = jsonData.isHas;
+                            var allFileName = jsonData.nowFile + "/" + jsonData.fileName;
+
+                            if (isHas) {
+                                fn_show_tips(jsonData.oldFileName + "已经上传过了。");
+                            }
+                        }
+                    });*/
+
+                };
+                //console.log("开始上传："+new Date());
+
+                fileReader.readAsDataURL(file);
+
+
+
+                fileReader.onerror = function (e) {
+                    switch (e.target.error.code) {
+                        case e.target.error.NOT_FOUND_ERR:
+                            alert('File Not Found!');
+                            break;
+                        case e.target.error.NOT_READABLE_ERR:
+                            alert('File is not readable');
+                            break;
+                        case e.target.error.ABORT_ERR:
+                            break; // noop
+                        default:
+                            alert('An error occurred reading this file.');
+                    }
+                    fn_show_tips('文件上传过程中出现问题。');
+                };
+                fileReader.onloadend = function () {
+
+                }
+            });
+        });
+
+      /*  var lbsGeo = document.getElementById('doc-geo');
+        //监听定位失败事件 geofail
+        lbsGeo.addEventListener("geofail", function (evt) {
+
+        });
+        //监听定位成功事件 geosuccess
+        lbsGeo.addEventListener("geosuccess", function (evt) {
+
+            g_location_address = evt.detail.address;
+            var coords = evt.detail.coords;
+            g_location_coords_x = coords.lng;
+            g_location_coords_y = coords.lat;
+        });*/
+    });
+
+
+    function compressImg(imgData, maxHeight, sizePic, kindPic, onCompress) {
+        if (!imgData)return;
+        onCompress = onCompress || function () { };
+        maxHeight = maxHeight || 200;//默认最大高度200px
+        var img = new Image();
+        img.onload = function () {
+            var canvas = document.createElement('canvas');
+            canvas.width = this.width * sizePic;
+            canvas.height = this.height * sizePic;
+
+            if (navigator.userAgent.match(/iphone/i)) {
+                console.log('iphone');
+                //如果方向角不为1，都需要进行旋转 added by lzk
+                if (Orientation != "" && Orientation != 1) {
+                    switch (Orientation) {
+                        case 6://需要顺时针（向左）90度旋转
+                            rotateImg(this, 'left', canvas);
+                            break;
+                        case 8://需要逆时针（向右）90度旋转
+                            rotateImg(this, 'right', canvas);
+                            break;
+                        case 3://需要180度旋转
+                            rotateImg(this, 'right', canvas);//转两次
+                            rotateImg(this, 'right', canvas);
+                            break;
+                    }
+                }
+            }
+
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // canvas清屏
+            ctx.drawImage(img, 0, 0 ,canvas.width, canvas.height); // 将图像绘制到canvas上 imgData
+            onCompress(canvas.toDataURL(kindPic, 1));//必须等压缩完才读取canvas值，否则canvas内容是黑帆布
+
+        };
+        // 记住必须先绑定事件，才能设置src属性，否则img没内容可以画到canvas
+        img.src = imgData;
+    }
+
+    // 参数，最大高度
+    var MAX_HEIGHT = 100;
+    // 渲染
+    function render(src) {
+        // 创建一个 Image 对象
+        var image = new Image();
+        // 绑定 load 事件处理器，加载完成后执行
+        image.onload = function () {
+            // 获取 canvas DOM 对象
+            var canvas = document.getElementById("myCanvas");
+/*
+            // 如果高度超标
+            if(image.height > MAX_HEIGHT) {
+                // 宽度等比例缩放 *=
+                image.width *= MAX_HEIGHT / image.height;
+                image.height = MAX_HEIGHT;
+            }
+*/
+            image.width = image.width * 2;
+            image.height = image.height * 2;
+            // 获取 canvas的 2d 环境对象,
+            var ctx = canvas.getContext("2d");
+            // canvas清屏
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // 重置canvas宽高
+            canvas.width = image.width;
+            canvas.height = image.height;
+            // 将图像绘制到canvas上
+            ctx.drawImage(image, 0, 0, image.width, image.height);
+            // !!! 注意，image 没有加入到 dom之中
+        };
+        // 设置src属性，浏览器会自动加载。
+        // 记住必须先绑定事件，才能设置src属性，否则会出同步问题。
+        image.src = src;
+        return src;
+    }
+
+    var is_confirm_back = true;
+    function return_back_home() {
+
+        if (g_is_choose_dept) {
+            choose_view("main");
+            g_is_choose_dept = false;
+        }
+        else {
+
+            var content = document.getElementById('doc-content').value;
+            if (content.length > 0) {
+                if (is_confirm_back) {
+
+                    fn_show_tips('确认不保存内容吗？再点一次将直接不保存返回');
+                    is_confirm_back = false;
+                }
+                else
+                    is_confirm_back = true;
+
+                setTimeout(function () {
+                    is_confirm_back = true;
+                }, 5000);
+                if (is_confirm_back)
+                    history.go(-1);
+            }
+            else {
+                history.go(-1);
+            }
+        }
+    }
+
+    function returnBack() {
+        history.go(-1);
+//    window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+    }
+
+    //提交稿件或保存草稿箱
+    function submit_doc(operate_type) {
+
+        if ($(".upload-img-wait-img").length != 0) {
+            fn_show_tips('文件上传中，请稍等。');
+            return;
+        }
+
+        var title = document.getElementById('doc-title').value;
+        if (title.length == 0) {
+            fn_show_tips('请填写标题');
+            return;
+        }
+
+        var content = document.getElementById('doc-content').value;
+        if ('<%= kind %>' == 'article') {
+            if (content.length == 0) {
+                fn_show_tips('请填写内容');
+                return;
+            }
+        }
+        if ($(".upload-img-div").parent().is(":visible") && $(".upload-img-div").length-1 == 0) {
+            fn_show_tips('请上传图片。');
+            return;
+        }
+
+        var $relation_name = $('#doc-select-relation-name');
+        var relation_docid = $relation_name.attr('data-relation-docid');
+        var relation_doclibid = $relation_name.attr('data-relation-doclibid');
+
+        var catalog_id = $('#doc-select-catalog-name').attr('data-catalog-id');
+        var lib_type = $('#doc-select-catalog-name').attr('data-catalog-type');
+        var loToken = localStorage.getItem('loToken');
+
+        if (catalog_id == "-1") {
+            fn_show_tips('请选择上传的稿库');
+            return;
+        }
+
+        var images_url_str = $("#doc-upload-img-list>.upload-img-div:visible").map(function () {
+            return $(this).attr("allFileName")
+        }).toArray().join(",");
+
+        var json_info = {};
+        json_info.title = title;
+        json_info.content = content;
+        json_info.catalog_type = lib_type;
+        json_info.relation_docid = relation_docid;
+        json_info.relation_doclibid = relation_doclibid;
+        json_info.catalog_id = catalog_id;
+        json_info.address = g_location_address;
+        json_info.kindParam = kind;
+        json_info.images = images_url_str;
+        json_info.loToken = loToken;
+        g_image_count = 0;
+        //以post方式提交数据
+     $.ajax({
+            type: "POST",
+            url: "/upload/upload_to_server",
+            dataType: 'json',
+            data: JSON.stringify(json_info),
+            contentType: "application/json",
+            beforeSend:function(){
+                $("#submitDiv").attr('href', '#');//提交链接只点击一次，防止多次点击
+            },
+            success: function (jsonData) {
+                if (jsonData.success == true) {
+                    fn_show_tips("稿件提交成功，马上返回首页");
+                    setTimeout(function () {
+                        window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+                    }, 3000);
+
+                }
+            }
+
+        });
+    }
+    //对图片旋转处理 added by lzk
+    function rotateImg(img, direction,canvas) {
+        //alert(img);
+        //最小与最大旋转方向，图片旋转4次后回到原方向
+        var min_step = 0;
+        var max_step = 3;
+        //var img = document.getElementById(pid);
+        if (img == null)return;
+        //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+        var height = img.height;
+        var width = img.width;
+        //var step = img.getAttribute('step');
+        var step = 2;
+        if (step == null) {
+            step = min_step;
+        }
+        if (direction == 'right') {
+            step++;
+            //旋转到原位置，即超过最大值
+            step > max_step && (step = min_step);
+        } else {
+            step--;
+            step < min_step && (step = max_step);
+        }
+        //img.setAttribute('step', step);
+        /*var canvas = document.getElementById('pic_' + pid);
+         if (canvas == null) {
+         img.style.display = 'none';
+         canvas = document.createElement('canvas');
+         canvas.setAttribute('id', 'pic_' + pid);
+         img.parentNode.appendChild(canvas);
+         }  */
+        //旋转角度以弧度值为参数
+        var degree = step * 90 * Math.PI / 180;
+        var ctx = canvas.getContext('2d');
+        switch (step) {
+            case 0:
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0);
+                break;
+            case 1:
+                canvas.width = height;
+                canvas.height = width;
+                ctx.rotate(degree);
+                ctx.drawImage(img, 0, -height);
+                break;
+            case 2:
+                canvas.width = width;
+                canvas.height = height;
+                ctx.rotate(degree);
+                ctx.drawImage(img, -width, -height);
+                break;
+            case 3:
+                canvas.width = height;
+                canvas.height = width;
+                ctx.rotate(degree);
+                ctx.drawImage(img, -width, 0);
+                break;
+        }
+    }
+
+</script>
+</body>
+</html>

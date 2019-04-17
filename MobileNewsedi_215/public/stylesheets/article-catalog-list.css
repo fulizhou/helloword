@@ -1,0 +1,178 @@
+/**
+    稿件库 catalog 选择列表的共享样式表
+
+    给如下 HTML 应用样式
+    <div>
+        <div>
+            <span id="catalog-level-root">部门库 全部稿件</span>
+        </div>
+        <div id="catalog-level-box">
+            <div id="level-one-box">
+                <ul class="level-one">
+                    <li>时政新闻</li>
+                    <li class="selected">时政新闻</li>
+                </ul>
+            </div>
+            <div id="level-other-box">
+                <ul class="level-two">
+                    <li><div>查看全部</div></li>
+                    <li class="has-more">
+                        <div>
+                            <span>时政新闻</span>
+                        </div>
+                        <ul class="level-more">
+                            <li><div>查看全部</div></li>
+                            <li><div>时政新闻</div></li>
+                            <li><div>时政新闻</div></li>
+                        </ul>
+                    </li>
+                    <li><div>时政新闻</div></li>
+                </ul>
+            </div>
+        </div>
+    <div>
+ */
+
+#catalog-level-box{
+    font-size: 1.5rem;
+}
+#catalog-level-box>div{
+    float: left;
+   /* min-height: 500px;*/
+}
+#catalog-level-box ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#catalog-level-box::after{
+    clear: both;
+    content: " ";
+    display: block;
+}
+
+#catalog-level-root-box{
+    background: #ededed;
+    padding-bottom: 15px;
+    border-bottom: solid 1px #cccccc;
+}
+#catalog-level-root{
+    width: 100%;
+    display: block;
+    padding: 10px;
+    text-align:center;
+    background: #ffffff;
+    border-bottom: solid 1px #cccccc;
+}
+
+#level-one-box{
+    width: 30%;
+    color: #666666;
+    position: relative;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+}
+#level-other-box{
+    width: 70%;
+    padding: 0 2%;
+    background: #FFFFFF;
+}
+
+#level-one-box::before{
+    top: 0;
+    right: 0;
+    bottom: 0;
+    content: " ";
+    display: block;
+    position: absolute;
+    border-right: solid 1px #ddd;
+}
+#level-one-des{
+    padding: 20px 4px 20px 12px;
+    border-right: solid 1px #cccccc;
+    border-bottom: solid 1px #cccccc;
+}
+#level-one-des::before{
+    width: 1em;
+    height: 1em;
+    content: " ";
+    margin-right: 5px;
+    display: inline-block;
+    background: url("../images/bookmark.png") 0 0 / 1em 1em;
+}
+#level-one-box .level-one li{
+    position: relative;
+    padding: 12px 5px 12px 5px;
+    border-right: solid 1px #ddd;
+    border-bottom: solid 1px #ddd;
+}
+.level-one{}
+#level-one-box li.selected{
+    color: #59B19A;
+    border-right: 0;
+    padding-right: 4px;
+    background: #FFFFFF;
+    border-left: solid 4px #59B19A;
+}
+#level-one-box li.selected::before, #level-one-box li.selected::after{
+    left: -3px;
+    bottom: 50%;
+    content: " ";
+    display: block;
+    position: absolute;
+    border-width: 3px;
+    border-style: solid;
+    border-color: transparent transparent #59B19A #59B19A;
+}
+#level-one-box li.selected::before{
+    top: 50%;
+    border-color: #59B19A transparent transparent #59B19A;
+}
+
+#level-other-box>ul>li{
+    margin: 2% 0;
+    border: solid 1px #ddd;
+}
+#level-other-box>ul>li>div{
+   /* background: #f9f9f9;*/
+    padding: 6px 0 6px 12px;
+}
+#level-other-box li.has-more::before{
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+    opacity: 0.3;
+    float: right;
+    content: " ";
+    display: block;
+    background: url("../images/extend.png") 0 0 / 20px 20px;
+}
+#level-other-box li.view-more::before{
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+#level-other-box li.view-more>.level-more{
+    display: block;
+}
+
+#level-other-box .level-more{
+    display: none;
+}
+#level-other-box .level-more li{
+}
+#level-other-box .level-more li>div{
+    background: #fff;
+    border-style: dashed;
+    border-color: #ededed;
+    border-width: 1px 0 0 0;
+    padding: 10px 0 10px 32px;
+}
+#level-other-box .level-more li:first-child>div{
+    border: 0;
+}
+.selected2{
+    color: #59B19A;
+}

@@ -1,0 +1,63 @@
+/* 页面 header 中下拉菜单的控制 */
+.can-extend{
+    position: relative;
+}
+
+.can-extend.extend .extend-box::before{
+    top: -5px;
+    left: 1rem;
+    width: 10px;
+    height: 10px;
+    z-index: 998;
+    content: ' ';
+    display: block;
+    position: absolute;
+    background: #59B19A;
+    transform:rotate(45deg);
+    -o-transform:rotate(45deg); 	/* Opera */
+    -ms-transform:rotate(45deg); 	/* IE 9 */
+    -moz-transform:rotate(45deg); 	/* Firefox */
+    -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+}
+.can-extend.extend-right.extend .extend-box:before{
+    left: auto;
+    right: 1rem;
+}
+
+.extend-box{
+    left: 0;
+    top: 50px;
+    margin: 0;
+    z-index: 999;
+    width: 8rem;
+    padding: 2px 5px;
+    display: none;
+    list-style: none;
+    position: absolute;
+    background: #59B19A;
+}
+.can-extend.extend .extend-box{
+    display: block;
+}
+.extend-right.extend .extend-box{
+    right: 0;
+    left: auto;
+}
+
+.extend-box li{
+    color: #FFF;
+    height: 2.2em;
+    display: block;
+    /*padding: 0 1rem;*/
+    line-height: 2.2em;
+    font-size: 1.5rem;
+    text-align: center;
+    border-top: solid 1px #1fadeb;
+}
+.extend-box li:first-child{
+    border:none;
+}
+.extend-box li a{
+    color: #FFF;
+    display: block;
+}

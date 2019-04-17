@@ -1,0 +1,236 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>编辑稿签</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/simditor.css">
+    <link rel="stylesheet" href="../assets/css/mobile.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <style>
+        .edit-div img, table {
+            max-width: 100%;
+        }
+        .am-form textarea{
+            font-size: 17px;
+            height: 82px;
+        }
+        .am-form-title{
+            margin-bottom: 5px;
+        }
+        .am-fr{
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <div>
+            <!--<a><img style="height: 1.7rem;" src="images/list/1.png"></a><span>&nbsp;&nbsp;</span><a><img style="height: 1.6rem;" src="images/list/1.png"></a><span>&nbsp;&nbsp;</span><span id="doc-select-catalog-name" style="color: #FFFFFF"></span>-->
+            <a href="javascript:returnBack()"><img src="../images/navbar/return.png"
+                                                   style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a><span>&nbsp;&nbsp;&nbsp;</span><span
+                id="doc-select-catalog-name" style="font-size:1.6rem;color: #FFFFFF">编辑稿签</span>
+        </div>
+    </div>
+    <div class="am-header-right am-header-nav">
+        <div>
+            <a href="javascript:clickRefresh();"><img src="../images/list/refresh-icon.png"
+                                                      style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+        </div>
+    </div>
+</header>
+
+<div class="edit-div" style="padding:2%; margin-bottom: 0%;">
+    <form class="am-form">
+        <fieldset style="background-color: #FFFFFF">
+            <div class="am-form-title">
+                标题
+            </div>
+            <div class="am-form-group">
+                <textarea id="doc-title" rows="2" placeholder="请输入标题" minlength="1" onkeyup ="getNum(1)"></textarea>
+                <div class="am-form-group am-fr">
+                    <span id="title_num" style="display: inline-block"></span>/100
+                </div>
+            </div>
+
+
+            <div class="am-form-title">
+                副题
+            </div>
+            <div class="am-form-group">
+                <textarea id="doc-subtitle" rows="2" placeholder="请输入副题" minlength="1" onkeyup ="getNum(3)"></textarea>
+                <div class="am-form-group am-fr">
+                    <span id="subtitle_num" style="display: inline-block"></span>/100
+                </div>
+            </div>
+
+
+            <div class="am-form-title">
+                引题
+            </div>
+            <div class="am-form-group">
+                <textarea id="doc-introtitle" rows="2" placeholder="请输入引题" minlength="1" onkeyup ="getNum(2)"></textarea>
+                <div class="am-form-group am-fr">
+                    <span id="introtitle_num" style="display: inline-block"></span>/100
+                </div>
+            </div>
+
+            <!--
+                        <hr data-am-widget="divider" class="am-divider am-divider-default am-no-layout" style="position:relative;width: 106%;left:-3%">
+                        <div class="am-form-group">
+                            <textarea class="" rows="6" id="doc-content" placeholder="请输入内容或说明"></textarea>
+                        </div>
+            -->
+        </fieldset>
+    </form>
+</div>
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="" style="left: auto">
+    <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4" style="border-top: solid 3px #59b19a">
+        <li id='edit-save'>
+            <a href="#">
+                <i class="am-icon-check"></i>
+                <span class="am-navbar-label">保存</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:history.back(-1);">
+                <i class="am-icon-close"></i>
+                <span class="am-navbar-label">取消</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>-->
+<script type="text/javascript" src="../assets/js/module.js"></script>
+<script type="text/javascript" src="../assets/js/hotkeys.js"></script>
+<script type="text/javascript" src="../assets/js/simditor.js"></script>
+<script type="text/javascript" src="../assets/js/uploader.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+<script type="text/javascript">
+
+    function getNum(index){
+        if(index == 1){
+            $("#title_num").text( $("#doc-title").val().length);
+        }
+        if(index == 2){
+            $("#introtitle_num").text( $("#doc-introtitle").val().length);
+        }
+        if(index == 3){
+            $("#subtitle_num").text( $("#doc-subtitle").val().length);
+        }
+    }
+
+    var returnBack = function () {
+        history.go(-1);
+    };
+
+    var load_article = function (callback) {
+        var loToken = localStorage.getItem('loToken');
+        //改稿获取稿件时，传入locked=true参数，锁定稿件
+        var q = "method=articleDetail&locked=true&article_id=" + "<%= article_id%>" + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>" + "&loToken=" + loToken + "&nocache=" + (new Date()).getTime();
+        var param = {"m": "", "q": q};
+
+        $.get("/get", param, function (data) {
+            if (data.success) {
+                callback(data);
+            } else {
+                fn_show_tips('获取稿件信息错误');
+            }
+
+        });
+    };
+
+    var save_article = function (data) {
+
+        if(!data.topic){ fn_show_tips("标题不能为空!"); return; }
+
+        var loToken = localStorage.getItem('loToken');
+        var param = { "loToken": loToken };
+        $.extend(param, data);
+        var count=$("#title_num").text();
+
+        if(count>100){
+            fn_show_tips('保存失败,标题输入过长！');
+            return;
+        }
+        var subcount=$("#subtitle_num").text();
+
+        if(subcount>100){
+            fn_show_tips('保存失败,副题输入过长！');
+            return;
+        }
+        var introcount=$("#introtitle_num").text();
+
+        if(introcount>100){
+            fn_show_tips('保存失败,引题输入过长！');
+            return;
+        }
+        $.post("/article_edit/save_edit_info", param, function (data) {
+            $("#edit-save").unbind();
+            if (data.success) {
+
+                    fn_show_tips('保存成功！', function () { history.go(-1); });
+
+
+            } else {
+                fn_show_tips('保存失败！' + data.msg);
+            }
+        });
+    };
+
+    $(function () {
+        load_article(function (data) {
+            $("#doc-title").text(data.results.title);
+            $("#title_num").text( $("#doc-title").text().length);
+            $("#doc-introtitle").text(data.results.introtopic);
+            $("#introtitle_num").text( $("#doc-introtitle").text().length);
+            $("#doc-subtitle").text(data.results.subtopic);
+            $("#subtitle_num").text( $("#doc-subtitle").text().length);
+        });
+
+        $('#edit-save').on('click',function(){
+            save_article({
+                article_id:'<%= article_id%>',
+                article_libid:'<%= article_libid %>',
+                topic: $("#doc-title").val(),
+                subtopic: $("#doc-subtitle").val(),
+                introtopic: $("#doc-introtitle").val()
+            })
+        });
+    });
+
+</script>
+</body>
+</html>

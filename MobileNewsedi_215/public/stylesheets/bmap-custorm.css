@@ -1,0 +1,44 @@
+/* 隐藏百度地图的 copyright */
+.anchorBL, .BMap_cpyCtrl{
+    display: none !important;
+}
+
+.baidu-photo-div{
+    height : 24px;
+    background : #FFF;
+    position : absolute;
+    border : 1px solid #59B19A;
+}
+
+.baidu-photo-span{
+    width: 22px;
+    height: 22px;
+    display: block;
+    position: relative;
+}
+
+.baidu-photo-span:after{
+    left: 8px;
+    width: 6px;
+    height: 6px;
+    bottom: -4px;
+    content: ' ';
+    position: absolute;
+    background: #59B19A;
+    z-index: -1;
+    border-right: solid 1px #59B19A;
+    border-bottom: solid 1px #59B19A;
+    transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.baidu-photo{
+    top: 0;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+}

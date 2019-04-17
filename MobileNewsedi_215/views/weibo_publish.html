@@ -1,0 +1,631 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>发布微博</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/amazeui.datetimepicker.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <!--<link rel="stylesheet" href="../assets/css/webuploader.css">-->
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jQuery.md5.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.datetimepicker.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <!--<script src="../assets/js/webuploader.js"></script>-->
+
+    <script src="http://api.map.baidu.com/components?ak=1ZtQkeXgxF3TsxWbQxUOTAYW&v=1.0"></script>
+
+    <style>
+        body {
+
+        }
+
+        .upload-img-div {
+            padding-top: 0px;
+            margin: 3px;
+            border: 1px solid #cccccc;
+            width: 31.5%;
+            height: 31.5%;
+            /*width: 100;*/
+            /*height: 100;*/
+            min-height: 100px;
+            overflow: hidden;
+            float: left;
+            position: relative;
+            background-origin: content;
+            background-position: 50% 50%;
+            background-size: auto 100%;
+            background-repeat: no-repeat;
+        }
+
+        .upload-img-remove-img {
+            width: 20px;
+            height: 20px;
+            float: right;
+        }
+
+        .upload-img-wait-img {
+            position: absolute;
+            margin-left: 22px;
+            margin-top: 17px;
+        }
+    </style>
+</head>
+<body>
+<header id="doc-dept-operation" data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <a href="javascript:returnBack();">
+            <img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+        </a>
+    </div>
+    <h1 id="header-title" class="am-header-title">微博发布</h1>
+
+</header>
+<!--<div style="padding-left: 5%;margin-top: 4%;margin-bottom: 3%"><small>请选择定时发布时间</small></div>-->
+<!--<div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd hh:mm'}" style="width: 100%">-->
+<!--<input id="public-time-input" type="text" class="input-date" style="display: inline-block;width: 94%;margin-left: 5%;font-size: 80%;padding: 2%;" placeholder="定时发布时间" readonly>-->
+<!--<span class="am-input-group-btn am-datepicker-add-on" style="clear: none">-->
+<!--<button id="doc-datepicker"  type="button" style="border: none;background-color: transparent;"><img src="../images/date-no-choose-grey.png" > </button>-->
+<!--</span>-->
+<!--</div>-->
+
+<div class="am-input-group date form_datetime-2">
+    <input id="public-time-input" size="16" type="text" value="" class="am-form-field" placeholder="请选择定时发布时间" readonly>
+    <span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>
+</div>
+<div style="padding-left: 5%;margin-top: 1%;margin-bottom: 3%">
+    <small style="color: red;">仅限定时发布选择!</small>
+</div>
+<!--<div style="padding-left: 5%;margin-top: 4%;margin-bottom: 3%"><small>请选择定时发布时间</small><small style="color: red;">(仅限定时发布选择)！</small></div>-->
+<!--<div class="am-input-group date form_datetime-2" style="position: relative">-->
+<!--<input size="16" type="text" value="2015-02-14 14:45" class="am-form-field" readonly>-->
+<!--<span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>-->
+<!--</div>-->
+
+<hr data-am-widget="divider" class="am-divider am-divider-default"/>
+<div id="doc-form-all">
+    <form class="am-form">
+        <fieldset style="background-color: #FFFFFF">
+            <div>
+                <div class="am-form-group">
+                    <textarea class="" rows="6" id="doc-content" placeholder="请输入内容或说明" style="border: none"></textarea>
+                </div>
+            </div>
+            <hr id="doc-line-onthepic" data-am-widget="divider" style="position:relative;width: 106%;left:-3%"
+                class="am-divider am-divider-default"/>
+            <div id="doc-upload-img-list" class="am-form-group am-u-g"
+                 style="float:left;margin-top:1%;padding-left: 0;padding-right: 0">
+                <div id="upload-img-div" class="am-form-file upload-img-div"
+                     style="background-image: url('../images/image_add.png');border: none">
+                    <input id="doc-form-file" type="file" multiple="multiple">
+                </div>
+            </div>
+            <hr id="doc-line-underthepic" data-am-widget="divider" style="position:relative;width: 106%;left:-3%"
+                class="am-divider am-divider-default"/>
+            <div style="width: 100%">
+                <div id="save-button" style="width: 50%;text-align: center;float: left">
+                    <button style="width: 80%" type="button" class="am-btn am-btn-default am-round"
+                            onclick="submit_doc('save');">保存
+                    </button>
+                </div>
+                <div style="width: 50%;text-align: center;display: inline">
+                    <button id="publish-button" style="width: 80%" type="button" class="am-btn am-btn-default am-round"
+                            onclick="submit_doc('publish');">发布
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <div style="height: 10rem"></div>
+</div>
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+
+<div id="doc-catalog-list-root" style="display: none;">
+
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:return_back_to_main()" class="">
+                <!--<i class="am-header-icon am-icon-angle-left"></i>-->
+                <img src="../images/navbar/return.png">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="#title-link" class="">上传至</a>
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <a href="" class="">
+                <!--<i class="am-header-icon am-icon-bars"></i>-->
+                <span>确定</span>
+            </a>
+        </div>
+    </header>
+
+</div>
+
+
+<script>
+    var g_location_coords_x = 0.0;
+    var g_location_coords_y = 0.0;
+    var g_location_address = "";
+    var g_ArrayUrl = [];
+    var g_imageUrlStr = "";
+    var g_image_count = 0;
+
+    /**
+     * Map
+     */
+    function Map() {
+        this.container = new Object();
+    }
+
+    Map.prototype.put = function (key, value) {
+        this.container[key] = value;
+    };
+    Map.prototype.get = function (key) {
+        return this.container[key];
+    };
+
+
+    $(function () {
+
+//      $('#doc-datepicker').datetimepicker().on('changeDate.datepicker.amui', function(event) {
+////          alert(event.date.Format('yyyy-MM-dd hh:mm').toString());
+//          document.getElementById('public-time-input').value = event.date.Format('yyyy-MM-dd hh:mm').toString();
+//          $('#doc-datepicker').datetimepicker('remove');
+//
+//      });
+
+        $('.form_datetime-2').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true,
+            todayBtn: true,
+            pickerPosition: 'bottom-left',
+            language: 'zh-CN',
+            minuteStep: 1
+
+        });
+
+        var weiboPerm = localStorage.getItem("weiboPerm");
+        if (weiboPerm.indexOf('|save|') < 0) {
+            $("#save-button").hide();
+            $("#publish-button").width("10%");
+        }
+        if (weiboPerm.indexOf('|publish|') < 0) {
+            $("#publish-button").hide();
+        }
+        if (weiboPerm.indexOf('|publish|') >= 0 && weiboPerm.indexOf('|save|') >= 0) {
+            $("#publish-button").parent().css({"float": "right"});
+        }
+
+        var doc_id = "<%= doc_id%>";
+
+        if (doc_id == 0) {
+            $("#doc-upload-img-list").show();
+            $("#doc-line-onthepic").show();
+        } else {
+            $("#doc-upload-img-list").hide();
+            $("#doc-line-onthepic").hide();
+            document.getElementById('doc-content').value = localStorage.getItem('weibo_content');
+        }
+
+        //监控选择文件组件，显示添加的图片
+        $("#doc-form-file").on("change", function () {
+            var jqStore = new Map();
+            $.each(this.files, function () {
+                var sBase64 = "";
+                var file = this;
+                var lastUpdateTime = file.lastModifiedDate.toDateString() + file.lastModifiedDate.getMilliseconds();////////
+                var fileName = file.name;
+                var format_param = fileName.substring(fileName.lastIndexOf("."), fileName.length);
+                var oReader = new FileReader();
+                oReader.onload = function (e) {
+
+                    sBase64 = e.target.result;
+                    //截取图片base64后20位为文件起名字(将“+”换位“y”，将“/”换位“p”)，因为ios不兼容，取不到文件名
+//          fileName = sBase64.substring(sBase64.length - 20,sBase64.length).split("+").join("y").split("=").join("r").split("/").join("p")+format_param;
+                    fileName = (sBase64.substring(35, 45) + sBase64.substring(135, 145) + sBase64.substring(sBase64.length - 140, sBase64.length - 130) + sBase64.substring(sBase64.length - 10, sBase64.length)).split("+").join("y").split("=").join("r").split("/").join("p") + format_param;
+                    var md5_param = $.md5(fileName);
+                    var loToken = localStorage.getItem('loToken');
+                    var data = {
+                        "md5_param": md5_param,
+                        "format_param": format_param,
+                        "fileName": fileName,
+                        "oldFileName": file.name,
+                        "loToken": loToken
+                    };
+                    var isHas = false;
+                    $.ajax({
+                        type: "GET",
+                        url: "/weibo_article_list/isExist",
+                        dataType: 'json',
+                        data: data,
+                        contentType: "application/json",
+                        success:function(jsonData){
+                            var pictureData = "";
+                            isHas = jsonData.isHas;
+                            var fileBuf = new Array(sBase64.slice(5, 10));
+                            var kindP = new Array(sBase64.slice(11, 15));
+                            var allFileName = jsonData.nowFile + "/" + jsonData.fileName;
+
+                            if (isHas) {
+                                fn_show_tips(jsonData.oldFileName + "已经上传过了。");
+//                var allFileName = jsonData.nowFile + "/" + jsonData.fileName + g_imageUrlStr;
+                                g_imageUrlStr = "," + allFileName;
+                                if (fileBuf == "image") {
+                                    var sizePic = 1 / 2;
+                                    var kindPic;
+                                    if (new Array(sBase64.slice(11, 15)) == "jpeg") {
+                                        kindPic = "image/jpeg";
+                                    } else if (new Array(sBase64.slice(11, 14)) == "png") {
+                                        kindPic = "image/png";
+                                    } else if (new Array(sBase64.slice(11, 14)) == "gif") {
+                                        kindPic = "image/gif";
+                                    } else {
+                                        kindPic = "image/jpg";
+                                    }
+                                    compressImg(sBase64, 1024, sizePic, kindPic, function (data) {//压缩完成后执行的callback
+                                        pictureData = data;
+                                        var img_div = document.createElement('div');
+                                        img_div.className = "upload-img-div";
+                                        img_div.style.backgroundImage = "url('" + sBase64 + "')";
+                                        img_div.setAttribute("allFileName", allFileName);
+                                        $("#upload-img-div").before($(img_div));
+
+                                        var a = document.createElement('a');
+                                        a.onclick = function () {
+                                            $(this).parents(".upload-img-div").hide();
+                                            var index = $(".upload-img-div").index($(this).parents(".upload-img-div"));
+                                            jqStore.get(index).abort();
+                                            var allFileName = $(this).parents(".upload-img-div").attr("allFileName");
+                                            g_imageUrlStr.replace("," + allFileName, "");
+                                        };
+
+                                        img_div.appendChild(a);
+//                    var img_wait = document.createElement('img');
+//                    img_wait.src = "/images/waiting.gif";
+//                    img_wait.className = "upload-img-wait-img";
+//                    a.appendChild(img_wait);
+
+                                        var img = document.createElement('img');
+                                        img.src = "/images/image_remove.png";
+                                        img.className = "upload-img-remove-img";
+                                        a.appendChild(img);
+                                    });
+                                }
+                                else {
+//                  alert("进入上传文件");
+                                    var img_div = document.createElement('div');
+                                    img_div.className = "upload-img-div";
+                                    img_div.style.border = 0;
+                                    img_div.style.backgroundImage = "url('/images/audio.png')";
+                                    img_div.setAttribute("allFileName", allFileName);
+                                    $("#upload-img-div").before($(img_div));
+
+                                    var a = document.createElement('a');
+                                    a.onclick = function () {
+                                        $(this).parents(".upload-img-div").hide();
+                                        var index = $(".upload-img-div").index($(this).parents(".upload-img-div"));
+                                        jqStore.get(index).abort();
+                                        var allFileName = $(this).parents(".upload-img-div").attr("allFileName");
+                                        g_imageUrlStr.replace("," + allFileName, "");
+                                    };
+                                    img_div.appendChild(a);
+//                  var img_wait = document.createElement('img');
+//                  img_wait.src = "/images/waiting.gif";
+//                  img_wait.className = "upload-img-wait-img";
+//                  a.appendChild(img_wait);
+
+                                    var img = document.createElement('img');
+                                    img.src = "/images/image_remove.png";
+                                    img.className = "upload-img-remove-img";
+                                    a.appendChild(img);
+                                }
+                            } else {
+
+                                if (fileBuf == "image") {
+                                    var sizePic = 1 / 2;
+                                    var kindPic;
+                                    if (new Array(sBase64.slice(11, 15)) == "jpeg") {
+                                        kindPic = "image/jpeg";
+                                    } else if (new Array(sBase64.slice(11, 14)) == "png") {
+                                        kindPic = "image/png";
+                                    } else if (new Array(sBase64.slice(11, 14)) == "gif") {
+                                        kindPic = "image/gif";
+                                    } else {
+                                        kindPic = "image/jpg";
+                                    }
+                                    compressImg(sBase64, 1024, sizePic, kindPic, function (data) {//压缩完成后执行的callback
+                                        pictureData = data;
+                                        var img_div = document.createElement('div');
+                                        img_div.className = "upload-img-div";
+                                        img_div.style.backgroundImage = "url('" + sBase64 + "')";
+                                        img_div.setAttribute("allFileName", allFileName);
+
+                                        $("#upload-img-div").before($(img_div));
+
+                                        var a = document.createElement('a');
+                                        a.onclick = function () {
+                                            $(this).parents(".upload-img-div").hide();
+                                            var index = $(".upload-img-div").index($(this).parents(".upload-img-div"));
+                                            jqStore.get(index).abort();
+                                            var allFileName = $(this).parents(".upload-img-div").attr("allFileName");
+                                            g_imageUrlStr.replace("," + allFileName, "");
+                                        };
+
+                                        img_div.appendChild(a);
+                                        var img_wait = document.createElement('img');
+                                        img_wait.src = "/images/waiting.gif";
+                                        img_wait.className = "upload-img-wait-img";
+                                        a.appendChild(img_wait);
+
+                                        var img = document.createElement('img');
+                                        img.src = "/images/image_remove.png";
+                                        img.className = "upload-img-remove-img";
+                                        a.appendChild(img);
+                                    });
+                                }
+                                else {
+//                  alert("进入上传文件");
+                                    var img_div = document.createElement('div');
+                                    img_div.className = "upload-img-div";
+                                    img_div.style.border = 0;
+                                    img_div.style.backgroundImage = "url('/images/audio.png')";
+                                    img_div.setAttribute("allFileName", allFileName);
+                                    $("#upload-img-div").before($(img_div));
+
+                                    var a = document.createElement('a');
+                                    a.onclick = function () {
+                                        $(this).parents(".upload-img-div").hide();
+                                        var index = $(".upload-img-div").index($(this).parents(".upload-img-div"));
+                                        jqStore.get(index).abort();
+                                        var allFileName = $(this).parents(".upload-img-div").attr("allFileName");
+                                        g_imageUrlStr.replace("," + allFileName, "");
+                                    };
+                                    img_div.appendChild(a);
+                                    var img_wait = document.createElement('img');
+                                    img_wait.src = "/images/waiting.gif";
+                                    img_wait.className = "upload-img-wait-img";
+                                    a.appendChild(img_wait);
+
+                                    var img = document.createElement('img');
+                                    img.src = "/images/image_remove.png";
+                                    img.className = "upload-img-remove-img";
+                                    a.appendChild(img);
+                                }
+                                g_image_count += 1;
+                                var picdata = {
+                                    "image_index": g_image_count,
+                                    "picfile": sBase64,
+                                    "fileName": fileName,
+                                    "md5_param": md5_param
+                                };
+                                var jqObj = $.ajax({
+                                    type: "POST",
+                                    url: "/weibo_article_list/upload_file",
+
+                                    dataType: 'json',
+                                    data: JSON.stringify(picdata),
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        var params = {"url": data.url, "id": data.image_index};
+
+                                        g_imageUrlStr = "," + data.url + g_imageUrlStr;
+
+                                        $(".upload-img-wait-img").remove();
+                                    }
+                                })
+
+                                jqStore.put(g_image_count, jqObj);
+                            }
+                        }
+                    });
+
+                };
+
+                oReader.readAsDataURL(file);
+
+                oReader.onerror = function () {
+                    fn_show_tips('文件上传过程中出现问题。');
+                }
+                oReader.onloadend = function () {
+
+                }
+            });
+        });
+
+    });
+
+
+    function compressImg(imgData, maxHeight, sizePic, kindPic, onCompress) {
+
+        if (!imgData)return;
+        onCompress = onCompress || function () {
+                };
+
+        maxHeight = maxHeight || 200;//默认最大高度200px
+
+        var img = new Image();
+
+        img.onload = function () {
+
+            var canvas = document.createElement('canvas');
+            canvas.width = this.width * sizePic;
+            canvas.height = this.height * sizePic;
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // canvas清屏
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 将图像绘制到canvas上 imgData
+            onCompress(canvas.toDataURL(kindPic, 1));//必须等压缩完才读取canvas值，否则canvas内容是黑帆布
+
+        };
+// 记住必须先绑定事件，才能设置src属性，否则img没内容可以画到canvas
+        img.src = imgData;
+
+    }
+
+    // 参数，最大高度
+    var MAX_HEIGHT = 100;
+    // 渲染
+    function render(src) {
+// 创建一个 Image 对象
+        var image = new Image();
+// 绑定 load 事件处理器，加载完成后执行
+        image.onload = function () {
+// 获取 canvas DOM 对象
+            var canvas = document.getElementById("myCanvas");
+
+// 如果高度超标
+//      if(image.height > MAX_HEIGHT) {
+//// 宽度等比例缩放 *=
+//        image.width *= MAX_HEIGHT / image.height;
+//        image.height = MAX_HEIGHT;
+//      }
+
+            image.width = image.width * 2;
+            image.height = image.height * 2;
+// 获取 canvas的 2d 环境对象,
+// 可以理解Context是管理员，canvas是房子
+            var ctx = canvas.getContext("2d");
+// canvas清屏
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+// 重置canvas宽高
+            canvas.width = image.width;
+            canvas.height = image.height;
+// 将图像绘制到canvas上
+            ctx.drawImage(image, 0, 0, image.width, image.height);
+// !!! 注意，image 没有加入到 dom之中
+        };
+// 设置src属性，浏览器会自动加载。
+// 记住必须先绑定事件，才能设置src属性，否则会出同步问题。
+        image.src = src;
+        return src;
+    }
+    ;
+
+    var is_confirm_back = true;
+    function return_back_home() {
+
+        if (g_is_choose_dept) {
+            $("#doc-form-all").show();
+            $("#doc-catalog-list").hide();
+            $("#doc-dept-operation").show();
+            g_is_choose_dept = false;
+        }
+        else {
+
+            var content = document.getElementById('doc-content').value;
+            if (content.length > 0) {
+                if (is_confirm_back) {
+
+                    fn_show_tips('确认不保存内容吗？再点一次将直接不保存返回');
+                    is_confirm_back = false;
+                }
+                else
+                    is_confirm_back = true;
+
+                setTimeout(function () {
+                    is_confirm_back = true;
+                }, 5000);
+                if (is_confirm_back)
+                    history.go(-1);
+            }
+            else {
+                history.go(-1);
+            }
+        }
+    }
+
+    function returnBack() {
+        history.go(-1);
+    }
+
+    //提交稿件或保存草稿箱
+    function submit_doc(operate_type) {
+
+        if ($(".upload-img-wait-img").length != 0) {
+            fn_show_tips('文件上传中，请稍等。');
+            return;
+        }
+        var dateInput = document.getElementById('public-time-input').value;
+        var content = document.getElementById('doc-content').value;
+//    var catalog_id = document.getElementById('doc-select-catalog-name').getAttribute('data-catalog-id');
+//    var lib_type = document.getElementById('doc-select-catalog-name').getAttribute('data-catalog-type');
+        if (content.length > 140) {
+            fn_show_tips('对不起，您输入的字数超出了限制（140字内）！');
+            return;
+        }
+
+
+        var json_info = {};
+        json_info.content = content;
+        json_info.pub_time = dateInput;
+        json_info.group_id = "<%= group_id%>";
+        json_info.doc_id = "<%= doc_id%>";
+        if (operate_type == "save") {
+            json_info.is_publish = 0;
+        } else {
+            json_info.is_publish = 1;
+        }
+        if (g_imageUrlStr.length > 0) {
+            json_info.weibo_type = 2;
+        } else {
+            json_info.weibo_type = 1;
+        }
+        json_info.images = g_imageUrlStr.substring(1);
+        var loToken = localStorage.getItem('loToken');
+        json_info.loToken = loToken;
+
+
+        g_imageUrlStr = "";
+        g_image_count = 0;
+        //以post方式提交数据
+        $.ajax({
+            type: "POST",
+            url: "/weibo_article_list/upload_to_server",
+
+            dataType: 'json',
+            data: JSON.stringify(json_info),
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if (jsonData.success == true) {
+                    fn_show_tips("稿件提交成功!");
+                    setTimeout(function () {
+                        window.location.href = "/weibo_article_list/list?group_id=" + "<%= group_id%>";
+                    }, 3000);
+
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

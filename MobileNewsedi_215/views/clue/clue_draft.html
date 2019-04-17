@@ -1,0 +1,462 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="save" content="history">
+    <title>线索</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/extend-box.css">
+    <link rel="stylesheet" href="../stylesheets/article-catalog-list.css">
+    <style type="text/css">
+        .am-list li {
+            padding: 1rem;
+        }
+
+        .am-list li a {
+            padding: 0;
+            font-size: 1.6rem;
+            min-height: 4.5rem;
+            line-height: 1.8rem;
+        }
+
+        .am-list .am-list-item-text span:first-child {
+            margin-left: 0;
+        }
+
+        .am-list .am-list-item-text span {
+            margin-left: 1rem;
+            display: inline-block;
+        }
+
+        .status {
+            color: #59B19A;
+            padding: 0 5px;
+            border-radius: 2px;
+            border: solid 1px #59B19A;
+        }
+
+        #status-filter li {
+            display: none;
+        }
+
+        #status-filter[catalog-name='my'] li[catalog='my'], #status-filter[catalog-name='all'] li[catalog='all'] {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+<div id="view-main" class="choose-view" style="display: block">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back()"><img src="../images/navbar/return.png"></a>
+
+            <a id="select-folder" href="javascript://">
+                <span id="select-folder-name">选择稿库</span>
+                <img src="../images/list/xiala.png">
+            </a>
+<!--
+            <span class="can-extend">
+                <span id="doc-select-catalog-name" style="color: #FFFFFF">我的报题</span>
+                <img src="../images/list/xiala.png" style="height: 2rem;">
+                <ul id="select-catalog-name" class="extend-box">
+                    <li><a href="javascript:false" catalog-name="my">我的报题</a></li>
+                    <li><a href="javascript:false" catalog-name="all">所有报题</a></li>
+                </ul>
+            </span>
+-->
+        </div>
+        <h1 class="am-header-title"><span></span></h1>
+        <div class="am-header-right am-header-nav">
+            <div>
+                <a href="./new_clue"><img src="../images/list/plus-icon.png"></a>
+<!--
+                <span class="can-extend extend-right">
+                    <img src="../images/list/xiala.png"/>
+                    <ul id="status-filter" class="extend-box" catalog-name="my">
+                        &lt;!&ndash; 我的报题的状态 &ndash;&gt;
+                        <li catalog="my"><a href="javascript:false">已完成</a></li>
+                        <li catalog="my"><a href="javascript:false">未完成</a></li>
+
+                        &lt;!&ndash; 所有报题的状态 &ndash;&gt;
+                        <li catalog="all"><a href="javascript:false">已审核</a></li>
+                        <li catalog="all"><a href="javascript:false">未审核</a></li>
+                        <li catalog="all"><a href="javascript:false">当前完成</a></li>
+                        <li catalog="all"><a href="javascript:false">暂缓备后</a></li>
+                        <li catalog="all"><a href="javascript:false">未确认</a></li>
+                        <li catalog="all"><a href="javascript:false">遗留</a></li>
+                    </ul>
+                </span>
+-->
+                <!--<a href="javascript:returnHome()"><img src="../images/list/home-icon.png"></a>-->
+            </div>
+        </div>
+    </header>
+
+    <div id="doc-scroll-wrapper" class="am-list-news-bd am-margin-left-sm" style="margin-left: 0">
+        <ul id="doc-article-list" class="am-list">
+            <!--<li class="am-g am-list-item-desced">
+                <a href="./draft_detail" class="am-list-title">习近平与华东一把手谈经济形势习近平与华东7省市一把手谈经济形势</a>
+                <div class="am-list-item-text more-two-line">
+                    <span class="word-size">33456 字</span>
+                    <span class="datetime">03-08 12:30</span>
+                    <span class="status">已审核</span>
+                </div>
+            </li>-->
+        </ul>
+        <div id="doc-scroll-more" style="display: none;" class="am-pagination-centered"
+             data-am-scrollspy="{animation: 'fade', delay: 300}">加载更多
+        </div>
+    </div>
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+        <a href="#top" title="回到顶部">
+            <img style="height: 3rem" src="../images/top.png">
+        </a>
+    </div>
+</div>
+
+<div id="view-folder-list" class="choose-view">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:back_to_main()">
+                <img src="../images/navbar/return.png">
+            </a>
+        </div>
+        <h1 id="folder-choose-name" class="am-header-title">
+            选择稿库
+        </h1>
+    </header>
+
+    <div id="doc-catalog-list-tpl" class="am-list-news-bd">
+        <div id="catalog-level-root-box">
+            <span id="catalog-level-root"><!--部门库 全部稿件--></span>
+        </div>
+        <div id="catalog-level-box">
+            <div id="level-one-box">
+               <!-- <div id="level-one-des">栏目分类</div>-->
+                <ul class="level-one"></ul>
+            </div>
+            <div id="level-other-box">
+                <!--<ul class="level-two">
+                    <li><div>查看全部</div></li>
+                    <li class="has-more">
+                        <div>
+                            <span>时政新闻</span>
+                        </div>
+                        <ul class="level-more">
+                            <li><div>查看全部</div></li>
+                            <li><div>时政新闻</div></li>
+                            <li><div>时政新闻</div></li>
+                        </ul>
+                    </li>
+                    <li><div>时政新闻</div></li>
+                </ul>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../assets/js/cookie.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<script type="text/javascript" src="../javascripts/extend-box.js"></script>
+<script type="text/javascript" src="../javascripts/fzcommon.js"></script>
+
+<script type="text/javascript">
+    var loToken = localStorage.getItem("loToken");
+
+
+    function getLastFolderID(type){
+        return localStorage.getItem(type + "_last_folder_id");
+    }
+
+    function setLastFolderID(type, folder_id){
+        localStorage.setItem(type + "_last_folder_id", folder_id);
+    }
+
+    function choose_view(name){
+        $(".choose-view").hide();
+        $("#view-" + name).show();
+    }
+
+    function back_to_main(){
+        choose_view('main');
+    }
+</script>
+<script type="text/javascript">
+
+    function load_article_list(param, callback) {
+        var type = param.type,
+                folderid = param.folder_id || 0,
+                $doc_list = param.$doc_list,
+                next_index = 0,
+                has_more = true,
+                isloading = false,
+                count = parseInt("<%= article_list_count %>");
+
+        function on_success(data) {
+            if (data.success) {
+                has_more = data.has_more;
+                next_index += data.results.length;
+                isloading = false;
+                callback && callback(data);
+            }
+        }
+
+        function load_list() {
+            if (isloading || !has_more) return;
+            isloading = true;
+
+            return $.ajax({
+                url: "/fatch",
+                data: {
+                    method: "getNewsPlanDocuments",
+                    type: type,
+                    folderid: folderid,
+                    begin: next_index,
+                    count: count,
+                    loToken: loToken
+                },
+                dataType: "json",
+                success: on_success
+            });
+        }
+
+        return {
+            load_list: load_list,
+            reset: function () {
+                next_index = 0;
+                has_more = true;
+                $doc_list.empty();
+            },
+            setFolderID: function (i) {
+                folderid = i;
+                setLastFolderID(type, folderid);
+            }
+        };
+    }
+
+    var $article_list = $("#doc-article-list").empty();
+    var load_clue_list = load_article_list({
+        type: "clue",
+        $doc_list:$article_list,
+        folderid:getLastFolderID("clue")
+    }, function (data) {
+        $.each(data.results, function (i, v) {
+            var href = "./clue_detail?libId=" + v.libId + "&id=" + v.id;
+            var $li = $("<li>", {"class": "am-g am-list-item-desced"}).appendTo($article_list);
+            $("<a></a>", {"class": "am-list-title", text: v.sysTopic, "href": href}).appendTo($li);
+            var $div = $("<div></div>", {"class": "am-list-item-text more-two-line"}).appendTo($li);
+/*
+            $("<span></span>", {"class": "word-size", text: "33456 字"}).appendTo($div);
+*/
+            $("<span></span>", {"class": "datetime", text: v.createDate}).appendTo($div);
+            $("<span></span>", {"class": "status", text: v.status}).appendTo($div);
+        });
+        $("#doc-scroll-more").css("display", data.has_more ? "" : "none");
+    });
+</script>
+
+<script type="text/javascript">
+    var folder_map = {};
+    var FOLDER_ID_ATTR = "folder-id";
+    $(function () {
+        function load_folder(type, callback){
+            $.ajax({
+                url:"/fatch",
+                data:{
+                    type:type,
+                    perm:"browser",
+                    method:"getNewsPlanFolders",
+                    loToken:loToken
+                },
+                dataType:"json",
+                success: on_success
+            });
+            function on_success(data) {
+
+                if(data.success){
+                    callback && callback(data.results);
+                }
+            }
+        }
+
+        (function (type) {
+            load_folder(type, function (data) {
+                var map = {0: {id: 0, name: "root"}};
+                $.each(data, function (i, v) {
+                    map[v.id] = v;
+                });
+                $.each(data, function (i, v) {
+                    map[v.parent_id].childrens = map[v.parent_id].childrens || [];
+                    map[v.parent_id].childrens.push(v);
+                });
+                folder_map[type] = map;
+
+                var folder_id = getLastFolderID(type);
+                if(folder_id){
+                    $("#select-folder-name").text(map[folder_id].name);
+                } else {
+                    choose_folder(type);
+                }
+            });
+        })("clue");
+
+        function choose_folder(type){
+            fill_folder(type);
+            choose_view("folder-list");
+        }
+
+        /**
+         *  填充分类树
+         * @param data 分类树的数据
+         */
+        function fill_folder(type) {
+            var root = folder_map[type][0].childrens[0];
+            var $catalog_root = $("#catalog-level-root");
+            var $level_one = $(".level-one").empty();
+
+            $catalog_root.attr(FOLDER_ID_ATTR, root.id).text(root.name + " 全部稿件");
+
+            fill_catalog_one($level_one, root.childrens);
+
+            // 默认打开二级菜单的第一个选项
+            $level_one.children(":first").click();
+        }
+
+        /**
+         *  填充分类树的一级菜单
+         * @param $target 存放一级菜单的 JQuery 对象, example: $(".level-one")
+         * @param data 一级菜单的数组数据
+         */
+        function fill_catalog_one($target, data) {
+            var $level_other_box = $("#level-other-box").empty();
+            for (var i in data) {
+                var obj = data[i];
+                var href = "catalog-children-" + obj.id;
+                $("<li></li>", {text: obj.name, href: "#" + href}).appendTo($target);
+
+                var $level_two = $("<ul></ul>", {
+                    "id": href,
+                    "class": "level-two"
+                }).css({"display": "none"}).appendTo($level_other_box);
+                $level_two.append($("<li></li>").attr(FOLDER_ID_ATTR, obj.id).append($("<div></div>", {text: "全部稿件"})));
+
+                if ((obj.childrens || []).length > 0) {
+                    fill_catalog_two($level_two, obj.childrens);
+                }
+            }
+        }
+
+        /**
+         * 填充分类树的二级菜单
+         * @param $target
+         * @param data 二级菜单的数组数据
+         */
+        function fill_catalog_two($target, data) {
+            for (var i in data) {
+                var obj = data[i];
+                var $li = $("<li></li>").attr(FOLDER_ID_ATTR, obj.id).append($("<div></div>", {text: obj.name})).appendTo($target);
+
+                if ((obj.childrens || []).length > 0) {
+                    $li.addClass("has-more").removeAttr(FOLDER_ID_ATTR);
+                    var $level_more = $("<ul></ul>", {"class": "level-more"}).appendTo($li);
+                    $("<li></li>").attr(FOLDER_ID_ATTR, obj.id).append($("<div></div>", {text: "全部稿件"})).appendTo($level_more);
+                    fill_catalog_more($level_more, obj.childrens);
+                }
+            }
+        }
+
+        function fill_catalog_more($target, data) {
+            for (var i in data) {
+                var obj = data[i];
+                $("<li></li>").attr(FOLDER_ID_ATTR, obj.id).append($("<div></div>", {text: obj.name})).appendTo($target);
+            }
+        }
+
+        $("#select-folder").click(function () {
+            choose_folder("clue");
+        });
+
+        // 选择
+        var click = function () {
+            var folder_id = $(this).attr(FOLDER_ID_ATTR);
+            $("#select-folder-name").text(folder_map["clue"][folder_id].name);
+            load_clue_list.setFolderID(folder_id);
+            load_clue_list.reset();
+            load_clue_list.load_list();
+            back_to_main();
+        };
+        $("#catalog-level-root").click(click);
+        $("#level-other-box").delegate("[" + FOLDER_ID_ATTR + "]", "click", click);
+    });
+
+    $(function () {
+        // 左侧 level-one-box 中的切换效果
+        $("#level-one-box").delegate("li", 'click', function () {
+            $("#level-one-box .selected").removeClass("selected");
+            $(this).addClass("selected");
+
+            $("#level-other-box>ul").css({"display": "none"});
+            $($(this).attr("href")).css({"display": ""});
+        });
+
+        // 右侧 level-other-box 子节点的切换效果
+        $("#level-other-box").delegate(".has-more", "click", function () {
+            $(this).toggleClass("view-more");
+            return false;
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    load_clue_list.load_list();
+
+    $('#doc-scroll-more').on('inview.scrollspy.amui', function () {
+        load_clue_list.load_list();
+    });
+
+/*
+    $("#select-catalog-name a").click(function () {
+        var text = $(this).text();
+        var catalog = $(this).attr("catalog-name");
+        $("#status-filter").attr("catalog-name", catalog);
+        $("title").text(text);
+        $("#doc-select-catalog-name").text(text);
+    });
+*/
+
+    /*
+        $('#doc-scroll-refresh').on('inview.scrollspy.amui', function () {
+            load_clue_list.resetNextIndex();
+            load_clue_list.load_article_list();
+        });
+    */
+
+</script>
+</body>
+</html>

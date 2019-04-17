@@ -1,0 +1,243 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>线索详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../../assets/css/app.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+    <link rel="stylesheet" href="../../stylesheets/report/detail.css">
+    <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../../javascripts/common.js"></script>
+    <style>
+        .lastDiv{
+            margin-bottom: 5rem;
+        }
+        .am-slider-default .am-direction-nav a{
+            height: 36px;
+        }
+        .am-slider-default .am-direction-nav a:before{
+            font-size: 30px;
+        }
+
+        #article-detail{
+            display: none;
+        }
+
+        #article-content{
+            min-height: 100px;
+        }
+
+        #article-content-text{
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+        .attachInfo-Annex{
+            position:relative;
+            height: 2.6rem;
+            background-color: #fafafa;
+            border: 1px solid #ddd;
+            overflow:hidden;
+        }
+        .clo{
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .clo img{
+            border:none;
+            width:65%;
+            height:65%;
+        }
+    </style>
+</head>
+<body>
+<!--头部开始-->
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <div>
+            <a href="javascript:back()"><img src="../../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+            <span id="doc-select-catalog-name" style="font-size:1.5rem;color: #FFFFFF">线索详情</span>
+        </div>
+    </div>
+    <div class="am-header-right am-header-nav">
+        <div>
+            <a href="javascript:refresh()"><img src="../../images/list/refresh-icon.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+        </div>
+    </div>
+</header>
+<!--头部结束-->
+<div id="article-detail">
+    <!--文章开始-->
+    <div class="am-text-danger contentBg">
+        <h2 id = "article-title" style=" margin-bottom: 0%;"></h2>
+        <div class="am-article-hd">
+            <p id="article-meta" class="am-article-meta" style="margin: 0px">
+                创建时间：<span id="article-meta-date"></span>
+                爆料人：<span id="article-meta-author"></span>
+            </p>
+        </div>
+        <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default am-no-layout"
+                 data-am-paragraph="{ tableScrollable: true, pureview: true }" style=" margin:0;">
+            <div id="article-content" class="am-article-bd">
+                <p id="article-content-text"></p>
+               <!-- <p class="attach">附件(<span id="attachNum">1</span>)</p>
+                <div class="attachInfo-Annex">
+                    <span class="clo"><img src="../../images/image_remove.png"></span>
+                    <span style="display:inline-block;font-size:15px;">已选附件:</span>
+                    <ul style="display:inline-block;margin-top:0;background: red;">
+                        <li>111.jpg</li>
+                    </ul>
+                </div>-->
+             </div>
+            <!--图片轮播开始-->
+            <div id="article-images" class="contentBg" style="display: none">
+                <div id="article-images-slider" class="am-slider am-slider-default" data-am-flexslider>
+                    <ul class="am-slides">
+                        <!-- <li><img src="http://s.amazeui.org/media/i/demos/bing-1.jpg" /></li> -->
+                    </ul>
+                </div>
+            </div>
+            <!--图片轮播结束-->
+            <!--视频-->
+            <div id="article-video_2" class="contentBg" style="display: none">
+                <div id="article-video-slider" class="am-slider am-slider-default" data-am-flexslider>
+                    <ul class="am-slides">
+                        <!-- <li> <video src="file/kbs.mp4"  controls="controls" style="display:block"></video></span> -->
+                    </ul>
+                </div>
+            </div>
+            <!--视频-->
+        </article>
+    </div>
+
+    <!--文章结束-->
+
+
+
+    <div id="relation-task" class="am-text-danger contentBg" style="font-size:1.3rem;display: none">
+        <span>相关采访任务:</span> <a id="task-title" style="color: #59B19A;"></a>
+    </div>
+
+    <div id="relation-topic" class="am-text-danger contentBg" style="font-size:1.3rem;display: none">
+        <span>相关选题:</span> <a id="topic-title" style="color: #59B19A;"></a>
+    </div>
+
+    <!-- 占位 -->
+    <div class="bottom-placehold"></div>
+
+    <!--底部按钮开始-->
+    <div id="bottom-operator" class="bottomBg">
+        <a id="assign_task" class="btn_determine am-btn am-btn-default">分配采访任务</a>
+        <a id="transfer_topic" class="btn_determine am-btn am-btn-default">转为选题</a>
+    </div>
+    <!--底部按钮结束-->
+</div>
+
+<script type="text/javascript">
+
+    var query = {}, regExpResult;
+    var search = location.search;
+    var regExp = /([^?&]+)=([^?&]*)/g;
+    while(regExpResult = regExp.exec(search)){
+        query[regExpResult[1]] = regExpResult[2];
+    }
+
+    var loToken = localStorage.getItem("loToken");
+
+    var s = "clueID=" + query.id + "&clueLibID=" + query.libId;
+    $("#assign_task").attr("href", "../interview_task/new_interview_task?" + s);
+    $("#transfer_topic").attr("href", "../topic/new_topic?" + s);
+
+    $(function () {
+        $.ajax({
+            url:"/fatch",
+            data:{
+                docId: query.id,
+                method: "clueView",
+                loToken: loToken
+            },
+            dataType:"json",
+            success: on_success
+        });
+
+        function on_success(data) {
+            if(data && data.clue){
+                var clue = data.clue;
+                $("#article-title").text("【" + clue.clueQualityName + "】 " + clue.topic);
+                $("#article-meta-date").text(clue.createTime);
+                $("#article-meta-author").text(clue.clue_author || "无");
+                $("#article-content-text").html(clue.clueContent);
+
+                // 图片
+                var images;
+                if( images = (data.domAttach.hasImg||"") ){
+                    $("#article-images").show();
+                    var $slider = $("#article-images-slider");
+                    $.each(images.split(","), function (i, v) {
+                        $slider.children("ul").append("<li><img src='" + "/newsedit/" + v + "'/></li>");
+                    });
+                    $("#article-images").appendTo("#article-content");
+                    $slider.flexslider();
+                }
+                //视频
+                var video_2;
+                if( video_2 = (data.domAttach.hasVideo||"") ){
+                    $("#article-video_2").show();
+                    var $slider = $("#article-video-slider");
+                    $.each(video_2.split(","), function (i, v) {
+                        $slider.children("ul").append("<li><video controls='controls' style='display:block;' src='" + "/newsedit/" + v + "'></video></li>");
+                    });
+                    $slider.flexslider();
+                }
+
+                var task = data.tasks;
+                if(task){
+                    var href = "../interview_task/interview_task_detail?libId="+ task.taskDocLibId +"&id="+ task.taskDocId;
+                    $("#task-title").text(task.taskTitle);
+                    $("#relation-task").show().click(function () {
+                        location.href = href;
+                    });
+                    $("#bottom-operator").hide();
+                }
+
+                var topic = data.topics;
+                if(topic){
+                    var href = "../topic/topic_details?libId="+ topic.topicDocLibId +"&id="+ topic.topicDocId;
+                    $("#topic-title").text(topic.topicTitle);
+                    $("#relation-topic").show().click(function () {
+                        location.href = href;
+                    });
+                    $("#bottom-operator").hide();
+                }
+
+                $("#article-detail").show();
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+</head>
+<body>
+<div class="am-text-danger">
+
+    <h2 id = "doc-article-title" style="padding:2%"></h2>
+    <div class="am-article-hd">
+        <p id="doc-article-meta" class="am-article-meta" style="padding-left:2%"></p>
+    </div>
+    <hr/>
+</div>
+<article data-am-widget="paragraph" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+    <div id = "doc-article-content" class="am-article-bd">
+    </div>
+</article>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+     id="">
+    <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4">
+    </ul>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+
+    function load_article_detail(article_id){
+        var loToken = localStorage.getItem('loToken');
+        var data = {"article_id":article_id, "loToken":loToken};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/article_detail/detail",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    show_article_detail(jsonData.results);
+                }
+            }
+        });
+
+    }
+
+    function show_article_detail(article){
+
+        document.getElementById('doc-article-title').innerText = article.title;
+        var meta_info = "";
+        meta_info += article.author;
+        meta_info += '&nbsp;&nbsp;';
+        meta_info += article.opt_time;
+        meta_info += '&nbsp;&nbsp;';
+        meta_info += article.text_count;
+        meta_info += '字';
+        document.getElementById('doc-article-meta').innerHTML = meta_info;
+        document.getElementById('doc-article-content').innerHTML = article.content;
+
+        var operation_list_node = document.getElementById('doc-operation-list');
+        var operate_perm = article.operate_perm;
+
+        //if(operate_perm.find('returnback') > 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_return_dept();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/returnback.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "退稿";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+        //if(operate_perm.find('fetch') > 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_unsign();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/unsign.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "撤签";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+        //if(operate_perm.find('transfer') > 0)
+        {
+            var operation_li = document.createElement('li');
+            var operation_a = document.createElement('a');
+            operation_a.href = 'javascript:article_sign();';
+            var operation_i = document.createElement('img');
+            operation_i.src = "images/navbar/sign.png";
+            operation_a.appendChild(operation_i);
+            var operation_span = document.createElement('span');
+            operation_span.className = "am-navbar-label";
+            operation_span.innerText = "签发";
+            operation_a.appendChild(operation_span);
+            operation_li.appendChild(operation_a);
+            operation_list_node.appendChild(operation_li);
+        }
+
+        /*
+         //if(operate_perm.find('sign') > 0)
+         {
+         var operation_li = document.createElement('li');
+         var operation_a = document.createElement('a');
+         operation_a.href = 'javascript:article_tranfer();';
+         var operation_i = document.createElement('i');
+         operation_i.className = "am-icon-pencil-square-o";
+         operation_a.appendChild(operation_i);
+         var operation_span = document.createElement('span');
+         operation_span.className = "am-navbar-label";
+         operation_span.innerText = "调版";
+         operation_a.appendChild(operation_span);
+         operation_li.appendChild(operation_a);
+         operation_list_node.appendChild(operation_li);
+         }
+         */
+
+    };
+
+    $(function(){
+
+        load_article_detail("<%= article_id %>");
+    });
+
+    function article_unsign(){
+
+        fn_show_tips("稿件撤签成功。");
+        $('html, body').animate({scrollTop: 0}, '500');
+    }
+
+    function article_sign(){
+
+        fn_show_tips("稿件签发成功。");
+        $('html, body').animate({scrollTop: 0}, '500');
+    }
+    function article_tranfer(){
+
+        var href = "/article_detail/sign?" + "article_id=" + "<%= article_id %>";
+        location.href = href;
+    }
+
+    function article_return_dept(){
+
+        fn_show_tips("稿件退稿成功。");
+        $('html, body').animate({scrollTop: 0}, '500');
+    }
+
+
+
+
+</script>
+</body>
+</html>

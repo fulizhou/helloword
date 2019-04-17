@@ -1,0 +1,449 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>稿件详情</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+</head>
+<body>
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <div>
+            <!--<a><img style="height: 1.7rem;" src="images/list/1.png"></a><span>&nbsp;&nbsp;</span><a><img style="height: 1.6rem;" src="images/list/1.png"></a><span>&nbsp;&nbsp;</span><span id="doc-select-catalog-name" style="color: #FFFFFF"></span>-->
+            <a href="javascript:returnBack()"><img src="images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a></span><span id="doc-select-catalog-name" style="font-size:1.5rem;color: #FFFFFF"></span>
+        </div>
+    </div>
+    <div class="am-header-right am-header-nav">
+        <div>
+            <a href="javascript:clickRefresh();"><img src="images/list/refresh-icon.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+        </div>
+    </div>
+</header>
+
+<div class="am-text-danger">
+    <h2 id = "doc-article-title" style="padding:2%; margin-bottom: 0%;text-align: center;"></h2>
+    <div class="am-article-hd" style="text-align: center;">
+        <p id="doc-article-meta" class="am-article-meta" style="padding-left:2%;;margin: 0px"></p>
+    </div>
+</div>
+<!--<hr data-am-widget="divider" style="" class="am-divider am-divider-default" />-->
+<article data-am-widget="paragraph" style="padding:2%; margin-bottom: 0%;" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+    <div id = "doc-article-content" class="am-article-bd">
+    </div>
+</article>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+    <a href="#top" title="回到顶部">
+        <img style="height: 3rem" src="../images/top.png">
+    </a>
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="">
+    <ul id="doc-operation-list" class="am-navbar-nav am-avg-sm-4" style="border-top: solid 0.1rem #E4E4E4">
+        <!--
+           <li>
+               <a href="javascript:history.back(-1);">
+                   <i class="am-icon-arrow-left"></i>
+                   <span class="am-navbar-label">返回</span>
+               </a>
+           </li>
+           -->
+    </ul>
+</div>
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-bd" id="modal-content-div">
+            <!--啦啦啦啦啦-->
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        </div>
+    </div>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script>
+
+    var statusMapping = {
+        "NORMAL":"success",
+        "NOEXIST":"文档状态已经改变，或者已经不存在！",
+        "ISLOCKED":"文档正在被别人处理，您现在不能进行操作！",
+        "STATECHANGE":"文档状态已经改变，或者已经不存在！"
+    };
+
+
+    function newArticle(){
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    function load_article_detail(article_id){
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=articleDetail&article_id=" + article_id + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>" + "&loToken=" + loToken + "&nocache=" + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+//        var q = "method=articleDetail&article_id=" + article_id + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>" + "&nocache=" + (new Date()).getTime();
+//        var data = {"m":"", "q":q};
+        $.ajax({
+            type: "GET",
+            url: "/get",
+
+            dataType:'json',
+            data: data,
+            cache:true,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+                    show_article_detail(jsonData.results);
+                }
+            }
+        });
+
+    };
+
+    function show_article_detail(article){
+
+        document.getElementById('doc-article-title').innerText = article.title;
+        var meta_info = "";
+        meta_info += article.author;
+        meta_info += '&nbsp;&nbsp;';
+        meta_info += article.opt_time;
+
+        if(article.text_count > 0){
+            meta_info += '&nbsp;&nbsp;';
+            meta_info += article.text_count;
+            meta_info += '字';
+        }
+
+        document.getElementById('doc-article-meta').innerHTML = meta_info;
+        document.getElementById('doc-article-content').innerHTML = article.content;
+
+        var operate_perm = "|" + article.opt_perm + "|";
+
+        var operateMapping = [];
+        operateMapping.push({
+            id:"auditing",
+            text: "审核",
+            statusCheck:true, // 调用 handler 之前是否进行稿件状态检查
+            handler: article_auditing, // 按钮触发的事件
+            iconImg: "images/navbar/auditing.png"
+        });
+        operateMapping.push({
+            id:"choose",
+            text: "选用",
+            statusCheck:true,
+            handler: article_choose,
+            iconImg: "images/navbar/choose.png"
+        });
+        operateMapping.push({
+            id:"get",
+            text: "取稿",
+            statusCheck:true,
+            handler: article_get,
+            iconImg: "images/navbar/choose.png"
+        });
+        operateMapping.push({
+            id:"transfer",
+            text: "送稿",
+            statusCheck:true,
+            handler: article_transfer,
+            iconImg: "images/navbar/transfer.png"
+        });
+        operateMapping.push({
+            id:"sign",
+            text: "签发",
+            statusCheck:true,
+            handler: article_sign,
+            iconImg: "images/navbar/sign.png"
+        });
+        operateMapping.push({
+            id:"unsign",
+            text: "撤签",
+            statusCheck:true,
+            handler: article_unsign,
+            iconImg: "images/navbar/unsigned.png"
+        });
+        operateMapping.push({
+            id:"publish",
+            text: "发布",
+            statusCheck:true,
+            handler: article_publish,
+            iconImg: "images/navbar/sign.png"
+        });
+        operateMapping.push({
+            id:"unpublish",
+            text: "取消发布",
+            statusCheck:true,
+            handler: article_unPublish,
+            iconImg: "images/navbar/unsigned.png"
+        });
+        operateMapping.push({
+            id:"record",
+            text: "流程记录",
+            statusCheck:false,
+            handler: article_logDetail,
+            iconImg: "images/navbar/record.png",
+            authCheck: function(auth){ return true; }
+        });
+
+        if(article.type=='text') {
+            operateMapping.push({
+                id: "edit",
+                text: "修改",
+                statusCheck:true,
+                handler: article_editDetail,
+                iconImg: "images/navbar/opinion.png"
+            });
+        }
+        operateMapping.push({
+            id:"modifity",
+            text: "修改痕迹",
+            statusCheck:true,
+            handler: article_modifity,
+            iconImg: "images/navbar/modifity.png"
+        });
+        var statusCheck = function (callback) {
+            var loToken = localStorage.getItem('loToken');
+
+            $.ajax({
+                url: "/article_detail/articleStatus",
+                data:{
+                    "article_id": "<%= article_id %>",
+                    "article_libid" : "<%= article_libid %>",
+                    "flowNode" : article.flowNode,
+                    "loToken" : loToken
+                },
+                dataType:"json",
+                success:function(data){
+                    if(!data.success){
+                        fn_show_tips(data.results.error_info); return;
+                    }
+                    var msg = statusMapping[data.results.status];
+                    if( msg !== "success" ){
+                        fn_show_tips(msg || "当前文档状态未知, 无法操作当前文档!");
+                    }else{
+                        callback();
+                    }
+                }
+            });
+        };
+
+        var check = function (auth) { return auth.indexOf('|' + this.id + '|') >= 0; };
+
+        var $operation_list = $("#doc-operation-list").empty();
+
+        $.each(operateMapping, function (i, v) {
+            var authCheck = v.authCheck || check;
+            // 权限检查
+            if(!authCheck.call(v, operate_perm)){ return; }
+
+            var handler = !v.statusCheck ? v.handler : function () { statusCheck(v.handler); };
+            $operation_list.append(
+                    $("<li></li>").append(
+                            $("<a></a>").append(
+                                    $("<img/>", { src: v.iconImg })
+                            ).append(
+                                    $("<span></span>", { "class":"am-navbar-label", text: v.text })
+                            ).click(handler)
+                    )
+            );
+        });
+
+    }
+
+    $(function(){
+
+        document.getElementById('doc-select-catalog-name').innerText = '<%= cat_name%>';
+        load_article_detail("<%= article_id %>");
+
+    });
+
+    function clickRefresh(){
+        document.getElementById('doc-select-catalog-name').innerText = '<%= cat_name%>';
+        load_article_detail("<%= article_id %>");
+    }
+
+    //导航栏返回按钮
+    function returnBack(){
+        history.go(-1);
+    }
+
+    function article_logDetail(){
+
+        var cat_name = document.getElementById('doc-select-catalog-name').innerText;
+        var cat_child_name = "";
+
+        var href = "/article_detail/logDetail?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>"+ "&cat_name=" + cat_name+ "&cat_child_name=" + cat_child_name;
+        location.href = href;
+    }
+
+    function article_auditing(){
+
+        var href = "/article_detail/auditing?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+        location.href = href;
+    }
+
+    function article_modifity(){
+        var href = "/article_detail/article_modifity?" + "article_id=" + "<%= article_id %>" + "&article_libid=" + "<%= article_libid %>" + "&loToken="+window.localStorage.getItem('loToken');
+        location.href = href;
+    }
+
+    function article_choose(){
+        //选用直接在当前页面完成
+        var href = "/article_detail/choose?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+        location.href = href;
+    }
+    function article_get(){
+
+        var href = "/article_detail/get?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+        location.href = href;
+    }
+    function article_transfer(){
+
+        var href = "/article_detail/transfer?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+        location.href = href;
+    }
+    function article_sign(){
+
+        var href = "/article_detail/sign?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+        location.href = href;
+    }
+
+    function article_unsign(){
+
+        var href = "/article_detail/unsign?" + "article_id=" + "<%= article_id %>" +"&"+ "article_libid=" + "<%= article_libid %>";
+        location.href = href;
+    }
+
+    //修改
+    function article_editDetail(){
+        var href = "/article_edit?" + "article_id=" + "<%= article_id %>" + "&position=" + "<%= position %>" + "&article_libid=" + "<%= article_libid %>" + "&lib_type=" + "<%= lib_type %>"
+        location.href = href;
+    }
+
+
+    function article_publish(){
+
+        document.getElementById('modal-content-div').innerText = "确定发布?";
+        $('#my-confirm').modal({
+
+            onConfirm: function(){
+                var loToken = localStorage.getItem('loToken');
+//                var q = "method=appPublish" + "&article_id=" + "<%= article_id %>"  + "&article_libid=" + "<%= article_libid %>" +"&ispublish=true" + "&column_id=" + "<%= column_id %>"  + "&code=" + "<%= code %>"  + "&loToken=" + loToken ;
+                var q = "method=sitePublish" + "&article_id=" + "<%= article_id %>"  + "&article_libid=" + "<%= article_libid %>" + "&column_id=" + "<%= column_id %>" + "&code=" + "<%= code%>"  + "&loToken=" + loToken ;
+                var data = {"m":"", "q":q};
+
+                //以post方式提交数据
+                $.ajax({
+                    type: "GET",
+                    url: "/get",
+
+                    dataType:'json',
+                    data: data,
+                    contentType: "application/json",
+                    success:function(jsonData){
+
+                        if(jsonData.success == true){
+
+                            $('html, body').animate({scrollTop: 0}, '500');
+                            fn_show_tips("发布成功。");
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1500);
+//                            load_article_detail("<%= article_id %>");
+                        }
+                        else{
+                            if(jsonData.getToken !== false){
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1500);
+                            }
+                        }
+                    }
+                });
+
+            },
+            onCancel: function(){
+                //啥也不干
+            }
+
+        })
+
+    }
+
+    function article_unPublish(){
+
+        document.getElementById('modal-content-div').innerText = "取消发布?";
+        $('#my-confirm').modal({
+
+            onConfirm: function(){
+                var loToken = localStorage.getItem('loToken');
+                var q = "method=unPublishSite" + "&article_id=" + "<%= article_id %>"  + "&article_libid=" + "<%= article_libid %>" + "&column_id=" + "<%= column_id %>" + "&code=" + "<%= code%>"  + "&loToken=" + loToken ;
+                var data = {"m":"", "q":q};
+
+                //以post方式提交数据
+                $.ajax({
+                    type: "GET",
+                    url: "/get",
+
+                    dataType:'json',
+                    data: data,
+                    contentType: "application/json",
+                    success:function(jsonData){
+
+                        if(jsonData.success == true){
+
+                            $('html, body').animate({scrollTop: 0}, '500');
+                            fn_show_tips("取消发布成功。");
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1500);
+                        }
+                        else{
+                            if(jsonData.getToken !== false){
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1500);
+                            }
+                        }
+                    }
+                });
+
+            },
+            onCancel: function(){
+                //啥也不干
+            }
+
+        })
+    }
+
+</script>
+</body>
+</html>

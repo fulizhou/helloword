@@ -1,0 +1,9 @@
+{
+  "success":true,
+  "results":
+  {
+    "user_id": "123",
+    "user_name": "周志扬",
+    "error_info": "用户密码错误."
+  }
+}

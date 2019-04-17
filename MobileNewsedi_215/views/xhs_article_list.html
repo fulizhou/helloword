@@ -1,0 +1,688 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="save" content="history">
+    <title>电稿库</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <link rel="stylesheet" href="../stylesheets/override.css">
+    <link rel="stylesheet" href="../stylesheets/article-catalog-list.css">
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <script type="text/javascript" src="../javascripts/fzcommon.js"></script>
+    <style>
+        /*列表左边标题图样式*/
+        .news-list-left-div {
+            padding-top: 0px;
+            margin: 3px;
+            width: 80px;
+            min-height: 70px;
+            overflow: hidden;
+            float: left;
+            position: relative;
+            background-origin: content;
+            background-position: 50% 50%;
+            background-size: auto 100%;
+            background-repeat: no-repeat;
+        }
+
+        /*列表右边标题区样式*/
+        .news-list-right-div {
+            margin: 3px;
+            padding-left: 3px;
+            padding-bottom: 0px;
+        }
+
+        .choose-view{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="view-main" class="choose-view" style="display: block">
+
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <div>
+                <a href="javascript:returnBack()"><img src="images/navbar/return.png"></a>
+                <!-- -->
+                <a href="javascript:choose_catalog_list();">
+                    <span id="doc-select-catalog-name" style="color: #FFFFFF"></span>
+                    <img src="../images/list/xiala.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+                </a>
+            </div>
+        </div>
+        <div class="am-header-right am-header-nav">
+            <div>
+                <a href="javascript:refresh();"><img src="../images/list/refresh-icon.png"></a>
+                <!-- -->
+                <a href="javascript:returnHome()"><img src="../images/list/home-icon.png"></a>
+            </div>
+        </div>
+    </header>
+
+    <div id="doc-scroll-wrapper" class="am-list-news-bd am-margin-left-sm" style="margin-left: 0px">
+        <ul id="doc-article-list" class="am-list"></ul>
+        <div id="doc-scroll-more" style="display: none;" class="am-pagination-centered"
+             data-am-scrollspy="{animation: 'fade', delay: 300}">加载更多
+        </div>
+    </div>
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+        <a href="#top" title="回到顶部">
+            <!--<span class="am-gotop-title">回到顶部</span>-->
+            <!--<i class="am-gotop-icon am-icon-chevron-up"></i>-->
+            <img style="height: 3rem" src="images/top.png">
+        </a>
+    </div>
+</div>
+<div id="view-catalog-list" class="choose-view">
+
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:returnBack()" class="">
+                <!--<i class="am-header-icon am-icon-angle-left"></i>-->
+                <img src="images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem">
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="#title-link">选择稿库</a>
+        </h1>
+
+    </header>
+
+    <div id="doc-catalog-list-tpl" class="am-list-news-bd">
+        <div id="catalog-level-root-box">
+            <span id="catalog-level-root"><!--部门库 全部稿件--></span>
+        </div>
+        <div id="catalog-level-box">
+            <div id="level-one-box">
+                <div id="level-one-des"></div>
+                <ul class="level-one">
+<!--
+                    <li></li>
+                    <li class="selected"></li>
+-->
+                </ul>
+            </div>
+            <div id="level-other-box">
+                <!--<ul class="level-two">
+                    <li><div>查看全部</div></li>
+                    <li class="has-more">
+                        <div>
+                            <span>时政新闻</span>
+                        </div>
+                        <ul class="level-more">
+                            <li><div>查看全部</div></li>
+                            <li><div>时政新闻</div></li>
+                            <li><div>时政新闻</div></li>
+                        </ul>
+                    </li>
+                    <li><div>时政新闻</div></li>
+                </ul>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        // 左侧 level-one-box 中的切换效果
+        $("#level-one-box").delegate("li", 'click', function () {
+            $("#level-one-box .selected").removeClass("selected");
+            $(this).addClass("selected");
+
+            $("#level-other-box>ul").css({"display": "none"});
+            $($(this).attr("href")).css({"display": ""});
+        });
+
+        // 右侧 level-other-box 子节点的切换效果
+        $("#level-other-box").delegate(".has-more", "click", function () {
+            $(this).toggleClass("view-more");
+            return false;
+        });
+
+        // 选择
+        var click = function () { select_catalog($(this).attr(catalog_id_attr)); };
+        $("#catalog-level-root").click(click);
+        $("#level-other-box").delegate("[" + catalog_id_attr + "]", "click", click);
+    });
+
+    function choose_view(name){
+        $(".choose-view").hide();
+        $("#view-" + name).show();
+    }
+
+    function back_to_main(){
+        choose_view('main');
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    var loToken = localStorage.getItem('loToken');
+
+    var g_is_choose_catalog = false;//是否弹出选择分类树
+    var g_articles_begin = 0;//从第几个稿件位置开始加载
+    var g_wireline_articles_begin = 0;//从第几个稿件位置开始加载
+    var g_select_catalog_id = -1;
+    var g_has_more = false;
+    //    var g_wirline_article_begin = 0;
+
+    function refresh() {
+        location.reload();
+    }
+
+    function newArticle() {
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    //导航栏返回按钮
+    function returnBack() {
+        var terminalType = "<%= terminalType %>";
+        if(terminalType && terminalType == "app"){
+            returnHome();
+        }else{
+            history.go(-1);
+        }
+    }
+
+    //返回首页
+    function returnHome() {
+        window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+    }
+
+    var g_wirline_catalogs = "";
+
+    function select_catalog(catalog_id) {
+        var obj = g_catalogs[catalog_id];
+        if (obj.isMore) {
+            load_wirline_list(obj.parent_id, obj.name, obj.id, 0);
+        } else {
+            load_article_list(obj.id, obj.name, 0);
+        }
+    }
+
+    var g_catalogs = "";
+    var catalog_id_attr = "catalog-id";
+
+    //点击弹出选择分类页面
+    function choose_catalog_list() {
+
+        var q = "method=xhsCatalog" + "&perm=browser" + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m": "", "q": q};
+
+        $.ajax({
+            type: "GET",
+            url: "/get",
+            dataType: 'json',
+            data: data,
+
+            contentType: "application/json",
+            success: function (jsonData) {
+
+                if (jsonData.success == true) {
+                    fill_catalog(jsonData.results);
+
+                    choose_view("catalog-list");
+                    g_is_choose_catalog = true;
+                }
+            }
+        });
+    }
+
+    /**
+     * 加载分类的二以上菜单
+     * @param parent_id 父菜单 ID
+     * @param callback 加载完成后调用的回调函数
+     */
+    function load_catalog_more(parent_id, callback) {
+
+        var q = "method=wirlineCatalog" + "&catalog_id=" + parent_id + "&loToken=" + loToken + "&nocache=" + (new Date()).getTime();
+        var data = {"m": "", "q": q};
+
+        $.ajax({
+            type: "GET",
+            url: "/get",
+            dataType: 'json',
+            data: data,
+            contentType: "application/json",
+            success: function (jsonData) {
+                if (jsonData.success == true) {
+                    var data = jsonData.results;
+                    $.each(data, function () {
+                        this.isMore = true;
+                        this.parent_id = parent_id;
+                        g_catalogs[this.id] = this;
+                    });
+                    callback(data);
+                }
+            }
+        });
+    }
+
+
+    /**
+     *  填充分类树
+     * @param data 分类树的数据
+     */
+    function fill_catalog(data) {
+        var $catalog_root = $("#catalog-level-root");
+        var $level_one = $(".level-one").empty();
+
+        // 以 id 为 Key 放入 map
+        var root = {}, map = {};
+        for (var i in data) {
+            var obj = data[i];
+            map[obj.id] = obj;
+        }
+        // 找到根节点, 对多对一的父子关系进行关联
+        for (var i in data) {
+            var obj = data[i];
+            if (obj.parent_id == 0) {
+                root = obj;
+            } else {
+                var parent = map[obj.parent_id];
+                parent.childrens = parent.childrens || [];
+                parent.childrens.push(obj);
+            }
+        }
+        g_catalogs = map;
+
+        $catalog_root.attr(catalog_id_attr, root.id).text(root.name + " 全部稿件");
+
+        // 填充一级菜单
+        fill_catalog_one($level_one, root.childrens);
+
+        // 默认打开二级菜单的第一个选项
+        $level_one.children(":first").click();
+    }
+
+    /**
+     *  填充分类树的一级菜单
+     * @param $target 存放一级菜单的 JQuery 对象, example: $(".level-one")
+     * @param data 一级菜单的数组数据
+     */
+    function fill_catalog_one($target, data) {
+        var $level_other_box = $("#level-other-box").empty();
+        for (var i in data) {
+            var obj = data[i];
+            var href = "catalog-children-" + obj.id;
+            $("<li></li>", {text: obj.name, href: "#" + href}).appendTo($target);
+
+            var $level_two = $("<ul></ul>", {
+                "id": href,
+                "class": "level-two"
+            }).css({"display": "none"}).appendTo($level_other_box);
+            $level_two.append($("<li></li>").attr(catalog_id_attr, obj.id).append($("<div></div>", {text: "全部稿件"})));
+
+            // 外电稿件的二级菜单填充和其他稿件库不一样
+            fill_catalog_two($level_two, obj.id);
+
+        }
+    }
+
+    /**
+     * 填充分类树的二级菜单
+     * @param $target
+     * @param parent_id 二级菜单 父 ID
+     */
+    function fill_catalog_two($target, parent_id) {
+        load_catalog_more(parent_id, function (data) {
+            for (var i in data) {
+                var obj = data[i];
+                var $li = $("<li></li>").attr(catalog_id_attr, obj.id).append($("<div></div>", {text: obj.name})).appendTo($target);
+
+                if ((obj.childrens || []).length > 0) {
+                    $li.addClass("has-more").removeAttr(catalog_id_attr);
+                    var $level_more = $("<ul></ul>", {"class": "level-more"}).appendTo($li);
+                    $("<li></li>").attr(catalog_id_attr, obj.id).append($("<div></div>", {text: obj.name})).appendTo($level_more);
+                    fill_catalog_more($level_more, obj.childrens);
+                }
+            }
+        });
+    }
+
+    function fill_catalog_more($target, parent_id) {
+        load_catalog_more(parent_id, function (data) {
+            for (var i in data) {
+                var obj = data[i];
+                $("<li></li>").attr(catalog_id_attr, obj.id).append($("<div></div>", {text: obj.name})).appendTo($target);
+            }
+        });
+    }
+
+    // 加载稿件列表用
+    function load_wirline_list(catalog_id, name, wireline_id, begin_id) {
+
+        $('#doc-select-catalog-name').text(name);
+
+        localStorageSetItem('xhs-catalog-id', g_select_catalog_id = catalog_id);
+        localStorageSetItem('xhs-wirline-catalog-id', wireline_id);
+        localStorageSetItem('xhs-catalog-name', name);
+
+        var q = "method=getXhsCatalog&catalog_id=" + catalog_id + "&begin=" + begin_id + "&wireline_id=" + wireline_id + "&loToken=" + loToken + "&count=20&nocache=" + (new Date()).getTime();
+        var data = {"m": "", "q": q};
+
+        $.ajax({
+            type: "GET",
+            url: "/get",
+            dataType: 'json',
+            data: data,
+            contentType: "application/json",
+            success: function (jsonData) {
+
+                if (jsonData.success == true) {
+
+                    show_article_list(jsonData.results, jsonData.has_more, begin_id);
+
+                    back_to_main();
+                    g_is_choose_catalog = false;
+
+                }
+            }
+        });
+
+    }
+
+    //获取某个分类下的稿件
+    function load_article_list(catalog_id, name, begin_id) {
+
+        $('#doc-select-catalog-name').text(name);
+
+        localStorageSetItem('xhs-catalog-id', g_select_catalog_id = catalog_id);
+        localStorageSetItem('xhs-wirline-catalog-id', 0);
+        localStorageSetItem('xhs-catalog-name', name);
+
+        var q = "method=getXhsCatalog&catalog_id=" + catalog_id + "&begin=" + begin_id + "&loToken=" + loToken + "&count=20&nocache=" + (new Date()).getTime();
+        var data = {"m": "", "q": q};
+
+        $.ajax({
+            type: "GET",
+            url: "/get",
+            dataType: 'json',
+            data: data,
+            contentType: "application/json",
+            success: function (jsonData) {
+                if (jsonData.success == true) {
+                    show_article_list(jsonData.results, jsonData.has_more, begin_id);
+
+                    back_to_main();
+                    g_is_choose_catalog = false;
+                }
+            }
+        });
+
+    }
+
+    //显示稿件列表
+    function show_article_list(article_list, has_more, begin_id) {
+
+        var wireline = localStorageGetItem('xhs-wirline-catalog-id');
+
+        g_has_more = has_more;
+        if (begin_id == 0) {
+
+            if (wireline == 0) {
+                g_articles_begin = 0;
+            } else {
+                g_wireline_articles_begin = 0;
+            }
+
+            var list = document.getElementById('doc-article-list');
+            list.innerHTML = "";
+
+            removeXhsHistoryPage();
+            $('html, body').animate({scrollTop: 0}, '500');
+        }
+
+        for (var i in article_list) {
+
+            if (article_list[i].type == "image") {
+
+                var article_node = document.createElement('li');
+                article_node.onclick = "show_article_detail(" + article_list[i].id + "," + article_list[i].article_libid + ");";
+                article_node.className = "am-g am-list-item-desced";
+                article_node.style.paddingLeft = "2%";
+                article_node.style.paddingTop = "1%";
+                article_node.style.paddingBottom = "0%";
+                article_node.setAttribute("article_id", article_list[i].id);
+                article_node.setAttribute("article_libid", article_list[i].article_libid);
+
+                var div_left = document.createElement('div');
+                div_left.className = 'news-list-left-div';
+//                a.appendChild(div_left);
+                article_list[i].imageUrl = article_list[i].imageUrl.split("&amp;").join("&");
+                var img_url = article_list[i].imageUrl == "" ? '../images/default_article.png' : (article_list[i].imageUrl + '&size=1');
+                div_left.style.backgroundImage = "url(" + img_url + ")";
+                div_left.style.backgroundColor = "black";
+                div_left.style.marginRight = "2%";
+                article_node.appendChild(div_left);
+
+                var div_right = document.createElement('div');
+                div_right.className = "news-list-right-div";
+
+                var title_node = document.createElement('a');
+                title_node.className = "am-list-title more-two-line";
+                title_node.innerText = article_list[i].title;
+                title_node.style.height = "50px";
+                var detail_node = document.createElement('span');
+                detail_node.style.color = "#9A999E";
+                detail_node.className = "am-list-date";
+
+                var meta_info = " ";
+                meta_info += article_list[i].author;
+                meta_info += ' ' + article_list[i].opt_time.substring(5, 16);
+                var choosed = "";
+                if (article_list[i].status.indexOf('choose') >= 0) {
+                    choosed += '<img src="../images/list/hadchoosed.png" style="height: 20px;padding-left: 1rem;padding-right: 1rem">';
+                }
+                detail_node.innerHTML = meta_info + choosed;
+                div_right.appendChild(title_node);
+                div_right.appendChild(detail_node);
+                article_node.appendChild(div_right);
+
+                document.getElementById('doc-article-list').appendChild(article_node);
+
+                if (wireline == 0) {
+                    g_articles_begin += 1;
+                } else {
+                    g_wireline_articles_begin += 1;
+                }
+//                g_articles_begin += 1;
+
+            } else if (article_list[i].type == "text") {
+                var article_node = document.createElement('li');
+                article_node.onclick = "show_article_detail(" + article_list[i].id + "," + article_list[i].article_libid + ");";
+                article_node.className = "am-g am-list-item-desced";
+                article_node.style.paddingLeft = "2%";
+                article_node.style.paddingTop = "1%";
+                article_node.style.paddingBottom = "1%";
+                article_node.setAttribute("article_id", article_list[i].id);
+                article_node.setAttribute("article_libid", article_list[i].article_libid);
+                var title_node = document.createElement('a');
+//                title_node.href = "javascript:show_article_detail(" + article_list[i].id+","+article_list[i].article_libid  + ");";
+                title_node.className = "am-list-title";
+                title_node.innerText = article_list[i].title;
+                title_node.style.overflow = "hidden";
+                title_node.style.textOverflow = "ellipsis";
+                title_node.style.display = "-webkit-box";
+                title_node.style.wordBreak = "break-all";
+                title_node.style.webkitBoxOrient = "vertical";
+                title_node.style.webkitLineClamp = "2";
+                title_node.style.height = "58px";
+                var detail_node = document.createElement('span');
+                detail_node.style.color = "#9A999E";
+                detail_node.className = "am-list-date";
+
+                var meta_info = " ";
+                meta_info += article_list[i].author;
+                meta_info += ' ' + article_list[i].opt_time.substring(5, 16);
+                var choosed = "";
+                if (article_list[i].status.indexOf('choose') >= 0) {
+                    choosed += '<img src="../images/list/hadchoosed.png" style="height: 20px;padding-left: 1rem;padding-right: 1rem">';
+                }
+                detail_node.innerHTML = meta_info + choosed;
+                article_node.appendChild(title_node);
+                article_node.appendChild(detail_node);
+                document.getElementById('doc-article-list').appendChild(article_node);
+
+                if (wireline == 0) {
+                    g_articles_begin += 1;
+                } else {
+                    g_wireline_articles_begin += 1;
+                }
+//                g_articles_begin += 1;
+            } else {
+                var article_node = document.createElement('li');
+                article_node.onclick = "show_article_detail(" + article_list[i].id + "," + article_list[i].article_libid + ");";
+                article_node.className = "am-g am-list-item-desced";
+                article_node.style.paddingLeft = "2%";
+                article_node.style.paddingTop = "1%";
+                article_node.style.paddingBottom = "0%";
+                article_node.setAttribute("article_id", article_list[i].id);
+                article_node.setAttribute("article_libid", article_list[i].article_libid);
+
+                var div_left = document.createElement('div');
+                div_left.className = 'news-list-left-div';
+//                a.appendChild(div_left);
+                article_list[i].imageUrl = article_list[i].imageUrl.split("&amp;").join("&");
+                var img_url = article_list[i].imageUrl == "" ? '../images/default_article.png' : (article_list[i].imageUrl + '&size=1');
+                div_left.style.backgroundImage = "url(" + img_url + ")";
+                div_left.style.backgroundColor = "black";
+                div_left.style.marginRight = "2%";
+                div_left.style.textAlign = "center";
+
+                var video_img = document.createElement('img');
+                video_img.src = "../images/list/video_pic.png";
+                video_img.style.width = "50%";
+                video_img.style.marginTop = "1.2rem";
+                div_left.appendChild(video_img);
+
+                article_node.appendChild(div_left);
+
+                var div_right = document.createElement('div');
+                div_right.className = "news-list-right-div";
+
+                var title_node = document.createElement('a');
+                title_node.className = "am-list-title more-two-line";
+                title_node.innerText = article_list[i].title;
+                title_node.style.height = "50px";
+                var detail_node = document.createElement('span');
+                detail_node.style.color = "#9A999E";
+                detail_node.className = "am-list-date";
+                detail_node.className = "am-list-date";
+
+                var meta_info = " ";
+                meta_info += article_list[i].author;
+                meta_info += ' ' + article_list[i].opt_time.substring(5, 16);
+                var choosed = "";
+                if (article_list[i].status.indexOf('choose') >= 0) {
+                    choosed += '<img src="../images/list/hadchoosed.png" style="height: 20px;padding-left: 1rem;padding-right: 1rem">';
+                }
+                detail_node.innerHTML = meta_info + choosed;
+                div_right.appendChild(title_node);
+                div_right.appendChild(detail_node);
+                article_node.appendChild(div_right);
+
+                document.getElementById('doc-article-list').appendChild(article_node);
+
+                if (wireline == 0) {
+                    g_articles_begin += 1;
+                } else {
+                    g_wireline_articles_begin += 1;
+                }
+//                g_articles_begin += 1;
+            }
+
+        }
+
+        $("#doc-scroll-more").css({ display : has_more ? "block" : "none" });
+    }
+
+    function show_article_detail(article_id, article_libid) {
+
+        var scrollTop = getScroll().scrollTop;
+        var history_json = {
+            content: document.getElementById('doc-article-list').innerHTML,
+            begin: g_articles_begin,
+            has_more: g_has_more,
+            scrollTop: scrollTop
+        };
+
+        saveXhsHistoryPage(JSON.stringify(history_json));
+        var cat_name = document.getElementById('doc-select-catalog-name').innerHTML;
+        window.location.href = "/article_detail?article_id=" + article_id + "&cat_name=" + cat_name + "&position=source" + "&article_libid=" + article_libid;
+    }
+
+    var is_confirm_back = true;
+
+    $(function () {
+
+        $("#doc-article-list").delegate("li", "click", function () {
+
+            var article_id = $(this).attr("article_id");
+            var article_libid = $(this).attr("article_libid");
+            show_article_detail(article_id, article_libid, this);
+
+        });
+
+        var cat = document.getElementById('doc-select-catalog-name');
+
+        var catalog_name = localStorageGetItem('xhs-catalog-name');
+        g_select_catalog_id = localStorageGetItem('xhs-catalog-id');
+        cat.innerText = catalog_name;
+
+        if (g_select_catalog_id <= 0) {
+            choose_catalog_list();
+            return;
+        }
+
+        var wireline_id = localStorageGetItem('xhs-wirline-catalog-id');
+        if (!wireline_id == 0) {
+            load_wirline_list(g_select_catalog_id, catalog_name, wireline_id, g_wireline_articles_begin);
+        } else {
+            load_article_list(g_select_catalog_id, catalog_name, g_articles_begin);
+        }
+
+        $('#doc-scroll-more').on('inview.scrollspy.amui', function () {
+
+            var wireline_id = localStorageGetItem('xhs-wirline-catalog-id');
+            if (wireline_id != 0) {
+                load_wirline_list(g_select_catalog_id, localStorageGetItem('xhs-catalog-name'), wireline_id, g_wireline_articles_begin)
+            } else {
+                load_article_list(g_select_catalog_id, localStorageGetItem('xhs-catalog-name'), g_articles_begin);
+            }
+        });
+
+    });
+
+</script>
+</body>
+</html>

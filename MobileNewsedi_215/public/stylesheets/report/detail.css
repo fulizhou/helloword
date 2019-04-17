@@ -1,0 +1,108 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #eee;
+}
+
+li {
+    list-style: none;
+}
+
+/* 缩略显示样式 从第5个元素开始隐藏 */
+.omitted-view>*:nth-child(n+5){
+    display: none;
+}
+.btn-show-omitted{
+    display: none;
+}
+.omitted-view~.btn-show-omitted{
+    display: block;
+}
+
+.can-empty-list:empty::before{
+    color: #999;
+    display: block;
+    font-size: 1.3rem;
+    content: attr(data-empty-text);
+    text-align: center;
+    line-height: 3.5rem;
+}
+
+ul.am-list{
+    margin: 1rem 0 0;
+}
+ul.am-list>li {
+    padding: 0 1rem;
+}
+ul.am-list-border>li{
+    border: none;
+}
+ul.am-list-border>li:not(:first-child){
+    border-top: 1px solid #ddd !important;
+}
+
+.contentBg{
+    width: 100%;
+    padding: 1rem;
+    background: #fff;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+}
+.am-text-danger{
+    width:100%;
+}
+
+.auditOpinion{
+    width: 100%;
+    display: block;
+    font-size: 1.3rem;
+}
+
+.bottom-placehold{
+    margin-bottom: 6rem;
+}
+
+.bottomBg{
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1rem 1%;
+    background: #fff;
+    text-align: center;
+    position: fixed;
+    border-top: 1px solid #ddd;
+}
+.bottomBg .am-btn{
+    width: 46%;
+    margin: 0 1%;
+    padding: 0.6rem 0;
+    text-align: center;
+}
+
+.btn_cancel{
+    background: #eeeeee;
+    border: 1px solid #59B19A;
+    color: #59B19A;
+    border-radius: 0.3rem;
+    padding: 0.6rem 5rem;
+    font-size: 1.6rem;
+    margin: 0 0.5rem;
+}
+.btn_determine{
+    background:#59B19A;
+    color: #fff;
+    border: 1px solid #59B19A;
+    border-radius: 0.3rem;
+    font-size: 1.6rem;
+    margin: 0 0.5rem;
+}
+/* 按钮禁用 */
+.btn_determine.disabled{
+    color: #999;
+    background: #eeeeee;
+    border: 1px solid #999;
+    pointer-events: none;
+}

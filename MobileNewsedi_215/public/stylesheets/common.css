@@ -1,0 +1,26 @@
+.clear::after, .clearfix::after{
+    width: 0;
+    height: 0;
+    clear: both;
+    content: ' ';
+    display: block;
+}
+
+.choose-view{
+    display: none;
+}
+
+.auto-fixed.fixed{
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+}
+
+*+.am-alert{
+    margin: 0;
+}
+
+.am-alert {
+    z-index: 999;
+}

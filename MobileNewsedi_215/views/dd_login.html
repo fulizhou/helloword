@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title%></title>
+    <script>
+        var _config = JSON.parse("<%=config%>".replace(/&#34;/g,"\""))
+
+    </script>
+    <script src='http://g.alicdn.com/ilw/ding/0.3.8/scripts/dingtalk.js' type="text/javascript"></script>
+    <!--<script src='/javascripts/demo.js' type='text/javascript'></script>-->
+    <script type='text/javascript'>
+        dd.config({
+            agentId: _config.agentId,
+            corpId: _config.corpId,
+            timeStamp: _config.timeStamp,
+            nonceStr: _config.nonceStr,
+            signature: _config.signature,
+            jsApiList: ['device.notification.confirm',
+                'device.notification.alert',
+                'device.notification.prompt',
+                'biz.chat.chooseConversation',
+                'biz.ding.post']
+        });
+        var loToken = window.localStorage.getItem('loToken');
+        dd.ready(function () {
+            dd.runtime.permission.requestAuthCode({
+                corpId: _config.corpId, onSuccess: function (result) {
+                    //alert(JSON.stringify(result));
+                    //var loginUrl =
+                    window.location.href = "/dd_login/auto_login?code="+result.code+"&lotoken="+loToken;
+                }, onFail: function (err) {
+                    alert(err)
+                }
+            })
+
+        });
+
+
+    </script>
+</head>
+<body>
+<h2><%= title%></h2>
+</body>
+</html>

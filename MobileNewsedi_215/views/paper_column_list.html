@@ -1,0 +1,281 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>纸媒栏目列表</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+    <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="../assets/js/cookie.js"></script>
+    <script type="text/javascript" src="../javascripts/common.js"></script>
+    <style type="text/css">
+
+    </style>
+</head>
+<body style="background-color: #EEEFF1">
+
+<div id = "doc-form-all">
+    <header data-am-widget="header" class="am-header am-header-default">
+        <div class="am-header-left am-header-nav" style="width: 50%">
+            <div>
+                <a id="doc-header-return-a" href="javascript:returnBack();" ><img src="../images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a><span>&nbsp;</span><a href="javascript:choose_catalog_list();" ><span id="doc-select-catalog-name" style="color: #FFFFFF"></span><img src="../images/list/xiala.png"  style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a>
+            </div>
+        </div>
+        <div class="am-header-right am-header-nav" style="width: 50%">
+            <div id="doc-date-picker-div" class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}" style="line-height: 49px;float: right">
+                <button id="doc-datepicker" class="am-btn am-btn-default" type="button" style="border: none;background-color: transparent;"><span id = "doc-select-date" style="color: white;font-size: 16px"></span><img src="../images/date-no-choose.png" style="position: relative;top:-1px"></button>
+                <a href="javascript:returnHome()"><img src="../images/list/home-icon.png" style="height: 2rem;padding-right: 0.6rem;padding-left: 0.2rem"></a>
+            </div>
+        </div>
+    </header>
+
+    <div id = "doc-scroll-wrapper" class="am-list-news-bd am-margin-left-sm" style="margin: 0;">
+        <ul id = "doc-article-list" class="am-list" style="margin: 0;"></ul>
+        <div id = "doc-scroll-more" onclick="load_more();" style="display: none;" class="am-pagination-centered" data-am-scrollspy="{animation: 'fade', delay: 300}">加载更多</div>
+    </div>
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" style="right: 0">
+        <a href="#top" title="回到顶部">
+            <img style="height: 3rem" src="../images/top.png">
+        </a>
+    </div>
+</div>
+<div id="doc-catalog-list" style="display: none;">
+    <div id = "doc-catalog-list-tpl" class="am-list-news-bd">
+    </div>
+</div>
+<script>
+    var g_is_choose_catalog = false;//是否弹出选择分类树
+    var g_articles_begin = 0;//从第几个稿件位置开始加载
+    var g_select_catalog_id = -1;
+
+    function list_articles_refresh(){
+
+        load_article_list(localStorage.getItem("paper_column_date_" + "<%= column_paper_id%>"), 0);
+    }
+
+    function newArticle(){
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    //导航栏返回按钮
+    function returnBack(){
+        history.go(-1);
+    }
+
+    //返回首页
+    function returnHome(){
+        window.location.href = "/home?loginToHome=0&timestamp" + (new Date()).getTime();
+    }
+
+    function choose_catalog_list(){
+//        alert("<%= catalog_id%>");
+        var now_column_id =  window.localStorage.getItem('now-column-id');
+        window.location.href = "/paper_article_list/childTree?column_paper_id=" + "<%= column_paper_id%>" + "&paper_name=" + "<%= paper_name%>" + "&column_id=" + now_column_id;
+    }
+
+    //显示稿件列表
+    function show_article_list(article_list, has_more, begin_id){
+
+        if(begin_id == 0){
+            g_articles_begin = 0;
+            var list = document.getElementById('doc-article-list');
+            list.className = "am-list";
+            list.innerHTML = "";
+            $('html, body').animate({scrollTop: 0}, '500');
+        }
+
+        for(var i in article_list){
+
+            var article_node = document.createElement('li');
+            article_node.onclick = function(){
+
+                var article_id = this.article_id;
+                var article_libid = article_list[i].article_libid;
+                var cat_name = document.getElementById('doc-select-catalog-name').innerHTML;
+                window.location.href = "/article_detail?article_id="+ article_id +"&article_libid=" + article_libid + "&lib_type=paper"+ "&cat_name="+ cat_name +"&position=source" + "&catalog_id="+"<%= catalog_id%>"+"&paper_id=<%= column_paper_id%>";
+            };
+            article_node.className = "am-g am-list-item-desced";
+            article_node.style.paddingLeft = "3%";
+            article_node.style.paddingRight = "1%";
+            article_node.article_id = article_list[i].id;
+            var title_node = document.createElement('a');
+            title_node.className = "am-list-title";
+            title_node.innerText = article_list[i].title;
+           /* title_node.style.overflow = "hidden";
+            title_node.style.textOverflow = "ellipsis";
+            title_node.style.display = "-webkit-box";
+            title_node.style.wordBreak = "break-all";
+            title_node.style.webkitBoxOrient = "vertical";
+            title_node.style.webkitLineClamp = "2";
+            title_node.style.height = "40px";*/
+            title_node.style.display = "inline-block";
+            title_node.style.width = "93%";
+            title_node.style.float="right";
+
+            var detail_node = document.createElement('span');
+            detail_node.style.display="block";
+            var detail_node_pic = document.createElement('span');
+            detail_node_pic.style.display="inline-block";
+            detail_node_pic.style.width="5%";
+            detail_node_pic.style.height="25px";
+            detail_node_pic.style.marginTop = "12px";
+            detail_node_pic.style.float="left";
+            detail_node.style.color = "#98999d";
+            if(article_list[i].type == "text")
+                detail_node_pic.className = "am-list-date am-icon-file-word-o";
+            else if(article_list[i].type == "image")
+                detail_node_pic.className = "am-list-date am-icon-file-image-o";
+            else if(article_list[i].type == "video")
+                detail_node_pic.className = "am-list-date am-icon-file-movie-o";
+            else
+                detail_node_pic.className = "am-list-date";
+            var meta_info = '';
+            meta_info += ' ' + article_list[i].status;
+            meta_info += ' ' + article_list[i].layout_name;
+            meta_info += ' ' + article_list[i].author;
+            meta_info += ' ' + article_list[i].opt_time.substring(5,16);
+            detail_node.innerText = meta_info;
+            detail_node.style.clear="both";
+            article_node.appendChild(detail_node_pic);
+            article_node.appendChild(title_node);
+            article_node.appendChild(detail_node);
+            document.getElementById('doc-article-list').appendChild(article_node);
+            g_articles_begin += 1;
+        }
+
+        if(has_more){
+            $("#doc-scroll-more").show();
+        }
+        else{
+            $("#doc-scroll-more").hide();
+        }
+
+        g_is_article_list = true;
+        //myScroll.refresh();
+        //myScroll.scrollTo(0, 40, 0, $.AMUI.iScroll.utils.circular);
+    };
+
+    function show_layout_detail(article_id,page_id,article_libid){
+
+        var column_name = document.getElementById('doc-select-catalog-name').innerText;
+        window.location.href = "/article_detail?articleId="+ article_id + "&lib_type=paper_layout&article_libid="+ article_libid+"&page_id=" + page_id + "&column_name=" + column_name;
+
+    };
+
+
+    function load_more(){
+        load_article_list(localStorage.getItem("paper_column_date_" + "<%= column_paper_id%>"), g_articles_begin);
+    };
+
+    function load_article_list(column_date, begin){
+        var paper_id = "<%= column_paper_id%>";
+        var catalog_id = "<%= catalog_id%>";
+        var loToken = localStorage.getItem('loToken');
+        var q = "method=getPaperCatalog" + "&catalog_id="+ catalog_id +"&column_date=" + column_date + "&paper_id="+ paper_id +"&count="+ "<%= article_list_count%>" + "&begin=" + begin + "&loToken=" + loToken + '&nocache=' + (new Date()).getTime();
+        var data = {"m":"", "q":q};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/get",
+//                url: "/paper_article_list/list",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    show_article_list(jsonData.results, jsonData.has_more, begin);
+                    window.localStorage.setItem("isCatalogType",false);
+                    if(JSON.stringify(jsonData.results).length <= 2){
+                        fn_show_tips("当前日期无内容。");
+                    }
+                }
+            }
+        });
+    }
+
+    function GetDateStr(AddDayCount)
+    {
+        var dd = new Date();
+        dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y+"-"+m+"-"+d;
+    }
+
+    $(function(){
+
+//        var add_date = 0;
+//        if(window.localStorage){
+//            var paper_id = "<%= column_paper_id%>";
+//            var str = "paper_select_date_" + paper_id;
+//            add_date = localStorage.getItem(str);
+//        }
+//        var i_date = add_date - 0;
+//        g_paper_column_date = GetDateStr(i_date);
+
+//        g_paper_column_date = GetDateStr(1);localStorage.getItem("paper_column_date")
+        var lastdate = localStorage.getItem("paper_column_date_" + "<%= column_paper_id%>");
+        if(!lastdate){
+            lastdate = "<%= paperMinDate%>";
+            window.localStorage.setItem("paper_column_date_" + "<%= column_paper_id%>",lastdate);
+        }
+
+        document.getElementById('doc-select-date').innerHTML = lastdate;
+        $('#doc-datepicker').datepicker('setValue', lastdate);
+
+        document.getElementById('doc-select-catalog-name').innerText = "<%= catalog_name%>";
+        $('#doc-datepicker').datepicker().on('changeDate.datepicker.amui', function(event) {
+            document.getElementById('doc-select-date').innerHTML = event.date.Format('yyyy-MM-dd').toString();
+            var column_date = event.date.Format('yyyy-MM-dd').toString();
+            window.localStorage.setItem("paper_column_date_" + "<%= column_paper_id%>",column_date);
+            g_articles_begin = 0;
+            load_article_list(localStorage.getItem("paper_column_date_" + "<%= column_paper_id%>"), g_articles_begin);
+//            g_paper_column_date = localStorage.getItem("paper_column_date");
+
+        });
+
+        load_article_list(localStorage.getItem("paper_column_date_" + "<%= column_paper_id%>"), g_articles_begin);
+
+        $('#doc-scroll-more').on('inview.scrollspy.amui', function() {
+
+            load_more();
+        });
+
+        $('#doc-scroll-refresh').on('inview.scrollspy.amui', function() {
+
+            load_article_list(localStorage.getItem("paper_column_date_" + "<%= column_paper_id%>"), 0);
+        });
+    });
+
+
+</script>
+</body>
+</html>

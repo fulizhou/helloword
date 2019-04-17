@@ -1,0 +1,182 @@
+<!doctype html>
+<html class="no-js" style="font-size: 75%;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>大样意见</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="../assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#59B19A">
+    <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../stylesheets/common.css">
+</head>
+<body style="background-color: #EEEFF1">
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <div>
+            <a id="doc-header-return-a" href="javascript:returnBack();" ><img src="images/navbar/return.png" style="height: 2rem;padding-left: 1rem;padding-right: 1rem"></a><span id="doc-select-catalog-name" style="color: #FFFFFF">纸媒发布</span><span id="doc-select-catalog-child-name" style="color: #FFFFFF;font-size: 1rem"></span>
+        </div>
+    </div>
+    <!--<div class="am-header-right am-header-nav">-->
+        <!--<div>-->
+            <!--<a href="javascript:list_articles_refresh();"><img src="images/list/refresh-icon.png"></a><span>&nbsp;&nbsp;&nbsp;</span><a href="javascript:newArticle();"><img src="images/list/plus-icon.png"></a>-->
+        <!--</div>-->
+    <!--</div>-->
+</header>
+<!--<div id="doc-date-picker-div" style="text-align: center;background-color: #ecf4f7;border-bottom: solid 1px #d2d2d2;vertical-align: middle;line-height: 4rem;">-->
+    <!--<span id="paper-info-lay" style="float: left;font-size: 80%;color: #59B19A"></span>-->
+    <!--<span id="paper-info-date" style="font-size: 80%"></span>-->
+    <!--<span id="paper-info-status" style="float: right;font-size: 80%;color: greenyellow"></span>-->
+    <!--<div style="clear: both"></div>-->
+<!--</div>-->
+<!--<div style="clear: both"></div>-->
+
+<!--<div style="text-align:left;margin:0;">-->
+    <!--<small id="doc-article-meta" style="padding-left:2%" class="am-text-danger"></small>-->
+<!--</div>-->
+<article data-am-widget="paragraph" class="am-paragraph am-paragraph-default" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+    <div id = "doc-article-content" class="am-article-bd" >
+    </div>
+</article>
+<div style="clear: both"></div>
+<div style="width: 100%;border-top: solid 1px #d2d2d2;">
+    <form class="am-form">
+        <!--<fieldset style="background-color: #FFFFFF">-->
+            <div style="position: fixed;width: 100%;bottom: 0;left: 0;height: 20rem;">
+                <div class = "am-form-group" style="margin-bottom: 0">
+                    <textarea class="" rows="6" id="doc-opinion" placeholder="请输入大样意见" minlength="1" style="border: none;border-bottom: solid 1px #d2d2d2;"></textarea>
+                </div>
+                <div style="padding-top: 5%;padding-bottom:5%;background-color: #FFF">
+                    <div style="width: 48%;position: relative;float: left">
+                        <botton type="button" onclick="opinion_cancel()" style="color:white;position: relative;float: right;width: 10rem;background-color: #a8a8a8;text-align: center;border-radius: 0.5rem;padding-top: 0.5rem;padding-bottom: 0.5rem">取消</botton>
+                    </div>
+                    <div style="width: 48%;position: relative;float: right">
+                        <botton type="button" onclick="opinion_submit()" style="color:white;position: relative;float: left;width: 10rem;background-color: #59B19A;text-align: center;border-radius: 0.5rem;padding-top: 0.5rem;padding-bottom: 0.5rem">提交</botton>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <!--<hr data-am-widget="divider" style="border-top: solid 1px #d2d2d2" class="am-divider am-divider-default" />-->
+
+            </div>
+        <!--</fieldset>-->
+    </form>
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<!--<![endif]-->
+
+<script type="text/javascript">
+    function returnBack(){
+        history.go(-1);
+    }
+
+    function newArticle(){
+        window.location.href = "/article_upload/turnNew";
+    }
+
+    function opinion_submit(){
+        var opinion = document.getElementById('doc-opinion').value;
+        if(opinion.length == 0){
+            fn_show_tips('请填写意见');
+            return;
+        }
+        var loToken = localStorage.getItem('loToken');
+        var data = {"article_id": '<%= article_id %>', "opinion":opinion, "loToken":loToken, "timestamp": (new Date()).getTime()};
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/article_detail/opinion",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    fn_show_tips("大样意见发布成功。");
+                    setTimeout(function () {
+//                        removeHistoryPage();
+//                        window.location.href = "/source_article?timestamp" + (new Date()).getTime();
+                        window.history.go(-2);
+                    }, 1500);
+                }
+            }
+        });
+
+    }
+
+    function opinion_cancel(){
+        history.go(-1);
+    }
+
+    function load_article_detail(article_id){
+        var loToken = localStorage.getItem('loToken');
+        var data = {"article_id":article_id, "page_id":"<%= page_id %>", "loToken":loToken};
+
+        //以post方式提交数据
+        $.ajax({
+            type: "GET",
+            url: "/article_detail/layout",
+
+            dataType:'json',
+            data: data,
+            contentType: "application/json",
+            success:function(jsonData){
+
+                if(jsonData.success == true){
+
+                    show_article_detail(jsonData.results);
+                }
+            }
+        });
+
+    }
+
+    function show_article_detail(article){
+
+        article.largeImage = article.largeImage.split("&amp;").join("&");
+        var content = '<img style="width:100%;padding-top:3%;padding-bottom:3%" src="' + article.largeImage + '" data-rel="' + article.largeImage + '"/>';
+
+        document.getElementById('doc-article-content').innerHTML = content;
+        document.getElementById('doc-select-catalog-name').innerText = article.column_name + ' ' + article.layout_name;
+//        document.getElementById('paper-info-lay').innerHTML = '&nbsp;&nbsp;' + article.column_name + article.layout_name + '&nbsp;&nbsp;' + article.author + '&nbsp;&nbsp;' + article.opt_time.substring(0, 10);
+//        document.getElementById('paper-info-status').innerHTML = article.status + '&nbsp;&nbsp;';
+
+
+    };
+
+    $(function(){
+        load_article_detail("<%= article_id %>");
+//        document.getElementById('doc-select-catalog-child-name').innerText = "<%= column_name%>";
+    });
+
+//    function article_return_dept(){
+//
+//        fn_show_tips("大样意见提交成功。");
+//        $('html, body').animate({scrollTop: 0}, '500');
+//    }
+
+</script>
+</body>
+</html>
